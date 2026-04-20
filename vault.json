@@ -1,5 +1,18 @@
 [
   {
+    "id": "mo738r6sek0",
+    "title": "Shuruaat",
+    "type": "ghazal",
+    "lang": "hi",
+    "content": "<p dir=\"ltr\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\"><span style=\"font-size: 11pt; font-family: &quot;Google Sans Text&quot;; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Chalo aaj phir wohi se shuruaat karte hain, jaha tum bas muje friend request bhejne ka soch rahi thi aur mai bas uss waqt se anjaan sa tha.</span></p><br><p dir=\"ltr\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\"><span style=\"font-size: 11pt; font-family: &quot;Google Sans Text&quot;; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Jaha tumm mere mez ke paas aakar apni dost ke sath bas selfiyaan liya karti thi, kyun ke me samajhta tha waha graffiti aachi thi, par unn selfiyon me zara main sa tha.</span></p><br><p dir=\"ltr\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\"><span style=\"font-size: 11pt; font-family: &quot;Google Sans Text&quot;; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Shuruaat wohi se karte hain, jab tumhara birthday tha aur messanger par hum tumhaare cake celebrations ki guftagu kiya karte the. Kyun ke tab na koi gila tha, na suroor be-wafayi ka mila tha.</span></p><br><p dir=\"ltr\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\"><span style=\"font-size: 11pt; font-family: &quot;Google Sans Text&quot;; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Chalo aaj phir wahi se zindagi suruaat karte hain, jaha bas main tha, aur tum tunhaari uss laal scooty par muskurate hue roz guzarti thi. Jaha bas tum follow karti thi aur main ajnabee sa tha!</span></p>",
+    "notes": "need title update and also needs refinement this content seems to be outdated.",
+    "status": "draft",
+    "platforms": [],
+    "tags": "",
+    "createdAt": 1776683096740,
+    "updatedAt": 1776683096740
+  },
+  {
     "id": "mo735m7d4td",
     "title": "Kaajal",
     "type": "poem",
