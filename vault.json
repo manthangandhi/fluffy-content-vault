@@ -8,10 +8,13 @@
     "notes": "need more refinement",
     "status": "draft",
     "platforms": [
-      "ig"
+      "ig",
+      "x",
+      "yt",
+      "sp"
     ],
     "tags": "",
     "createdAt": 1776682551557,
-    "updatedAt": 1776682582293
+    "updatedAt": 1776682590048
   }
 ]
