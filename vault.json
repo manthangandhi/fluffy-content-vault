@@ -1,5 +1,23 @@
 [
   {
+    "id": "mo73ts8v859",
+    "title": "Kho gaya",
+    "type": "poem",
+    "lang": "hi",
+    "content": "<p dir=\"ltr\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\"><span style=\"font-size: 11pt; font-family: &quot;Google Sans Text&quot;; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Aajkal mohabbat ke&nbsp; dard&nbsp; mein koi karta ho jaise,</span></p><p dir=\"ltr\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\"><span style=\"font-size: 11pt; font-family: &quot;Google Sans Text&quot;; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Aajkal dil ko jodne ka daur bhi badal gaya ho jaise,</span></p><p dir=\"ltr\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\"><span style=\"font-size: 11pt; font-family: &quot;Google Sans Text&quot;; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Aur jo bhi hai waqt ki ruthi hui raah mein,</span></p><p dir=\"ltr\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\"><span style=\"font-size: 11pt; font-family: &quot;Google Sans Text&quot;; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Wo har pal kisi ke saath kho gaya hai jaise.</span></p>",
+    "notes": "need some refinement",
+    "status": "draft",
+    "platforms": [
+      "ig",
+      "x",
+      "yt",
+      "sp"
+    ],
+    "tags": "",
+    "createdAt": 1776684077887,
+    "updatedAt": 1776684077887
+  },
+  {
     "id": "mo73t0vasrf",
     "title": "Chahat",
     "type": "poem",
