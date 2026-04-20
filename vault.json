@@ -1,5 +1,18 @@
 [
   {
+    "id": "mo743xpyavo",
+    "title": "Doobey",
+    "type": "poem",
+    "lang": "hi",
+    "content": "<p dir=\"ltr\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\"><span style=\"font-size: 11pt; font-family: &quot;Google Sans Text&quot;; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Aashaaqo ke maare hain hum toh,</span></p><p dir=\"ltr\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\"><span style=\"font-size: 11pt; font-family: &quot;Google Sans Text&quot;; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Doobey hain hum diye ki tarah,</span></p><p dir=\"ltr\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\"><span style=\"font-size: 11pt; font-family: &quot;Google Sans Text&quot;; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Dard sehte hain hum bhi magar,</span></p><p dir=\"ltr\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\"><span style=\"font-size: 11pt; font-family: &quot;Google Sans Text&quot;; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Na jane kyun muskuraa dete hain.</span></p>",
+    "notes": "",
+    "status": "draft",
+    "platforms": [],
+    "tags": "",
+    "createdAt": 1776684551542,
+    "updatedAt": 1776684551542
+  },
+  {
     "id": "mo742afbvgp",
     "title": "Mohabbat ki aas",
     "type": "poem",
