@@ -1,5 +1,4 @@
 const SHEET_ID = "YOUR_GOOGLE_SHEET_ID";
-const SECRET_KEY = "YOUR_SHARED_SECRET_KEY";
 const SCRIPT_VERSION = "2026-06-01-sheets-only-local-tz";
 const LOCAL_TIMEZONE = "Asia/Kolkata";
 
@@ -22,7 +21,6 @@ const LOCAL_TIMEZONE = "Asia/Kolkata";
   function doPost(e) {
     try {
       const body = JSON.parse(e.postData && e.postData.contents ? e.postData.contents : "{}");
-      if (!body || body.key !== SECRET_KEY) return jsonOut({ ok: false, error: "Unauthorized" });
 
       if (body.action === "load") {
         return jsonOut({

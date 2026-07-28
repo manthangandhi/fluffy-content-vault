@@ -1,0 +1,60 @@
+name: Deploy site to GitHub Pages (with Apps Script URL injection)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare site directory
+        run: |
+          rm -rf site || true
+          mkdir site
+          # copy site files (exclude .git and workflows)
+          rsync -av --exclude='.git' --exclude='.github' ./ site/
+          # inject Apps Script URL from secret into the built site (not committed)
+          if [ -n "${{ secrets.APPS_SCRIPT_URL }}" ]; then
+            echo "${{ secrets.APPS_SCRIPT_URL }}" > site/apps-script-url.txt
+          fi
+
+      - name: "Debug: print environment and site files"
+        run: |
+          echo "=== Debug: GitHub Actions environment ==="
+          echo "GITHUB_REF=$GITHUB_REF"
+          echo "GITHUB_SHA=$GITHUB_SHA"
+          echo "Runner info: $(uname -a)"
+          echo "-- repo root contents --"
+          ls -la || true
+          echo "-- site/ contents --"
+          ls -la site || true
+          if [ -n "${{ secrets.APPS_SCRIPT_URL }}" ]; then
+            echo "APPS_SCRIPT_URL is set (value hidden)"
+          else
+            echo "APPS_SCRIPT_URL is NOT set"
+          fi
+          echo "=== End debug ==="
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: site
+
+  deploy:
+    needs: build-and-upload
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1

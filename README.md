@@ -3,8 +3,8 @@
 This app is a personal writing vault for shayari/poems and other content types.  
 It is a static app (`index.html`) that runs on GitHub Pages and now supports:
 
-- `Google Sheets` backend (recommended)
-- Session-only Google Sheets connection in the browser
+- `Google Sheets` backend
+- GitHub Pages URL injection via `apps-script-url.txt`
 - PWA install support for mobile devices
 - One-time import from the repository `vault.json`
 
@@ -26,7 +26,7 @@ The UI now focuses on a simpler writing flow:
 - a dedicated Published Shelf for posted work
 - Google Sheets as the one connected source of truth
 
-## Google Sheets Setup (Recommended)
+## Google Sheets Setup
 
 1. Create a Google Sheet with two tabs:
 - `vault`
@@ -50,7 +50,7 @@ Both tabs should use these headers in row 1:
 
 3. Paste code from [`google-apps-script.gs`](/Users/manthangandhi/Documents/agents/fluffy-content-vault/fluffy-content-vault/google-apps-script.gs).
 
-4. Update `SHEET_ID` and `SECRET_KEY` in the script.
+4. Update `SHEET_ID` in the script.
 
 5. Deploy:
 - `Deploy -> New deployment -> Web app`
@@ -59,10 +59,10 @@ Both tabs should use these headers in row 1:
 
 6. Copy the Web App URL.
 
-7. In the app (`Setup` button):
-- Paste Web App URL
-- Paste Shared Key
-- Save settings
+7. Add the URL to GitHub Pages injection:
+- Create a repository secret named `APPS_SCRIPT_URL`
+- Set it to the full Web App URL
+- Add the workflow in [`.github/workflows/pages-deploy.yml`](/Users/manthangandhi/Documents/agents/fluffy-content-vault/fluffy-content-vault/.github/workflows/pages-deploy.yml)
 
 8. If you want to seed the sheet with the repository data:
 - Open `Setup`
@@ -81,8 +81,8 @@ This reads `vault.json` from the same published site and pushes it into the `vau
 
 The frontend sends POST JSON:
 
-- `{ action: "load", key: "..." }` -> returns `{ ok, vault, archive }`
-- `{ action: "save", key: "...", vault: [...], archive: [...] }` -> returns `{ ok: true }`
+- `{ action: "load" }` -> returns `{ ok, vault, archive }`
+- `{ action: "save", vault: [...], archive: [...] }` -> returns `{ ok: true }`
 
 ## QA Checklist
 
@@ -100,6 +100,5 @@ After setup, verify:
 
 - For personal use, shared key auth is typically enough.
 - Keep local JSON backups using `Download Backup`.
-- The Sheets connection is session-only, so you will reconnect on each device or browser session.
 - Apps Script auto-ensures header row on save/load, so header drift is corrected.
 - The app can be installed on mobile as a standalone PWA once hosted over HTTPS.

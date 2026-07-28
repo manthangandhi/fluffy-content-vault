@@ -1343,21 +1343,26 @@
 
 <div class="modal-scrim" id="modalScrim"></div>
 <section class="modal" id="settingsModal" aria-hidden="true">
-  <h3>Connect Sheets</h3>
-  <p>Paste your Google Apps Script Web App URL and shared key once. The connection stays for this browser session and refreshes without local storage.</p>
+  <h3>Shared backend config</h3>
+  <p>The app reads the Google Apps Script URL from `apps-script-url.txt` in the Pages root, so every device uses the same backend without re-entering setup.</p>
   <div class="modal-grid">
-    <input class="field" id="sheetsUrlInput" type="url" placeholder="Google Apps Script Web App URL">
-    <input class="field" id="sheetsKeyInput" type="password" placeholder="Shared key">
+    <div class="doc-stat">
+      <span class="k">Config source</span>
+      <span class="v">apps-script-url.txt</span>
+    </div>
+    <div class="doc-stat">
+      <span class="k">Backend url</span>
+      <span class="v" id="sharedConfigUrl">Not set</span>
+    </div>
+    <div class="doc-stat">
+      <span class="k">Backend access</span>
+      <span class="v">GitHub secret + Apps Script</span>
+    </div>
   </div>
+  <p style="margin-top:14px">Update the repo file once, deploy GitHub Pages, and every device will use the same Sheets backend automatically.</p>
   <div class="modal-foot">
-      <button class="ghost-btn" id="cancelSetupBtn" type="button">Cancel</button>
-    <button class="primary-btn" id="saveSetupBtn" type="button">Save</button>
-  </div>
-  <div style="height:12px"></div>
-  <div class="doc-section-title">Import data</div>
-  <p style="margin-top:0">Seed Sheets from the repository JSON that ships with this app. Use this once during setup, then keep working from Google Sheets.</p>
-  <div class="modal-foot" style="margin-top:0">
     <button class="ghost-btn" id="importRepoBtn" type="button">Import repo JSON</button>
+    <button class="primary-btn" id="cancelSetupBtn" type="button">Done</button>
   </div>
 </section>
 
@@ -1381,8 +1386,6 @@
 <script>
 const STATUS_ORDER=['draft','wip','ready','recorded','posted'];
 const STATUS_LABEL={draft:'Draft',wip:'In Progress',ready:'Ready',recorded:'Recorded',posted:'Posted'};
-const CONFIG_URL_KEY='fluffyPens.sheetsUrl';
-const CONFIG_KEY_KEY='fluffyPens.sheetsKey';
 const DEFAULT_STATUS='draft';
 const state={
   vault:[],
@@ -1393,7 +1396,6 @@ const state={
   selectedId:null,
   editingArchive:false,
   sheetsUrl:'',
-  sheetsKey:'',
   saving:false,
   toastTimer:null,
   modalOpen:false,
@@ -1570,21 +1572,25 @@ function updateSharePreview(){
   if($('shareMetaLeft'))$('shareMetaLeft').textContent=`${words} words ready`;
   if($('shareMetaRight'))$('shareMetaRight').textContent=state.sheetsUrl ? 'Syncing through Sheets' : 'Session only';
 }
-function loadSessionConfig(){
-  state.sheetsUrl=sessionStorage.getItem(CONFIG_URL_KEY)||'';
-  state.sheetsKey=sessionStorage.getItem(CONFIG_KEY_KEY)||'';
+async function loadSharedConfig(){
+  try{
+    const res=await fetch('./apps-script-url.txt',{cache:'no-store'});
+    if(!res.ok)return false;
+    const url=(await res.text()).trim();
+    if(!url || url.includes('PASTE_YOUR')) return false;
+    state.sheetsUrl=url;
+    return true;
+  }catch{
+    return false;
+  }
 }
-function saveSessionConfig(){
-  sessionStorage.setItem(CONFIG_URL_KEY,state.sheetsUrl);
-  sessionStorage.setItem(CONFIG_KEY_KEY,state.sheetsKey);
-}
-function hasConfig(){return Boolean(state.sheetsUrl&&state.sheetsKey)}
+function hasConfig(){return Boolean(state.sheetsUrl)}
 async function sheetsRequest(payload){
   if(!hasConfig())throw new Error('Sheets not configured');
   const res=await fetch(state.sheetsUrl,{
     method:'POST',
     headers:{'Content-Type':'text/plain;charset=utf-8'},
-    body:JSON.stringify({...payload,key:state.sheetsKey})
+    body:JSON.stringify(payload)
   });
   if(!res.ok)throw new Error(`HTTP ${res.status}`);
   const data=await res.json();
@@ -1880,13 +1886,11 @@ function updateCounts(){
   updateDocSummary();
 }
 function openSettings(){
-  if(state.shareOpen)closeShareModal();
   state.modalOpen=true;
   $('modalScrim').classList.add('on');
   $('settingsModal').classList.add('on');
   $('settingsModal').setAttribute('aria-hidden','false');
-  $('sheetsUrlInput').value=state.sheetsUrl;
-  $('sheetsKeyInput').value=state.sheetsKey;
+  if($('sharedConfigUrl'))$('sharedConfigUrl').textContent=state.sheetsUrl||'Not set';
 }
 function closeSettings(){
   state.modalOpen=false;
@@ -1910,17 +1914,6 @@ function closeShareModal(){
   $('shareModal').setAttribute('aria-hidden','true');
   $('docShareBtn')?.setAttribute('aria-expanded','false');
   if(!state.modalOpen)$('modalScrim').classList.remove('on');
-}
-function saveSettings(){
-  const url=$('sheetsUrlInput').value.trim();
-  const key=$('sheetsKeyInput').value.trim();
-  if(!url||!key){toast('Add the Web App URL and shared key');return}
-  state.sheetsUrl=url;
-  state.sheetsKey=key;
-  saveSessionConfig();
-  closeSettings();
-  toast('Connected');
-  loadRemote();
 }
 function downloadBackup(){
   const download=(name,data)=>{
@@ -1975,7 +1968,7 @@ async function copyShareSummary(){
 }
 async function importRepoJson(){
   if(!hasConfig()){
-    toast('Connect Sheets first');
+    toast('Add the shared backend URL in apps-script-url.txt');
     openSettings();
     return;
   }
@@ -2021,7 +2014,6 @@ function bindEvents(){
     if(state.shareOpen)closeShareModal();
     else closeSettings();
   });
-  $('saveSetupBtn').addEventListener('click',saveSettings);
   $('saveBtn').addEventListener('click',savePiece);
   $('deleteBtn').addEventListener('click',archivePiece);
   $('restoreBtn').addEventListener('click',restorePiece);
@@ -2074,19 +2066,19 @@ function bindEvents(){
     toast('FluffyPens installed');
   });
 }
-function init(){
+async function init(){
   wireStatusButtons();
   bindEvents();
   registerPwa();
-  loadSessionConfig();
+  const loaded=await loadSharedConfig();
   closeDrawer();
   closeSettings();
   document.body.dataset.view=state.view;
-  if(hasConfig()){
+  if(loaded && hasConfig()){
     setConn('ok','Ready');
     loadRemote();
   }else{
-    setConn('', 'Not connected');
+    setConn('', 'Apps Script URL not set');
     openSettings();
   }
   updateDocSummary();
