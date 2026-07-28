@@ -22,9 +22,11 @@ jobs:
           mkdir site
           # copy site files (exclude .git and workflows)
           rsync -av --exclude='.git' --exclude='.github' ./ site/
-          # inject Apps Script URL from secret into the built site (not committed)
+          # always create the file so the app can load it without a 404
           if [ -n "${{ secrets.APPS_SCRIPT_URL }}" ]; then
             echo "${{ secrets.APPS_SCRIPT_URL }}" > site/apps-script-url.txt
+          else
+            echo "PASTE_YOUR_APPS_SCRIPT_URL_HERE" > site/apps-script-url.txt
           fi
 
       - name: "Debug: print environment and site files"
