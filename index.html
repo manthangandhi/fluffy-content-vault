@@ -1344,7 +1344,7 @@
 <div class="modal-scrim" id="modalScrim"></div>
 <section class="modal" id="settingsModal" aria-hidden="true">
   <h3>Shared backend config</h3>
-  <p>The app reads the Google Apps Script URL from `apps-script-url.txt` in the Pages root, so every device uses the same backend without re-entering setup.</p>
+  <p>The app reads the Google Apps Script URL from the deployed Pages file, so every device stays on the same backend without re-entering setup.</p>
   <div class="modal-grid">
     <div class="doc-stat">
       <span class="k">Config source</span>
@@ -1356,7 +1356,7 @@
     </div>
     <div class="doc-stat">
       <span class="k">Backend access</span>
-      <span class="v">GitHub secret + Apps Script</span>
+      <span class="v">Injected at deploy time</span>
     </div>
   </div>
   <p style="margin-top:14px">Update the repo file once, deploy GitHub Pages, and every device will use the same Sheets backend automatically.</p>
@@ -1968,7 +1968,7 @@ async function copyShareSummary(){
 }
 async function importRepoJson(){
   if(!hasConfig()){
-    toast('Add the shared backend URL in apps-script-url.txt');
+    toast('Publish Pages to load the backend URL');
     openSettings();
     return;
   }
