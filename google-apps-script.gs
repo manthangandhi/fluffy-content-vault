@@ -1,4 +1,4 @@
-const SHEET_ID = "YOUR_GOOGLE_SHEET_ID";
+const SHEET_ID = "15EYdRdL2YAMnITyZSywfhfjVZj46Q1CRMTXktxeAm38";
 const SCRIPT_VERSION = "2026-06-01-sheets-only-local-tz";
 const LOCAL_TIMEZONE = "Asia/Kolkata";
 
