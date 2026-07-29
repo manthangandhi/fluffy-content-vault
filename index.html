@@ -369,6 +369,65 @@
     box-shadow:var(--shadow);
     backdrop-filter:blur(16px);
   }
+  .shelf-banner{
+    display:grid;
+    gap:10px;
+    padding:14px;
+    border-radius:18px;
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.94),rgba(248,250,252,.92)),
+      radial-gradient(circle at top right,rgba(26,115,232,.08),transparent 34%);
+    border:1px solid rgba(26,115,232,.10);
+  }
+  .shelf-banner .eyebrow{
+    margin:0;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--soft);
+  }
+  .shelf-banner .headline{
+    margin:0;
+    font-size:18px;
+    line-height:1.1;
+    letter-spacing:-.03em;
+    font-weight:750;
+    color:var(--ink);
+  }
+  .shelf-banner .subhead{
+    margin:0;
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.6;
+    max-width:62ch;
+  }
+  .shelf-metrics{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px;
+  }
+  .shelf-metric{
+    padding:10px 11px;
+    border-radius:14px;
+    background:#fff;
+    border:1px solid var(--line);
+  }
+  .shelf-metric .k{
+    display:block;
+    color:var(--soft);
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    margin-bottom:5px;
+  }
+  .shelf-metric .v{
+    display:block;
+    color:var(--ink);
+    font-size:13px;
+    font-weight:750;
+  }
   .workspace-hint{
     color:var(--soft);
     font-size:10px;
@@ -498,6 +557,15 @@
     align-items:flex-start;
     margin-bottom:12px;
   }
+  .piece-kicker{
+    margin:0 0 8px;
+    padding-left:10px;
+    color:var(--soft);
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
   .piece-title{
     margin:0;
     padding-left:10px;
@@ -572,7 +640,7 @@
     color:rgba(255,255,255,.70);
   }
   .empty{
-    padding:42px 18px;
+    padding:44px 18px 22px;
     text-align:center;
     border:1px dashed rgba(46,39,33,.18);
     border-radius:18px;
@@ -591,6 +659,28 @@
     max-width:32ch;
     font-size:14px;
     line-height:1.75;
+  }
+  .empty-actions{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:14px;
+  }
+  .empty-btn{
+    min-height:34px;
+    padding:0 12px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--ink);
+    font-size:11px;
+    font-weight:700;
+  }
+  .empty-btn.primary{
+    background:#1a73e8;
+    border-color:#1a73e8;
+    color:#fff;
   }
   .drawer-scrim,.modal-scrim{
     position:fixed;
@@ -1066,6 +1156,16 @@
       padding:14px;
       border-radius:18px;
     }
+    .shelf-banner{
+      gap:8px;
+      padding:12px;
+    }
+    .shelf-banner .headline{
+      font-size:16px;
+    }
+    .shelf-metrics{
+      grid-template-columns:1fr;
+    }
     .search-row{
       display:grid;
       grid-template-columns:minmax(0,1fr) 104px;
@@ -1191,6 +1291,7 @@
           <button class="chip" data-view="published" type="button">Published</button>
           <button class="chip" data-view="archive" type="button">Archive</button>
         </div>
+        <div class="shelf-banner" id="shelfBanner" aria-live="polite"></div>
         <div class="workspace-hint">Cmd/Ctrl+K focuses search, Cmd/Ctrl+S saves, click a card to edit.</div>
         <div class="search-row">
           <div class="search-wrap">
@@ -1508,6 +1609,40 @@ function updateFooter(){
     ?'Connected to Google Sheets · no local storage'
     :'Session only until Sheets is connected';
 }
+function renderShelfBanner(){
+  const el=$('shelfBanner');
+  if(!el)return;
+  const total=state.vault.length+state.archive.length;
+  const published=state.vault.filter(p=>p.status==='posted').length;
+  const drafts=state.vault.filter(p=>p.status==='draft' || p.status==='wip').length;
+  const archived=state.archive.length;
+  const title=state.view==='published'
+    ?'Published Shelf'
+    :state.view==='archive'
+      ?'Archive Cabinet'
+      :'Writing Library';
+  const headline=state.view==='published'
+    ?'Your published book, ready to read'
+    :state.view==='archive'
+      ?'Stored work stays out of the way'
+      :'A calm workspace for drafting and publishing';
+  const copy=state.view==='published'
+    ?'Pieces marked Posted appear here as a clean, book-like reading surface.'
+    :state.view==='archive'
+      ?'Archived work remains easy to restore without cluttering the active library.'
+      :'Keep drafts, revisions, and published work organized in one focused space.';
+  el.innerHTML=`
+    <p class="eyebrow">${title}</p>
+    <h2 class="headline">${headline}</h2>
+    <p class="subhead">${copy}</p>
+    <div class="shelf-metrics" aria-label="Workspace summary">
+      <div class="shelf-metric"><span class="k">Total</span><span class="v">${total} pieces</span></div>
+      <div class="shelf-metric"><span class="k">Published</span><span class="v">${published} live</span></div>
+      <div class="shelf-metric"><span class="k">Drafts</span><span class="v">${drafts} active</span></div>
+      ${state.view==='archive' ? `<div class="shelf-metric"><span class="k">Archive</span><span class="v">${archived} stored</span></div>` : ''}
+    </div>
+  `;
+}
 function setConn(kind,text){
   const dot=$('connDot'), label=$('connText');
   if(dot)dot.className='status-dot'+(kind?' '+kind:'');
@@ -1680,12 +1815,42 @@ function renderPieces(){
   const grid=$('pieceGrid');
   const list=filteredList();
   if(!list.length){
-    grid.innerHTML=`<div class="empty"><div class="title">${state.view==='archive'?'Archive empty':'Nothing to show'}</div><p class="copy">${state.view==='archive'?'Archived work will appear here.':'Try another search or create a new piece.'}</p></div>`;
+    const emptyTitle=state.view==='archive'
+      ?'Archive empty'
+      :state.view==='published'
+        ?'No published pieces yet'
+        :'Nothing to show';
+    const emptyCopy=state.view==='archive'
+      ?'Archived work will appear here and can be restored anytime.'
+      :state.view==='published'
+        ?'Pieces marked Posted will appear here like a clean published shelf.'
+        :'Try another search or create a new piece.';
+    const emptyActions=state.view==='archive'
+      ?`
+        <button class="empty-btn" type="button" data-empty-action="library">Back to Library</button>
+        <button class="empty-btn primary" type="button" data-empty-action="new">New Piece</button>
+      `
+      :state.view==='published'
+        ?`
+          <button class="empty-btn" type="button" data-empty-action="library">View Library</button>
+          <button class="empty-btn primary" type="button" data-empty-action="new">New Piece</button>
+        `
+        :`
+          <button class="empty-btn" type="button" data-empty-action="published">Published Shelf</button>
+          <button class="empty-btn primary" type="button" data-empty-action="new">New Piece</button>
+        `;
+    grid.innerHTML=`<div class="empty"><div class="title">${emptyTitle}</div><p class="copy">${emptyCopy}</p><div class="empty-actions">${emptyActions}</div></div>`;
     return;
   }
   grid.innerHTML=list.map(p=>{
     const preview=pieceToPreview(p,150);
     const updatedText=fmtDate(p.updatedAt||p.createdAt);
+    const typeLabel=String(p.type||'poem').replace(/_/g,' ');
+    const langLabel={
+      hi:'Hindi / Urdu',
+      en:'English',
+      mixed:'Mixed'
+    }[p.lang] || String(p.lang||'');
     const badgeText=state.view==='published'&&p.status==='posted'
       ?'Published Book'
       :p.status==='posted'
@@ -1695,6 +1860,7 @@ function renderPieces(){
           :'Open';
     return `
       <article class="piece-card ${p.status==='posted'?'posted':''}" data-open="${esc(p.id)}">
+        <div class="piece-kicker">${esc(typeLabel)} · ${esc(langLabel)}</div>
         <div class="piece-top">
           <h3 class="piece-title">${esc(p.title||'Untitled')}</h3>
           <span class="status-chip">${esc(STATUS_LABEL[p.status]||p.status)}</span>
@@ -1711,6 +1877,7 @@ function renderPieces(){
 function renderAll(){
   renderStatusRow();
   renderPieces();
+  renderShelfBanner();
   updateFooter();
 }
 function openDrawer(){
@@ -2035,6 +2202,14 @@ function bindEvents(){
   $('statusRow').addEventListener('click',e=>{
     const btn=e.target.closest('[data-status]');
     if(btn)setStatus(btn.dataset.status);
+  });
+  $('pieceGrid').addEventListener('click',e=>{
+    const btn=e.target.closest('[data-empty-action]');
+    if(!btn)return;
+    const action=btn.dataset.emptyAction;
+    if(action==='new'){resetEditor();openDrawer();return;}
+    if(action==='library'){setView('library');return;}
+    if(action==='published'){setView('published');return;}
   });
   document.addEventListener('click',e=>{
     const statusBtn=e.target.closest('[data-status-choice]');
