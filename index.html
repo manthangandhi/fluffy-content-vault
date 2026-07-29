@@ -1574,7 +1574,7 @@ function updateSharePreview(){
 }
 async function loadSharedConfig(){
   try{
-    const res=await fetch('./apps-script-url.txt',{cache:'no-store'});
+    const res=await fetch(`./apps-script-url.txt?v=${Date.now()}`,{cache:'no-store'});
     if(!res.ok)return false;
     const url=(await res.text()).trim();
     if(!url || url.includes('PASTE_YOUR')) return false;
