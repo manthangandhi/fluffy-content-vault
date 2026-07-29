@@ -754,6 +754,79 @@
     max-width:1120px;
     margin:0 auto;
   }
+  .reader-panel{
+    display:grid;
+    gap:12px;
+    padding:18px;
+    border-radius:20px;
+    background:
+      linear-gradient(180deg,#fffdf9 0%,#f7f4ee 100%);
+    border:1px solid rgba(17,24,39,.08);
+    box-shadow:var(--shadow);
+  }
+  .reader-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .reader-kicker{
+    margin:0 0 4px;
+    color:var(--soft);
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+  }
+  .reader-title{
+    margin:0;
+    font-size:28px;
+    line-height:1.05;
+    letter-spacing:-.05em;
+    font-weight:750;
+    color:var(--ink);
+  }
+  .reader-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+  }
+  .reader-pill{
+    display:inline-flex;
+    align-items:center;
+    min-height:28px;
+    padding:0 10px;
+    border-radius:999px;
+    border:1px solid rgba(17,24,39,.08);
+    background:#fff;
+    color:var(--muted);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .reader-body{
+    padding:2px 2px 0;
+    color:var(--ink);
+    font-size:15px;
+    line-height:1.95;
+    white-space:normal;
+  }
+  .reader-body p{margin:0 0 12px}
+  .reader-body h1,.reader-body h2,.reader-body blockquote{margin:0 0 12px}
+  .reader-body blockquote{
+    padding:10px 14px;
+    border-left:3px solid rgba(26,115,232,.24);
+    background:rgba(26,115,232,.04);
+    border-radius:0 12px 12px 0;
+    color:var(--muted);
+  }
+  .reader-note{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.7;
+  }
   .doc-bar{
     display:flex;
     align-items:flex-start;
@@ -1372,6 +1445,18 @@
           </button>
         </div>
       </div>
+      <section class="reader-panel" id="readerPanel" aria-label="Piece reader">
+        <div class="reader-head">
+          <div>
+            <p class="reader-kicker" id="readerKicker">Published book</p>
+            <h2 class="reader-title" id="readerTitle">Piece title</h2>
+            <div class="reader-meta" id="readerMeta"></div>
+          </div>
+          <span class="status-chip" id="readerStatus">Draft</span>
+        </div>
+        <div class="reader-body" id="readerBody"></div>
+        <p class="reader-note" id="readerNote">Open a piece to read it in a calm, book-like layout.</p>
+      </section>
       <div class="doc-grid">
         <section class="doc-main">
           <div class="doc-panel">
@@ -1576,6 +1661,36 @@ function toast(msg){
 function setDocState(text){
   const el=$('docStateText');
   if(el)el.textContent=text;
+}
+function updateReaderView(piece,archived){
+  const title=piece?.title||'Untitled piece';
+  const status=STATUS_LABEL[piece?.status]||'Draft';
+  const langLabel={
+    hi:'Hindi / Urdu',
+    en:'English',
+    mixed:'Mixed'
+  }[piece?.lang] || 'Hindi / Urdu';
+  const typeLabel=String(piece?.type||'poem').replace(/_/g,' ');
+  const created=fmtDate(piece?.createdAt);
+  const updated=fmtDate(piece?.updatedAt||piece?.createdAt);
+  const body=piece?.content ? piece.content : '<p class="reader-note">No content yet.</p>';
+  if($('readerKicker')) $('readerKicker').textContent=archived ? 'Archived piece' : (status==='Posted' ? 'Published book' : 'Writing view');
+  if($('readerTitle')) $('readerTitle').textContent=title;
+  if($('readerStatus')) $('readerStatus').textContent=status;
+  if($('readerMeta')) $('readerMeta').innerHTML=[
+    `<span class="reader-pill">${esc(typeLabel)}</span>`,
+    `<span class="reader-pill">${esc(langLabel)}</span>`,
+    created ? `<span class="reader-pill">Created ${esc(created)}</span>` : '',
+    updated ? `<span class="reader-pill">Updated ${esc(updated)}</span>` : ''
+  ].filter(Boolean).join('');
+  if($('readerBody')) $('readerBody').innerHTML=body;
+  if($('readerNote')) {
+    $('readerNote').textContent=archived
+      ?'This piece is archived. Restore it to edit again.'
+      :status==='Posted'
+        ?'This is the published reading view. The editor remains below if you need to revise it.'
+        :'This is the live reading view for drafting and review.';
+  }
 }
 function updateDocSummary(){
   const text=$('editor')?.innerText||'';
@@ -1907,6 +2022,7 @@ function openPiece(id){
 function fillEditor(piece,archived){
   $('drawerTitle').textContent=piece.title||'New Piece';
   $('drawerSubtitle').textContent=archived?'Archived, read-only until restored':'Editing with Sheets sync';
+  updateReaderView(piece,archived);
   $('titleInput').value=piece.title||'';
   $('langSelect').value=piece.lang||'hi';
   $('notesInput').value=piece.notes||'';
@@ -1932,6 +2048,7 @@ function resetEditor(){
   state.editingArchive=false;
   $('drawerTitle').textContent='New Piece';
   $('drawerSubtitle').textContent='Calm editing, synced to Sheets';
+  updateReaderView({title:'New piece',content:'',status:DEFAULT_STATUS,lang:'hi',type:'poem'},false);
   $('titleInput').value='';
   $('langSelect').value='hi';
   $('notesInput').value='';
