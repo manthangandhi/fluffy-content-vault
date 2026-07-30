@@ -33,10 +33,7 @@
   html,body{height:100%}
   body{
     margin:0;
-    background:
-      radial-gradient(circle at top left,rgba(29,78,216,.06),transparent 24%),
-      radial-gradient(circle at top right,rgba(15,157,88,.05),transparent 22%),
-      linear-gradient(180deg,#f8fafc 0%,#edf2f7 100%);
+    background:linear-gradient(180deg,#f8fafc 0%,#edf2f7 100%);
     color:var(--ink);
     font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Segoe UI',system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
@@ -340,23 +337,18 @@
     flex-wrap:wrap;
     justify-content:flex-end;
   }
-  .footer-pill,.footer-action{
+  .footer-action{
     display:inline-flex;
     align-items:center;
     min-height:28px;
     padding:0 10px;
     border-radius:999px;
-    border:1px solid var(--line);
-    background:#fff;
-    color:var(--muted);
-    font-size:10px;
-    font-weight:700;
-    white-space:nowrap;
-  }
-  .footer-action{
     border:1px solid rgba(26,115,232,.16);
     background:#fff;
     color:#1558c0;
+    font-size:10px;
+    font-weight:700;
+    white-space:nowrap;
   }
   .footer-action:disabled{
     opacity:.45;
@@ -386,9 +378,7 @@
     gap:10px;
     padding:14px;
     border-radius:18px;
-    background:
-      linear-gradient(180deg,rgba(255,255,255,.94),rgba(248,250,252,.92)),
-      radial-gradient(circle at top right,rgba(26,115,232,.08),transparent 34%);
+    background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(248,250,252,.92));
     border:1px solid rgba(26,115,232,.10);
   }
   .shelf-banner .eyebrow{
@@ -546,7 +536,7 @@
     top:0;
     bottom:0;
     width:8px;
-    background:linear-gradient(180deg,rgba(26,115,232,.44),rgba(15,157,88,.42));
+    background:linear-gradient(180deg,rgba(26,115,232,.48),rgba(26,115,232,.14));
     opacity:.88;
   }
   .piece-card.posted{
@@ -771,16 +761,14 @@
     gap:12px;
     padding:18px;
     border-radius:20px;
-    background:
-      linear-gradient(180deg,#fffdf9 0%,#f7f4ee 100%);
+    background:linear-gradient(180deg,#ffffff 0%,#f7f9fc 100%);
     border:1px solid rgba(17,24,39,.08);
     box-shadow:var(--shadow);
   }
   .reader-panel.full{
     padding:22px;
     gap:16px;
-    background:
-      linear-gradient(180deg,#fffdf7 0%,#f4efe6 100%);
+    background:linear-gradient(180deg,#ffffff 0%,#f7f9fc 100%);
     min-height:calc(100svh - 190px);
   }
   .reader-head{
@@ -788,6 +776,17 @@
     align-items:flex-start;
     justify-content:space-between;
     gap:12px;
+  }
+  .reader-chrome{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex:0 0 auto;
+  }
+  .reader-nav-group{
+    display:flex;
+    align-items:center;
+    gap:6px;
   }
   .reader-kicker{
     margin:0 0 4px;
@@ -907,6 +906,9 @@
     color:var(--muted);
   }
   .drawer.reader-mode .doc-grid{
+    display:none;
+  }
+  .drawer:not(.reader-mode) .reader-panel{
     display:none;
   }
   .drawer.reader-mode .reader-panel{
@@ -1304,6 +1306,9 @@
     .brand-subtitle{
       display:none;
     }
+    #setupBtn{
+      display:none;
+    }
     .top-actions{
       gap:5px;
       flex:0 0 auto;
@@ -1375,26 +1380,32 @@
       flex-direction:column;
       align-items:flex-start;
       padding:10px 12px;
-      gap:8px;
+      gap:6px;
     }
     .footer-copy{
       width:100%;
+      gap:0;
+    }
+    .footer-mark,
+    .footer-title{
+      display:none;
     }
     .footer-subtitle{
       white-space:normal;
       overflow:visible;
       text-overflow:clip;
-      line-height:1.5;
+      line-height:1.45;
+      font-size:11px;
     }
     .footer-stats{
       width:100%;
-      justify-content:space-between;
+      justify-content:flex-end;
       gap:8px;
     }
-    .footer-pill,.footer-action{
-      min-height:30px;
-      padding:0 10px;
-      font-size:9px;
+    .footer-action{
+      min-height:32px;
+      padding:0 12px;
+      font-size:10px;
     }
     .drawer-foot{
       grid-template-columns:1fr;
@@ -1428,6 +1439,14 @@
     }
     .reader-nav{
       width:100%;
+    }
+    .reader-actions #readerCloseBtn{
+      grid-column:1 / -1;
+    }
+    .reader-chrome{
+      width:100%;
+      justify-content:space-between;
+      margin-top:2px;
     }
   }
   @media (prefers-reduced-motion: reduce){
@@ -1490,6 +1509,14 @@
         </svg>
         Backup now
       </button>
+      <button class="menu-item" type="button" data-menu-action="setup" role="menuitem">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 1 0-7.07l1.17-1.17a5 5 0 0 1 7.07 7.07l-1.1 1.1"/>
+          <path d="M14 11a5 5 0 0 1 0 7.07l-1.17 1.17a5 5 0 0 1-7.07-7.07l1.1-1.1"/>
+          <path d="M9 15l6-6"/>
+        </svg>
+        Connect Sheets
+      </button>
       <button class="menu-item" type="button" data-menu-action="shortcuts" role="menuitem">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <rect x="4" y="5" width="16" height="14" rx="3"/>
@@ -1544,7 +1571,6 @@
         </div>
       </div>
       <div class="footer-stats" aria-label="Workspace stats">
-        <span class="footer-pill" id="footerSource">Google Sheets source</span>
         <button class="footer-action" id="undoBtn" type="button" disabled>Undo last change</button>
       </div>
     </footer>
@@ -1603,21 +1629,25 @@
             <h2 class="reader-title" id="readerTitle">Piece title</h2>
             <div class="reader-meta" id="readerMeta"></div>
           </div>
-          <span class="status-chip" id="readerStatus">Draft</span>
+          <div class="reader-chrome">
+            <span class="status-chip" id="readerStatus">Draft</span>
+            <div class="reader-nav-group" aria-label="Reader navigation">
+              <button class="ghost-btn muted reader-nav" id="readerPrevBtn" type="button" aria-label="Previous piece" title="Previous piece">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M15 6l-6 6 6 6"/>
+                </svg>
+              </button>
+              <button class="ghost-btn muted reader-nav" id="readerNextBtn" type="button" aria-label="Next piece" title="Next piece">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 6l6 6-6 6"/>
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
         <div class="reader-body" id="readerBody"></div>
         <div class="reader-summary" id="readerSummary"></div>
         <div class="reader-actions" id="readerActions">
-          <button class="ghost-btn muted reader-nav" id="readerPrevBtn" type="button" aria-label="Previous piece" title="Previous piece">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M15 6l-6 6 6 6"/>
-            </svg>
-          </button>
-          <button class="ghost-btn muted reader-nav" id="readerNextBtn" type="button" aria-label="Next piece" title="Next piece">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M9 6l6 6-6 6"/>
-            </svg>
-          </button>
           <button class="ghost-btn muted" id="readerEditBtn" type="button">Edit</button>
           <button class="ghost-btn muted" id="readerDuplicateBtn" type="button">Duplicate</button>
           <button class="ghost-btn muted" id="readerCloseBtn" type="button">Close</button>
@@ -1918,7 +1948,6 @@ function updateFooter(){
       : 'Session only until Sheets is connected';
     $('footerHint').classList.toggle('error', Boolean(state.syncError));
   }
-  if($('footerSource'))$('footerSource').textContent=state.sheetsUrl ? 'Google Sheets source' : 'Session only';
   const undoBtn=$('undoBtn');
   if(undoBtn){
     const action=state.lastAction;
@@ -2643,6 +2672,7 @@ function bindEvents(){
     const action=btn.dataset.menuAction;
     closeTopMenu();
     if(action==='backup')downloadBackup();
+    if(action==='setup')openSettings();
     if(action==='shortcuts')showShortcutHelp();
     if(action==='about')showAbout();
   }));
