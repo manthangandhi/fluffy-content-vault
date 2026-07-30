@@ -776,6 +776,13 @@
     border:1px solid rgba(17,24,39,.08);
     box-shadow:var(--shadow);
   }
+  .reader-panel.full{
+    padding:22px;
+    gap:16px;
+    background:
+      linear-gradient(180deg,#fffdf7 0%,#f4efe6 100%);
+    min-height:calc(100svh - 190px);
+  }
   .reader-head{
     display:flex;
     align-items:flex-start;
@@ -803,6 +810,33 @@
     flex-wrap:wrap;
     gap:8px;
     margin-top:10px;
+  }
+  .reader-summary{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px;
+  }
+  .reader-stat{
+    padding:12px;
+    border-radius:16px;
+    background:rgba(255,255,255,.8);
+    border:1px solid rgba(17,24,39,.08);
+  }
+  .reader-stat .k{
+    display:block;
+    color:var(--soft);
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .reader-stat .v{
+    display:block;
+    color:var(--ink);
+    font-size:12px;
+    font-weight:750;
+    line-height:1.4;
   }
   .reader-pill{
     display:inline-flex;
@@ -838,6 +872,31 @@
     color:var(--muted);
     font-size:12px;
     line-height:1.7;
+  }
+  .reader-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+  .reader-actions .ghost-btn,
+  .reader-actions .primary-btn{
+    min-height:36px;
+    border-radius:12px;
+    padding:0 12px;
+  }
+  .reader-actions .muted{
+    background:#fff;
+    color:var(--muted);
+  }
+  .drawer.reader-mode .doc-grid{
+    display:none;
+  }
+  .drawer.reader-mode .reader-panel{
+    min-height:0;
+  }
+  .drawer.reader-mode .drawer-body{
+    padding:18px;
   }
   .doc-bar{
     display:flex;
@@ -1472,6 +1531,12 @@
           <span class="status-chip" id="readerStatus">Draft</span>
         </div>
         <div class="reader-body" id="readerBody"></div>
+        <div class="reader-summary" id="readerSummary"></div>
+        <div class="reader-actions" id="readerActions">
+          <button class="ghost-btn muted" id="readerEditBtn" type="button">Edit</button>
+          <button class="ghost-btn muted" id="readerDuplicateBtn" type="button">Duplicate</button>
+          <button class="ghost-btn muted" id="readerCloseBtn" type="button">Close</button>
+        </div>
         <p class="reader-note" id="readerNote">Open a piece to read it in a calm, book-like layout.</p>
       </section>
       <div class="doc-grid">
@@ -1609,6 +1674,7 @@ const state={
   lastSyncAt:null,
   syncError:'',
   lastAction:null,
+  readerMode:'edit',
 };
 let deferredInstallPrompt=null;
 
@@ -1712,11 +1778,29 @@ function updateReaderView(piece,archived){
     updated ? `<span class="reader-pill">Updated ${esc(updated)}</span>` : ''
   ].filter(Boolean).join('');
   if($('readerBody')) $('readerBody').innerHTML=body;
+  if($('readerPanel')) $('readerPanel').classList.toggle('full', state.readerMode==='reader');
+  if($('drawer')) $('drawer').classList.toggle('reader-mode', state.readerMode==='reader');
+  const words=wordsCount(stripHtml(piece?.content||''));
+  const chars=String(stripHtml(piece?.content||'').trim()).length;
+  const notes=String(piece?.notes||'').trim();
+  if($('readerSummary')) $('readerSummary').innerHTML=[
+    `<div class="reader-stat"><span class="k">Words</span><span class="v">${words}</span></div>`,
+    `<div class="reader-stat"><span class="k">Chars</span><span class="v">${chars}</span></div>`,
+    `<div class="reader-stat"><span class="k">Notes</span><span class="v">${notes ? esc(notes.slice(0,72)) : 'No notes yet'}</span></div>`,
+    `<div class="reader-stat"><span class="k">Status</span><span class="v">${esc(status)}</span></div>`,
+    `<div class="reader-stat"><span class="k">Language</span><span class="v">${esc(langLabel)}</span></div>`,
+    `<div class="reader-stat"><span class="k">Type</span><span class="v">${esc(typeLabel)}</span></div>`,
+  ].join('');
+  if($('readerActions')){
+    const isPublished=status==='Posted' && !archived;
+    $('readerActions').classList.toggle('hidden', archived || !piece?.id);
+    if($('readerEditBtn')) $('readerEditBtn').textContent=isPublished ? 'Open editor' : 'Edit';
+  }
   if($('readerNote')) {
     $('readerNote').textContent=archived
       ?'This piece is archived. Restore it to edit again.'
       :status==='Posted'
-        ?'This is the published reading view. The editor remains below if you need to revise it.'
+        ?'This is the published reading view. Use Open editor to switch back to editing.'
         :'This is the live reading view for drafting and review.';
   }
 }
@@ -2061,18 +2145,29 @@ function closeDrawer(){
   document.body.style.overflow='';
   state.selectedId=null;
   state.editingArchive=false;
+  state.readerMode='edit';
 }
 function openPiece(id){
   const piece=state.vault.find(p=>p.id===id)||state.archive.find(p=>p.id===id);
   if(!piece)return;
   state.selectedId=id;
   state.editingArchive=state.view==='archive';
+  state.readerMode=(state.view==='published' || piece.status==='posted') ? 'reader' : 'edit';
   fillEditor(piece,state.view==='archive');
   openDrawer();
+}
+function openSelectedInEditor(){
+  if(!state.selectedId)return;
+  const piece=state.vault.find(p=>p.id===state.selectedId)||state.archive.find(p=>p.id===state.selectedId);
+  if(!piece)return;
+  state.readerMode='edit';
+  fillEditor(piece,state.view==='archive');
+  toast('Editor opened');
 }
 function fillEditor(piece,archived){
   $('drawerTitle').textContent=piece.title||'New Piece';
   $('drawerSubtitle').textContent=archived?'Archived, read-only until restored':'Editing with Sheets sync';
+  const reader=state.readerMode==='reader';
   updateReaderView(piece,archived);
   $('titleInput').value=piece.title||'';
   $('langSelect').value=piece.lang||'hi';
@@ -2089,15 +2184,16 @@ function fillEditor(piece,archived){
     btn.setAttribute('aria-pressed',on?'true':'false');
   });
   setDocState(archived?'Archived document':(state.sheetsUrl?'Autosaved to Sheets':'Session only · connect Sheets to sync'));
-  $('deleteBtn').classList.toggle('hidden',archived);
+  $('deleteBtn').classList.toggle('hidden',archived || reader);
   $('restoreBtn').classList.toggle('hidden',!archived);
-  $('purgeBtn').classList.toggle('hidden',!archived);
+  $('purgeBtn').classList.toggle('hidden',!archived || reader);
   $('duplicateBtn').classList.toggle('hidden',!state.selectedId);
-  $('saveBtn').classList.toggle('hidden',archived);
+  $('saveBtn').classList.toggle('hidden',archived || reader);
 }
 function resetEditor(){
   state.selectedId=null;
   state.editingArchive=false;
+  state.readerMode='edit';
   clearLastAction();
   $('drawerTitle').textContent='New Piece';
   $('drawerSubtitle').textContent='Calm editing, synced to Sheets';
@@ -2237,6 +2333,7 @@ async function undoLastChange(){
 async function duplicatePiece(){
   const piece=state.vault.find(p=>p.id===state.selectedId)||state.archive.find(p=>p.id===state.selectedId);
   if(!piece)return;
+  state.readerMode='edit';
   const now=new Date().toISOString().slice(0,19).replace('T',' ');
   const baseTitle=(piece.title||'Untitled').trim();
   const copyTitle=baseTitle.endsWith(' Copy') ? `${baseTitle} 2` : `${baseTitle} Copy`;
@@ -2398,6 +2495,9 @@ function bindEvents(){
   $('copySummaryBtn')?.addEventListener('click',copyShareSummary);
   $('closeShareBtn')?.addEventListener('click',closeShareModal);
   $('importRepoBtn')?.addEventListener('click',importRepoJson);
+  $('readerEditBtn')?.addEventListener('click',openSelectedInEditor);
+  $('readerDuplicateBtn')?.addEventListener('click',duplicatePiece);
+  $('readerCloseBtn')?.addEventListener('click',closeDrawer);
   $('closeDrawerBtn').addEventListener('click',closeDrawer);
   $('cancelBtn').addEventListener('click',closeDrawer);
   $('drawerScrim').addEventListener('click',closeDrawer);
