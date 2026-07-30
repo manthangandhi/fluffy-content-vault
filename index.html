@@ -1411,9 +1411,10 @@
       position:sticky;
       bottom:0;
       z-index:2;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:8px;
-      padding:10px 10px calc(10px + env(safe-area-inset-bottom));
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      padding:8px 8px calc(8px + env(safe-area-inset-bottom));
       border-top:1px solid rgba(17,24,39,.08);
       background:rgba(255,255,255,.94);
       backdrop-filter:blur(18px) saturate(1.06);
@@ -1425,14 +1426,17 @@
     }
     .drawer-foot .ghost-btn,
     .drawer-foot .primary-btn{
-      min-height:38px;
-      border-radius:13px;
-      font-size:11px;
+      flex:1 1 calc(50% - 3px);
+      min-width:0;
+      min-height:34px;
+      border-radius:12px;
+      font-size:10px;
       letter-spacing:.01em;
+      padding:0 10px;
     }
     .drawer-foot .primary-btn{
-      grid-column:1 / -1;
-      min-height:46px;
+      flex:1 1 100%;
+      min-height:42px;
       box-shadow:0 12px 24px rgba(26,115,232,.18);
     }
     .drawer-foot .danger{
@@ -1982,6 +1986,15 @@ function updateFooter(){
     undoBtn.disabled=!action;
   }
 }
+function updateDrawerActionLabels(){
+  const mobile=window.matchMedia('(max-width:859px)').matches;
+  if($('deleteBtn')) $('deleteBtn').textContent=mobile ? 'Archive' : 'Archive';
+  if($('restoreBtn')) $('restoreBtn').textContent=mobile ? 'Restore' : 'Restore';
+  if($('purgeBtn')) $('purgeBtn').textContent=mobile ? 'Delete' : 'Delete Forever';
+  if($('duplicateBtn')) $('duplicateBtn').textContent=mobile ? 'Duplicate' : 'Duplicate as Draft';
+  if($('cancelBtn')) $('cancelBtn').textContent=mobile ? 'Close' : 'Cancel';
+  if($('saveBtn')) $('saveBtn').textContent=mobile ? 'Save' : 'Save & Sync';
+}
 function renderShelfBanner(){
   const el=$('shelfBanner');
   if(!el)return;
@@ -2300,6 +2313,7 @@ function openDrawer(){
   $('drawerScrim').classList.add('on');
   $('drawer').setAttribute('aria-hidden','false');
   document.body.style.overflow='hidden';
+  updateDrawerActionLabels();
 }
 function closeDrawer(){
   state.drawerOpen=false;
@@ -2360,6 +2374,7 @@ function fillEditor(piece,archived){
   $('purgeBtn').classList.toggle('hidden',!archived || reader);
   $('duplicateBtn').classList.toggle('hidden',!state.selectedId);
   $('saveBtn').classList.toggle('hidden',archived || reader);
+  updateDrawerActionLabels();
   syncReaderShell();
 }
 function resetEditor(){
@@ -2386,6 +2401,7 @@ function resetEditor(){
   $('duplicateBtn').classList.add('hidden');
   $('saveBtn').classList.remove('hidden');
   setDocState(state.sheetsUrl ? 'Autosaved to Sheets' : 'Session only · connect Sheets to sync');
+  updateDrawerActionLabels();
 }
 function pickStatus(status){
   document.querySelectorAll('[data-status-choice]').forEach(btn=>{
@@ -2766,6 +2782,7 @@ function bindEvents(){
     setInstallVisible(false);
     toast('FluffyPens installed');
   });
+  window.addEventListener('resize',updateDrawerActionLabels,{passive:true});
 }
 async function init(){
   wireStatusButtons();
@@ -2786,6 +2803,7 @@ async function init(){
   $('docShareBtn')?.setAttribute('aria-expanded','false');
   closeTopMenu();
   setInstallVisible(false);
+  updateDrawerActionLabels();
   renderAll();
 }
 init();
