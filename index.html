@@ -879,6 +879,23 @@
     flex-wrap:wrap;
     align-items:center;
   }
+  .reader-nav{
+    width:36px;
+    height:36px;
+    padding:0;
+    border-radius:12px;
+    display:grid;
+    place-items:center;
+  }
+  .reader-nav svg{
+    width:16px;
+    height:16px;
+    stroke:currentColor;
+    fill:none;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
   .reader-actions .ghost-btn,
   .reader-actions .primary-btn{
     min-height:36px;
@@ -1533,6 +1550,16 @@
         <div class="reader-body" id="readerBody"></div>
         <div class="reader-summary" id="readerSummary"></div>
         <div class="reader-actions" id="readerActions">
+          <button class="ghost-btn muted reader-nav" id="readerPrevBtn" type="button" aria-label="Previous piece" title="Previous piece">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 6l-6 6 6 6"/>
+            </svg>
+          </button>
+          <button class="ghost-btn muted reader-nav" id="readerNextBtn" type="button" aria-label="Next piece" title="Next piece">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 6l6 6-6 6"/>
+            </svg>
+          </button>
           <button class="ghost-btn muted" id="readerEditBtn" type="button">Edit</button>
           <button class="ghost-btn muted" id="readerDuplicateBtn" type="button">Duplicate</button>
           <button class="ghost-btn muted" id="readerCloseBtn" type="button">Close</button>
@@ -1793,9 +1820,10 @@ function updateReaderView(piece,archived){
   ].join('');
   if($('readerActions')){
     const isPublished=status==='Posted' && !archived;
-    $('readerActions').classList.toggle('hidden', archived || !piece?.id);
+    $('readerActions').classList.toggle('hidden', archived || state.readerMode!=='reader' || !piece?.id);
     if($('readerEditBtn')) $('readerEditBtn').textContent=isPublished ? 'Open editor' : 'Edit';
   }
+  updateReaderNavState();
   if($('readerNote')) {
     $('readerNote').textContent=archived
       ?'This piece is archived. Restore it to edit again.'
@@ -2033,6 +2061,29 @@ function filteredList(){
   });
   return list;
 }
+function readerSequence(){
+  return filteredList();
+}
+function readerIndex(){
+  const list=readerSequence();
+  return list.findIndex(p=>p.id===state.selectedId);
+}
+function updateReaderNavState(){
+  const list=readerSequence();
+  const idx=readerIndex();
+  const canMove=list.length>1 && idx>=0;
+  const prevBtn=$('readerPrevBtn');
+  const nextBtn=$('readerNextBtn');
+  if(prevBtn)prevBtn.disabled=!canMove || idx<=0;
+  if(nextBtn)nextBtn.disabled=!canMove || idx>=list.length-1;
+}
+function openReaderAt(delta){
+  const list=readerSequence();
+  const idx=readerIndex();
+  if(idx<0 || !list.length) return;
+  const next=list[idx+delta];
+  if(next) openPiece(next.id);
+}
 function setView(view){
   state.view=view;
   document.body.dataset.view=view;
@@ -2147,6 +2198,11 @@ function closeDrawer(){
   state.editingArchive=false;
   state.readerMode='edit';
 }
+function syncReaderShell(){
+  $('drawer')?.classList.toggle('reader-mode', state.readerMode==='reader');
+  $('readerPanel')?.classList.toggle('full', state.readerMode==='reader');
+  updateReaderNavState();
+}
 function openPiece(id){
   const piece=state.vault.find(p=>p.id===id)||state.archive.find(p=>p.id===id);
   if(!piece)return;
@@ -2155,6 +2211,7 @@ function openPiece(id){
   state.readerMode=(state.view==='published' || piece.status==='posted') ? 'reader' : 'edit';
   fillEditor(piece,state.view==='archive');
   openDrawer();
+  syncReaderShell();
 }
 function openSelectedInEditor(){
   if(!state.selectedId)return;
@@ -2162,6 +2219,7 @@ function openSelectedInEditor(){
   if(!piece)return;
   state.readerMode='edit';
   fillEditor(piece,state.view==='archive');
+  syncReaderShell();
   toast('Editor opened');
 }
 function fillEditor(piece,archived){
@@ -2173,10 +2231,10 @@ function fillEditor(piece,archived){
   $('langSelect').value=piece.lang||'hi';
   $('notesInput').value=piece.notes||'';
   $('editor').innerHTML=piece.content||'';
-  $('titleInput').disabled=archived;
-  $('langSelect').disabled=archived;
-  $('notesInput').disabled=archived;
-  $('editor').contentEditable=archived?'false':'true';
+  $('titleInput').disabled=archived || reader;
+  $('langSelect').disabled=archived || reader;
+  $('notesInput').disabled=archived || reader;
+  $('editor').contentEditable=(archived || reader)?'false':'true';
   updateDocSummary();
   document.querySelectorAll('[data-status-choice]').forEach(btn=>{
     const on=btn.dataset.statusChoice===piece.status;
@@ -2189,6 +2247,7 @@ function fillEditor(piece,archived){
   $('purgeBtn').classList.toggle('hidden',!archived || reader);
   $('duplicateBtn').classList.toggle('hidden',!state.selectedId);
   $('saveBtn').classList.toggle('hidden',archived || reader);
+  syncReaderShell();
 }
 function resetEditor(){
   state.selectedId=null;
@@ -2353,6 +2412,7 @@ async function duplicatePiece(){
   renderAll();
   openDrawer();
   fillEditor(copy,false);
+  syncReaderShell();
   if(await saveRemote()){
     toast('Duplicated as draft');
   }
@@ -2495,6 +2555,8 @@ function bindEvents(){
   $('copySummaryBtn')?.addEventListener('click',copyShareSummary);
   $('closeShareBtn')?.addEventListener('click',closeShareModal);
   $('importRepoBtn')?.addEventListener('click',importRepoJson);
+  $('readerPrevBtn')?.addEventListener('click',()=>openReaderAt(-1));
+  $('readerNextBtn')?.addEventListener('click',()=>openReaderAt(1));
   $('readerEditBtn')?.addEventListener('click',openSelectedInEditor);
   $('readerDuplicateBtn')?.addEventListener('click',duplicatePiece);
   $('readerCloseBtn')?.addEventListener('click',closeDrawer);
@@ -2538,6 +2600,25 @@ function bindEvents(){
     if(action==='library'){setView('library');return;}
     if(action==='published'){setView('published');return;}
   });
+  let touchStartX=0;
+  let touchStartY=0;
+  $('drawerBody')?.addEventListener('touchstart',e=>{
+    if(state.readerMode!=='reader')return;
+    const t=e.touches?.[0];
+    if(!t)return;
+    touchStartX=t.clientX;
+    touchStartY=t.clientY;
+  },{passive:true});
+  $('drawerBody')?.addEventListener('touchend',e=>{
+    if(state.readerMode!=='reader')return;
+    const t=e.changedTouches?.[0];
+    if(!t)return;
+    const dx=t.clientX-touchStartX;
+    const dy=t.clientY-touchStartY;
+    if(Math.abs(dx)<50 || Math.abs(dx)<Math.abs(dy))return;
+    if(dx<0)openReaderAt(1);
+    else openReaderAt(-1);
+  },{passive:true});
   document.addEventListener('click',e=>{
     const statusBtn=e.target.closest('[data-status-choice]');
     if(statusBtn)pickStatus(statusBtn.dataset.statusChoice);
@@ -2551,6 +2632,10 @@ function bindEvents(){
       if(state.shareOpen)closeShareModal();
       if(state.drawerOpen)closeDrawer();
       if(state.modalOpen)closeSettings();
+    }
+    if(state.drawerOpen && state.readerMode==='reader'){
+      if(e.key==='ArrowLeft'){e.preventDefault();openReaderAt(-1);}
+      if(e.key==='ArrowRight'){e.preventDefault();openReaderAt(1);}
     }
     if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='s'&&state.drawerOpen){
       e.preventDefault();
