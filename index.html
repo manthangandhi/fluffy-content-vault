@@ -340,7 +340,7 @@
     flex-wrap:wrap;
     justify-content:flex-end;
   }
-  .footer-pill{
+  .footer-pill,.footer-action{
     display:inline-flex;
     align-items:center;
     min-height:28px;
@@ -352,6 +352,15 @@
     font-size:10px;
     font-weight:700;
     white-space:nowrap;
+  }
+  .footer-action{
+    border:1px solid rgba(26,115,232,.16);
+    background:#fff;
+    color:#1558c0;
+  }
+  .footer-action:disabled{
+    opacity:.45;
+    cursor:not-allowed;
   }
   .main{
     flex:1;
@@ -1401,9 +1410,8 @@
         </div>
       </div>
       <div class="footer-stats" aria-label="Workspace stats">
-        <span class="footer-pill" id="footerTotal">0 pieces</span>
-        <span class="footer-pill" id="footerPublished">0 published</span>
-        <span class="footer-pill" id="footerArchive">0 archived</span>
+        <span class="footer-pill" id="footerSource">Google Sheets source</span>
+        <button class="footer-action" id="undoBtn" type="button" disabled>Undo last change</button>
       </div>
     </footer>
   </div>
@@ -1600,6 +1608,7 @@ const state={
   menuOpen:false,
   lastSyncAt:null,
   syncError:'',
+  lastAction:null,
 };
 let deferredInstallPrompt=null;
 
@@ -1733,17 +1742,19 @@ function updateDocSummary(){
   if($('docStateText'))setDocState(state.editingArchive ? 'Archived document' : (state.sheetsUrl ? 'Autosaved to Sheets' : 'Session only · connect Sheets to sync'));
 }
 function updateFooter(){
-  const total=state.vault.length+state.archive.length;
-  const published=state.vault.filter(p=>p.status==='posted').length;
-  const archiveCount=state.archive.length;
-  if($('footerTotal'))$('footerTotal').textContent=`${total} piece${total===1?'':'s'}`;
-  if($('footerPublished'))$('footerPublished').textContent=`${published} published`;
-  if($('footerArchive'))$('footerArchive').textContent=`${archiveCount} archived`;
   if($('footerHint')){
     $('footerHint').textContent=state.sheetsUrl
-      ? `${state.syncError ? 'Sync issue · ' : 'Connected to Google Sheets · '}${syncStampLabel()}`
+      ? `${state.syncError ? 'Sync issue · ' : ''}${syncStampLabel()}`
       : 'Session only until Sheets is connected';
     $('footerHint').classList.toggle('error', Boolean(state.syncError));
+  }
+  if($('footerSource'))$('footerSource').textContent=state.sheetsUrl ? 'Google Sheets source' : 'Session only';
+  const undoBtn=$('undoBtn');
+  if(undoBtn){
+    const action=state.lastAction;
+    const label=action?.type==='delete' ? 'Undo delete' : action?.type==='archive' ? 'Undo archive' : 'Undo last change';
+    undoBtn.textContent=label;
+    undoBtn.disabled=!action;
   }
 }
 function renderShelfBanner(){
@@ -1787,6 +1798,14 @@ function setConn(kind,text){
   if(kind==='busy')setDocState('Syncing to Sheets...');
   else if(kind==='ok')setDocState('Autosaved to Sheets');
   else if(kind==='')setDocState('Session only · connect Sheets to sync');
+}
+function setLastAction(action){
+  state.lastAction=action||null;
+  updateFooter();
+}
+function clearLastAction(){
+  state.lastAction=null;
+  updateFooter();
 }
 async function registerPwa(){
   if(!('serviceWorker' in navigator))return;
@@ -1878,6 +1897,7 @@ async function loadRemote(){
     state.archive=Array.isArray(data.archive)?data.archive.map(normalizePiece):[];
     state.lastSyncAt=new Date();
     state.syncError='';
+    clearLastAction();
     setConn('ok',syncStampLabel());
     renderAll();
   }catch(err){
@@ -1933,6 +1953,7 @@ function setView(view){
   state.view=view;
   document.body.dataset.view=view;
   if(view==='archive')state.status='all';
+  closeTopMenu();
   document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view===view));
   renderAll();
 }
@@ -2077,6 +2098,7 @@ function fillEditor(piece,archived){
 function resetEditor(){
   state.selectedId=null;
   state.editingArchive=false;
+  clearLastAction();
   $('drawerTitle').textContent='New Piece';
   $('drawerSubtitle').textContent='Calm editing, synced to Sheets';
   updateReaderView({title:'New piece',content:'',status:DEFAULT_STATUS,lang:'hi',type:'poem'},false);
@@ -2152,7 +2174,9 @@ async function archivePiece(){
   if(idx<0)return;
   const piece=state.vault[idx];
   state.vault.splice(idx,1);
-  state.archive.unshift({...piece,deletedAt:new Date().toISOString().slice(0,19).replace('T',' ')});
+  const archived={...piece,deletedAt:new Date().toISOString().slice(0,19).replace('T',' ')};
+  state.archive.unshift(archived);
+  setLastAction({type:'archive',piece:JSON.parse(JSON.stringify(piece))});
   renderAll();
   if(await saveRemote()){
     toast('Archived');
@@ -2177,10 +2201,36 @@ async function purgePiece(){
   if(!confirm('Delete forever? This cannot be undone.'))return;
   const idx=state.archive.findIndex(p=>p.id===state.selectedId);
   if(idx<0)return;
+  const piece=state.archive[idx];
   state.archive.splice(idx,1);
+  setLastAction({type:'delete',piece:JSON.parse(JSON.stringify(piece))});
   renderAll();
   if(await saveRemote()){
     toast('Deleted');
+    closeDrawer();
+  }
+}
+async function undoLastChange(){
+  const action=state.lastAction;
+  if(!action)return;
+  if(action.type==='archive' && action.piece){
+    const idx=state.archive.findIndex(p=>p.id===action.piece.id);
+    if(idx>=0)state.archive.splice(idx,1);
+    state.vault.unshift({...action.piece,deletedAt:''});
+    state.view='library';
+    document.body.dataset.view='library';
+    toast('Archive undone');
+  }else if(action.type==='delete' && action.piece){
+    state.archive.unshift(action.piece);
+    state.view='archive';
+    document.body.dataset.view='archive';
+    toast('Delete undone');
+  }else{
+    return;
+  }
+  clearLastAction();
+  renderAll();
+  if(await saveRemote()){
     closeDrawer();
   }
 }
@@ -2360,6 +2410,7 @@ function bindEvents(){
   $('deleteBtn').addEventListener('click',archivePiece);
   $('restoreBtn').addEventListener('click',restorePiece);
   $('purgeBtn').addEventListener('click',purgePiece);
+  $('undoBtn').addEventListener('click',undoLastChange);
   $('duplicateBtn').addEventListener('click',duplicatePiece);
   $('searchInput').addEventListener('input',renderPieces);
   $('sortSelect').addEventListener('change',e=>{state.sort=e.target.value;renderPieces()});
