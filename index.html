@@ -330,6 +330,9 @@
     overflow:hidden;
     text-overflow:ellipsis;
   }
+  .footer-subtitle.error{
+    color:#a43b3b;
+  }
   .footer-stats{
     display:flex;
     align-items:center;
@@ -1045,6 +1048,9 @@
     border-radius:16px;
     justify-content:center;
   }
+  .drawer-foot .wide{
+    grid-column:1 / -1;
+  }
   .drawer-foot .danger{
     color:#a43b3b;
     border-color:rgba(164,59,59,.22);
@@ -1179,6 +1185,9 @@
     .drawer-foot{
       grid-template-columns:auto auto auto auto;
       justify-content:end;
+    }
+    .drawer-foot .wide{
+      grid-column:auto;
     }
   }
   @media (max-width:859px){
@@ -1522,6 +1531,7 @@
     <button class="ghost-btn danger hidden" id="deleteBtn" type="button">Archive</button>
     <button class="ghost-btn hidden" id="restoreBtn" type="button">Restore</button>
     <button class="ghost-btn hidden" id="purgeBtn" type="button">Delete Forever</button>
+    <button class="ghost-btn hidden wide" id="duplicateBtn" type="button">Duplicate as Draft</button>
     <button class="ghost-btn" id="cancelBtn" type="button">Cancel</button>
     <button class="primary-btn" id="saveBtn" type="button">Save &amp; Sync</button>
   </div>
@@ -1588,6 +1598,8 @@ const state={
   shareOpen:false,
   drawerOpen:false,
   menuOpen:false,
+  lastSyncAt:null,
+  syncError:'',
 };
 let deferredInstallPrompt=null;
 
@@ -1599,6 +1611,10 @@ const fmtDate=v=>{
 const fmtShort=v=>{
   const d=new Date(v);
   return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'});
+};
+const fmtClock=v=>{
+  const d=new Date(v);
+  return Number.isNaN(d.getTime()) ? '' : d.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'});
 };
 const esc=s=>String(s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
 
@@ -1662,6 +1678,9 @@ function setDocState(text){
   const el=$('docStateText');
   if(el)el.textContent=text;
 }
+function syncStampLabel(){
+  return state.lastSyncAt ? `Last synced ${fmtClock(state.lastSyncAt)}` : 'Not synced yet';
+}
 function updateReaderView(piece,archived){
   const title=piece?.title||'Untitled piece';
   const status=STATUS_LABEL[piece?.status]||'Draft';
@@ -1720,9 +1739,12 @@ function updateFooter(){
   if($('footerTotal'))$('footerTotal').textContent=`${total} piece${total===1?'':'s'}`;
   if($('footerPublished'))$('footerPublished').textContent=`${published} published`;
   if($('footerArchive'))$('footerArchive').textContent=`${archiveCount} archived`;
-  if($('footerHint'))$('footerHint').textContent=state.sheetsUrl
-    ?'Connected to Google Sheets · no local storage'
-    :'Session only until Sheets is connected';
+  if($('footerHint')){
+    $('footerHint').textContent=state.sheetsUrl
+      ? `${state.syncError ? 'Sync issue · ' : 'Connected to Google Sheets · '}${syncStampLabel()}`
+      : 'Session only until Sheets is connected';
+    $('footerHint').classList.toggle('error', Boolean(state.syncError));
+  }
 }
 function renderShelfBanner(){
   const el=$('shelfBanner');
@@ -1854,9 +1876,12 @@ async function loadRemote(){
     const data=await sheetsRequest({action:'load'});
     state.vault=Array.isArray(data.vault)?data.vault.map(normalizePiece):[];
     state.archive=Array.isArray(data.archive)?data.archive.map(normalizePiece):[];
-    setConn('ok',`Synced · ${state.vault.length}`);
+    state.lastSyncAt=new Date();
+    state.syncError='';
+    setConn('ok',syncStampLabel());
     renderAll();
   }catch(err){
+    state.syncError=err.message;
     setConn('', 'Connection failed');
     toast(`Load failed: ${err.message}`);
   }
@@ -1867,10 +1892,15 @@ async function saveRemote(){
   setConn('busy','Saving...');
   try{
     await sheetsRequest({action:'save',vault:state.vault,archive:state.archive});
-    setConn('ok',`Synced · ${state.vault.length}`);
+    state.lastSyncAt=new Date();
+    state.syncError='';
+    setConn('ok',syncStampLabel());
+    updateFooter();
     return true;
   }catch(err){
+    state.syncError=err.message;
     setConn('', 'Save failed');
+    updateFooter();
     toast(`Save failed: ${err.message}`);
     return false;
   }finally{
@@ -2041,6 +2071,7 @@ function fillEditor(piece,archived){
   $('deleteBtn').classList.toggle('hidden',archived);
   $('restoreBtn').classList.toggle('hidden',!archived);
   $('purgeBtn').classList.toggle('hidden',!archived);
+  $('duplicateBtn').classList.toggle('hidden',!state.selectedId);
   $('saveBtn').classList.toggle('hidden',archived);
 }
 function resetEditor(){
@@ -2062,6 +2093,7 @@ function resetEditor(){
   $('deleteBtn').classList.add('hidden');
   $('restoreBtn').classList.add('hidden');
   $('purgeBtn').classList.add('hidden');
+  $('duplicateBtn').classList.add('hidden');
   $('saveBtn').classList.remove('hidden');
   setDocState(state.sheetsUrl ? 'Autosaved to Sheets' : 'Session only · connect Sheets to sync');
 }
@@ -2150,6 +2182,32 @@ async function purgePiece(){
   if(await saveRemote()){
     toast('Deleted');
     closeDrawer();
+  }
+}
+async function duplicatePiece(){
+  const piece=state.vault.find(p=>p.id===state.selectedId)||state.archive.find(p=>p.id===state.selectedId);
+  if(!piece)return;
+  const now=new Date().toISOString().slice(0,19).replace('T',' ');
+  const baseTitle=(piece.title||'Untitled').trim();
+  const copyTitle=baseTitle.endsWith(' Copy') ? `${baseTitle} 2` : `${baseTitle} Copy`;
+  const copy={
+    ...piece,
+    id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+    title:copyTitle,
+    status:'draft',
+    createdAt:now,
+    updatedAt:now,
+    deletedAt:'',
+  };
+  state.vault.unshift(copy);
+  state.selectedId=copy.id;
+  state.view='library';
+  document.body.dataset.view='library';
+  renderAll();
+  openDrawer();
+  fillEditor(copy,false);
+  if(await saveRemote()){
+    toast('Duplicated as draft');
   }
 }
 function applyEditorCmd(cmd){
@@ -2302,6 +2360,7 @@ function bindEvents(){
   $('deleteBtn').addEventListener('click',archivePiece);
   $('restoreBtn').addEventListener('click',restorePiece);
   $('purgeBtn').addEventListener('click',purgePiece);
+  $('duplicateBtn').addEventListener('click',duplicatePiece);
   $('searchInput').addEventListener('input',renderPieces);
   $('sortSelect').addEventListener('change',e=>{state.sort=e.target.value;renderPieces()});
   $('editor').addEventListener('input',updateCounts);
