@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>FluffyPens</title>
-<meta name="theme-color" content="#09090b">
+<meta name="theme-color" content="#0c0b0a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,460;9..144,560&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="FluffyPens">
@@ -13,15 +16,17 @@
 <link rel="apple-touch-icon" href="./icon.svg">
 <style>
   :root{
-    --bg:#09090b;
-    --panel:#141416;
-    --panel-2:#18181b;
-    --ink:#f4f4f5;
-    --muted:#a1a1aa;
-    --soft:#71717a;
-    --line:rgba(255,255,255,.08);
-    --line-2:rgba(255,255,255,.16);
-    --accent:#f5f0e8;
+    --bg:#0c0b0a;
+    --panel:#161513;
+    --panel-2:#1c1b19;
+    --ink:#f7f1e7;
+    --muted:#c9c0b4;
+    --soft:#8f887f;
+    --line:rgba(247,241,231,.10);
+    --line-2:rgba(247,241,231,.18);
+    --accent:#f7f1e7;
+    --font-ui:"Outfit",system-ui,sans-serif;
+    --font-verse:"Fraunces",Palatino,"Iowan Old Style",serif;
     --accent-2:#d6d3d1;
     --shadow:none;
     --shadow-2:none;
@@ -33,9 +38,11 @@
   html,body{height:100%}
   body{
     margin:0;
-    background:#09090b;
+    background:#0c0b0a;
     color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Segoe UI',system-ui,sans-serif;
+    font-family:var(--font-ui);
+    font-size:14px;
+    line-height:1.4;
     -webkit-font-smoothing:antialiased;
     overflow:hidden;
   }
@@ -56,7 +63,7 @@
     gap:10px;
     padding:9px 12px;
     border-bottom:1px solid var(--line);
-    background:rgba(255,255,255,.90);
+    background:rgba(12,11,10,.92);
     backdrop-filter:blur(22px) saturate(1.08);
     -webkit-backdrop-filter:blur(22px) saturate(1.08);
   }
@@ -1207,12 +1214,13 @@
     transform:translateX(-50%) translateY(10px);
     opacity:0;
     z-index:100;
-    background:#f5f0e8;
-    color:#111;
+    background:#f7f1e7;
+    color:#141311;
     border-radius:999px;
     padding:10px 16px;
-    font-size:11px;
-    font-weight:800;
+    font-family:var(--font-ui);
+    font-size:14px;
+    font-weight:500;
     letter-spacing:.04em;
     box-shadow:0 18px 38px rgba(24,34,51,.22);
     transition:opacity .18s ease,transform .18s ease;
@@ -1565,20 +1573,20 @@
   body[data-surface="studio"] .top-menu,
   body[data-surface="studio"] .seg-btn,
   body[data-surface="studio"] .doc-stat{
-    background:#141416;
-    color:#f4f4f5;
+    background:#161513;
+    color:#f7f1e7;
     border-color:rgba(255,255,255,.08);
     box-shadow:none;
   }
-  body[data-surface="studio"] .menu-item:hover{background:#222226}
+  body[data-surface="studio"] .menu-item:hover{background:#242220}
   body[data-surface="studio"] .chip.on,
   body[data-surface="studio"] .primary-btn,
   body[data-surface="studio"] .icon-btn.primary,
   body[data-surface="studio"] .seg-btn.on,
   body[data-surface="studio"] .empty-btn.primary{
-    background:#f5f0e8;
-    color:#111;
-    border-color:#f5f0e8;
+    background:#f7f1e7;
+    color:#141311;
+    border-color:#f7f1e7;
   }
   body[data-surface="studio"] .main{padding:8px}
   body[data-surface="studio"] .controls{padding:8px;gap:8px;margin-bottom:8px;border-radius:16px}
@@ -1601,89 +1609,222 @@
   body[data-surface="studio"] .piece-copy,
   body[data-surface="studio"] .piece-meta{padding-left:8px}
   body[data-surface="studio"] .workspace-footer{padding:8px 10px}
-  body[data-surface="studio"] .editor{min-height:180px;color:#f4f4f5}
+  body[data-surface="studio"] .editor{min-height:220px;color:#f7f1e7}
   body[data-surface="studio"] .search-input:focus,
   body[data-surface="studio"] .field:focus,
-  body[data-surface="studio"] .notes:focus{background:#141416}
+  body[data-surface="studio"] .notes:focus{background:#161513}
   .public-app{
     height:100svh;
     overflow:auto;
-    background:#09090b;
-    color:#f4f4f5;
+    background:#0c0b0a;
+    color:#f7f1e7;
   }
   .feed-bar{
     position:sticky;top:0;z-index:5;
     display:grid;
     grid-template-columns:auto minmax(0,1fr) auto;
     align-items:center;
-    gap:10px;
-    height:52px;
-    padding:0 12px;
-    background:rgba(9,9,11,.9);
-    border-bottom:1px solid rgba(255,255,255,.06);
+    gap:12px;
+    height:56px;
+    padding:0 16px;
+    background:rgba(12,11,10,.92);
+    border-bottom:1px solid rgba(247,241,231,.08);
     backdrop-filter:blur(16px);
   }
-  .feed-brand h1{margin:0;font-size:16px;font-weight:650;letter-spacing:-.04em}
-  .lock-btn,.ig-icon,.post-share{
-    width:34px;height:34px;padding:0;border:0;border-radius:10px;
-    background:rgba(255,255,255,.06);color:#f4f4f5;
+  .feed-brand h1{
+    margin:0;
+    font-family:var(--font-verse);
+    font-size:22px;
+    font-weight:560;
+    letter-spacing:-.03em;
+  }
+  .lock-btn,.ig-icon{
+    width:36px;height:36px;padding:0;border:0;border-radius:999px;
+    background:transparent;color:#f7f1e7;
     display:grid;place-items:center;
   }
-  .lock-btn svg,.ig-icon svg,.post-share svg{
-    width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;
+  .lock-btn svg,.ig-icon svg{
+    width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;
     stroke-linecap:round;stroke-linejoin:round;
   }
-  .feed-wrap{width:min(640px,100%);margin:0 auto;padding:8px 8px 28px}
+  .feed-wrap{width:min(720px,100%);margin:0 auto;padding:0 0 48px}
   .public-search{
-    width:100%;min-height:34px;margin:0;padding:0 10px;border-radius:10px;
-    border:1px solid rgba(255,255,255,.08);background:#141416;color:#f4f4f5;font-size:13px;outline:none;
+    width:100%;min-height:36px;margin:0;padding:0 12px;border-radius:999px;
+    border:1px solid rgba(247,241,231,.12);background:#161513;color:#f7f1e7;
+    font-family:var(--font-ui);font-size:14px;font-weight:400;outline:none;
   }
-  .post{position:relative;margin:0 0 8px}
-  .post-open{display:block;width:100%;padding:0;border:0;background:transparent;cursor:pointer}
-  .post-open img{display:block;width:100%;height:auto;border-radius:16px}
-  .post-share{position:absolute;top:10px;right:10px}
-  .public-empty{padding:28px 12px;color:#a1a1aa;text-align:center}
-  .public-empty h3{margin:0 0 6px;color:#f4f4f5;font-size:18px}
+  .public-search::placeholder{color:#8f887f}
+  .post{
+    margin:0;
+    padding:28px 20px 18px;
+    border-bottom:1px solid rgba(247,241,231,.08);
+  }
+  .post-open{
+    display:block;width:100%;padding:0;border:0;background:transparent;color:inherit;
+    text-align:left;cursor:pointer;
+  }
+  .post-title{
+    margin:0 0 14px;
+    font-family:var(--font-verse);
+    font-size:28px;
+    font-weight:560;
+    line-height:1.15;
+    letter-spacing:-.03em;
+    color:#f7f1e7;
+  }
+  .post-verse{display:flex;flex-direction:column;gap:8px}
+  .post-line{
+    margin:0;
+    font-family:var(--font-verse);
+    font-weight:460;
+    font-size:18px;
+    line-height:1.55;
+    letter-spacing:0;
+    color:#f3ecdf;
+  }
+  .post-foot{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-top:18px;
+  }
+  .post-date{
+    font-family:var(--font-ui);
+    font-size:13px;
+    font-weight:400;
+    color:#8f887f;
+  }
+  .post-share{
+    width:auto;height:auto;padding:0;border:0;border-radius:0;
+    background:transparent;color:#f7f1e7;
+    font-family:var(--font-ui);font-size:13px;font-weight:500;
+  }
+  .public-empty{padding:48px 20px;color:#8f887f}
+  .public-empty h3{
+    margin:0 0 8px;color:#f7f1e7;
+    font-family:var(--font-verse);font-size:28px;font-weight:560;letter-spacing:-.03em;
+  }
+  .public-empty p{margin:0;font-size:16px;line-height:1.5}
   .reader-screen,.share-sheet{position:fixed;inset:0;z-index:40}
-  .reader-screen{background:#09090b;display:flex;flex-direction:column}
+  .reader-screen{background:#0c0b0a;display:flex;flex-direction:column}
   .reader-screen[hidden],.share-sheet[hidden],.studio-gate[hidden]{display:none !important}
-  .reader-top{display:flex;align-items:center;justify-content:space-between;height:48px;padding:0 8px}
+  .reader-top{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 10px}
   .reader-scroll{flex:1;overflow:auto}
-  .reader-scroll img{width:min(640px,100%);height:auto;display:block;margin:0 auto}
+  .reader-verse{
+    width:min(720px,100%);
+    margin:0 auto;
+    padding:12px 20px 64px;
+  }
+  .reader-verse .post-title{font-size:36px}
+  .reader-verse .post-line{font-size:22px;line-height:1.6}
   .share-scrim{position:absolute;inset:0;background:rgba(0,0,0,.62)}
   .share-panel{
     position:absolute;left:50%;bottom:0;transform:translateX(-50%);
     width:min(520px,100%);
-    background:#141416;color:#f4f4f5;border-radius:18px 18px 0 0;
-    padding:14px 12px calc(14px + env(safe-area-inset-bottom));
-    border-top:1px solid rgba(255,255,255,.08);
+    background:#161513;color:#f7f1e7;border-radius:20px 20px 0 0;
+    padding:16px 16px calc(16px + env(safe-area-inset-bottom));
+    border-top:1px solid rgba(247,241,231,.1);
   }
-  .share-panel h3{margin:0 0 4px;font-size:15px}
-  .share-panel p{margin:0 0 10px;color:#a1a1aa;font-size:12px;line-height:1.45}
-  .share-preview-frame{max-height:42vh;overflow:auto;border-radius:12px;margin-bottom:10px;background:#f6f1e8}
+  .share-panel h3{
+    margin:0 0 6px;
+    font-family:var(--font-verse);font-size:24px;font-weight:560;letter-spacing:-.03em;
+  }
+  .share-panel p{margin:0 0 12px;color:#c9c0b4;font-size:14px;line-height:1.45}
+  .share-preview-frame{max-height:42vh;overflow:auto;border-radius:12px;margin-bottom:12px;background:#141311}
   .share-card-preview{width:100%;height:auto;display:block}
   .share-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .share-grid button{
-    min-height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
-    background:#1c1c1f;color:#f4f4f5;font-size:13px;font-weight:650;
+    min-height:44px;border-radius:12px;border:1px solid rgba(247,241,231,.12);
+    background:#1c1b19;color:#f7f1e7;font-family:var(--font-ui);font-size:14px;font-weight:500;
   }
-  .share-grid .wide{grid-column:1 / -1;background:#f5f0e8;border-color:#f5f0e8;color:#111}
+  .share-grid .wide{grid-column:1 / -1;background:#f7f1e7;border-color:#f7f1e7;color:#141311}
   .studio-gate{
-    min-height:100svh;display:grid;place-items:center;padding:20px;
-    background:#09090b;color:#f4f4f5;
+    min-height:100svh;display:grid;place-items:center;padding:24px;
+    background:#0c0b0a;color:#f7f1e7;
   }
   .studio-card{
-    width:min(380px,100%);background:#141416;border:1px solid rgba(255,255,255,.08);
-    border-radius:18px;padding:22px 18px;text-align:left;
+    width:min(400px,100%);background:#161513;border:1px solid rgba(247,241,231,.1);
+    border-radius:20px;padding:28px 22px;text-align:left;
   }
-  .studio-card h2{margin:0 0 6px;font-size:26px;letter-spacing:-.04em}
-  .studio-card .lede{margin:0 0 14px;color:#a1a1aa;font-size:13px;line-height:1.45}
+  .studio-card h2{
+    margin:0 0 8px;
+    font-family:var(--font-verse);font-size:32px;font-weight:560;letter-spacing:-.03em;
+  }
+  .studio-card .lede{margin:0 0 16px;color:#c9c0b4;font-size:15px;line-height:1.45}
   .studio-card input{
-    width:100%;min-height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
-    padding:0 12px;font-size:14px;background:#09090b;color:#f4f4f5;
+    width:100%;min-height:44px;border-radius:12px;border:1px solid rgba(247,241,231,.12);
+    padding:0 12px;font-size:15px;background:#0c0b0a;color:#f7f1e7;
   }
-  .studio-card .primary-btn{width:100%;margin-top:10px;border-radius:12px;background:#f5f0e8;color:#111}
-  .studio-help{margin:12px 0 0;color:#71717a;font-size:12px;line-height:1.45}
+  .studio-card .primary-btn{width:100%;margin-top:10px;border-radius:12px;background:#f7f1e7;color:#141311}
+  .studio-help{margin:14px 0 0;color:#8f887f;font-size:13px;line-height:1.45}
+  .brand-title,.studio-card h2,.feed-brand h1{font-family:var(--font-verse)}
+  .piece-kicker,.piece-date,.piece-badge,.pipe .k,.status-chip,.chip,.menu-item,.footer-title,.footer-subtitle{
+    font-family:var(--font-ui);
+    font-weight:500;
+    letter-spacing:0;
+    text-transform:none;
+  }
+  .piece-kicker{font-size:13px;color:#8f887f}
+  .piece-title{
+    font-family:var(--font-verse);
+    font-size:22px;
+    font-weight:560;
+    line-height:1.2;
+    letter-spacing:-.02em;
+  }
+  .piece-copy{
+    font-family:var(--font-verse);
+    font-size:16px;
+    font-weight:460;
+    line-height:1.45;
+    color:#d9d0c4;
+    min-height:0;
+    -webkit-line-clamp:3;
+  }
+  .piece-date,.piece-badge{font-size:13px;font-weight:400;color:#8f887f}
+  .status-chip{
+    min-height:24px;
+    padding:0 8px;
+    background:transparent;
+    border-color:rgba(247,241,231,.16);
+    color:#f7f1e7;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:0;
+    text-transform:none;
+  }
+  .pipe .k{font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;margin-bottom:2px}
+  .pipe .v,.pipe.draft .v,.pipe.wip .v,.pipe.ready .v,.pipe.recorded .v,.pipe.posted .v{
+    font-family:var(--font-verse);font-size:22px;font-weight:560;color:#f7f1e7;
+  }
+  .status-chip.draft,.status-chip.wip,.status-chip.ready,.status-chip.recorded,.status-chip.posted{
+    background:transparent;color:#f7f1e7;border-color:rgba(247,241,231,.16);
+  }
+  .brand-title{font-size:20px;font-weight:560;letter-spacing:-.03em}
+  #titleInput,.reader-title,#readerTitle{
+    font-family:var(--font-verse) !important;
+    font-weight:560 !important;
+    letter-spacing:-.03em !important;
+  }
+  #editor,#editor *,#readerBody,#readerBody *{
+    font-family:var(--font-verse) !important;
+    font-size:20px !important;
+    font-weight:460 !important;
+    line-height:1.6 !important;
+    letter-spacing:0 !important;
+    color:#f7f1e7 !important;
+    background:transparent !important;
+  }
+  #editor b,#editor strong,#readerBody b,#readerBody strong{font-weight:560 !important}
+  .doc-title-input{font-family:var(--font-verse);font-size:28px;font-weight:560;letter-spacing:-.03em}
+  .doc-kicker,.doc-section-title,.doc-stat .k,.label,.field-group .label,.doc-side .field-group .label{
+    font-family:var(--font-ui) !important;
+    font-size:12px !important;
+    font-weight:500 !important;
+    letter-spacing:0 !important;
+    text-transform:none !important;
+    color:#8f887f !important;
+  }
+  .doc-state,.doc-title-help,.doc-stat .v,.editor-meta{font-size:14px;font-weight:400;letter-spacing:0;text-transform:none}
+  .doc-stat .v{font-family:var(--font-verse);font-size:18px;font-weight:560;color:#f7f1e7}
   @media (max-width:720px){
     .pipeline{grid-template-columns:repeat(3,minmax(0,1fr))}
   }
@@ -1719,7 +1860,7 @@
       </button>
     </div>
     <div class="reader-scroll">
-      <img id="publicReaderImage" alt="">
+      <article class="reader-verse" id="publicReaderVerse"></article>
     </div>
   </section>
   <section class="share-sheet" id="shareSheet" hidden>
@@ -2173,6 +2314,22 @@ function normalizePiece(piece){
     deletedAt:String(piece.deletedAt||'')
   };
 }
+function cleanEditorHtml(html){
+  const raw=String(html||'').trim();
+  if(!raw) return '';
+  const doc=new DOMParser().parseFromString(raw,'text/html');
+  doc.body.querySelectorAll('*').forEach(node=>{
+    node.removeAttribute('style');
+    node.removeAttribute('class');
+    node.removeAttribute('id');
+    [...node.attributes].forEach(attr=>{
+      if(attr.name.startsWith('data-') || attr.name==='face' || attr.name==='color' || attr.name==='size' || attr.name==='dir'){
+        node.removeAttribute(attr.name);
+      }
+    });
+  });
+  return doc.body.innerHTML.trim();
+}
 function poemLines(piece){
   return stripHtml(piece?.content||piece?.rawContent||'')
     .split(/\n+/)
@@ -2210,69 +2367,66 @@ function wrapCanvasLine(ctx,text,maxWidth){
   if(current) lines.push(current);
   return lines;
 }
+const VERSE_STACK='Fraunces, Palatino, "Iowan Old Style", serif';
+async function ensureVerseFont(){
+  if(!document.fonts?.load) return;
+  await Promise.all([
+    document.fonts.load(`560 44px ${VERSE_STACK}`),
+    document.fonts.load(`460 48px ${VERSE_STACK}`),
+    document.fonts.ready
+  ]);
+}
 function drawCard(piece){
   const w=1080;
-  const padX=96;
+  const padX=104;
   const maxWidth=w-padX*2;
   const title=String(piece?.title||'Untitled').trim()||'Untitled';
   const source=poemLines(piece);
   const bodyLines=source.length?source:[title];
   const measure=document.createElement('canvas').getContext('2d');
-  let fontSize=64;
-  let titleSize=58;
+  const titleSize=44;
+  let fontSize=48;
   let wrapped=[];
   let titleLines=[];
-  while(fontSize>=52){
-    measure.font=`500 ${fontSize}px Georgia, "Times New Roman", serif`;
+  while(fontSize>=40){
+    measure.font=`460 ${fontSize}px ${VERSE_STACK}`;
     wrapped=bodyLines.flatMap(line=>wrapCanvasLine(measure,line,maxWidth));
-    measure.font=`600 ${titleSize}px Georgia, "Times New Roman", serif`;
+    measure.font=`560 ${titleSize}px ${VERSE_STACK}`;
     titleLines=wrapCanvasLine(measure,title,maxWidth);
-    if(wrapped.length<=28) break;
-    fontSize-=4;
-    titleSize=Math.max(46,titleSize-2);
+    if(wrapped.length<=34) break;
+    fontSize-=2;
   }
-  const lineHeight=Math.round(fontSize*1.42);
-  const titleLH=Math.round(titleSize*1.22);
-  const top=64;
-  const gap=28;
-  const footerGap=40;
-  const bottom=52;
-  const h=top+titleLines.length*titleLH+gap+wrapped.length*lineHeight+footerGap+bottom;
+  const lineHeight=Math.round(fontSize*1.5);
+  const titleLH=Math.round(titleSize*1.2);
+  const top=96;
+  const gap=40;
+  const bottom=96;
+  const h=top+titleLines.length*titleLH+gap+wrapped.length*lineHeight+bottom;
   const canvas=document.createElement('canvas');
   canvas.width=w;
   canvas.height=h;
   const ctx=canvas.getContext('2d');
-  ctx.fillStyle='#f6f1e8';
+  ctx.fillStyle='#141311';
   ctx.fillRect(0,0,w,h);
-  ctx.strokeStyle='#e4d8c8';
-  ctx.lineWidth=8;
-  ctx.strokeRect(16,16,w-32,h-32);
-  ctx.textAlign='center';
+  ctx.textAlign='left';
   ctx.textBaseline='top';
-  ctx.fillStyle='#1c1917';
-  ctx.font=`600 ${titleSize}px Georgia, "Times New Roman", serif`;
+  ctx.fillStyle='#f7f1e7';
+  ctx.font=`560 ${titleSize}px ${VERSE_STACK}`;
   let y=top;
   titleLines.forEach(line=>{
-    ctx.fillText(line,w/2,y);
+    ctx.fillText(line,padX,y);
     y+=titleLH;
   });
-  y+=18;
-  ctx.strokeStyle='#c4b4a0';
-  ctx.lineWidth=2;
-  ctx.beginPath();
-  ctx.moveTo(w/2-48,y);
-  ctx.lineTo(w/2+48,y);
-  ctx.stroke();
-  y+=gap-18;
-  ctx.font=`500 ${fontSize}px Georgia, "Times New Roman", serif`;
+  y+=gap;
+  ctx.font=`460 ${fontSize}px ${VERSE_STACK}`;
   wrapped.forEach(line=>{
-    ctx.fillText(line,w/2,y);
+    ctx.fillText(line,padX,y);
     y+=lineHeight;
   });
-  ctx.fillStyle='#6b6258';
-  ctx.font='600 24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+  ctx.fillStyle='#8f887f';
+  ctx.font=`460 26px ${VERSE_STACK}`;
   ctx.textBaseline='alphabetic';
-  ctx.fillText('fluffypens', w/2, h-28);
+  ctx.fillText('FluffyPens', padX, h-42);
   return canvas;
 }
 function cardKey(piece){
@@ -2289,6 +2443,8 @@ function cardBlob(piece){
   return new Promise(resolve=>drawCard(piece).toBlob(resolve,'image/png'));
 }
 async function pieceCardFile(piece){
+  await ensureVerseFont();
+  cardCache.delete(cardKey(piece));
   const blob=await cardBlob(piece);
   const name=(piece?.title||'shayari').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)||'shayari';
   return new File([blob], `${name}.png`, {type:'image/png'});
@@ -2348,7 +2504,7 @@ function updateReaderView(piece,archived){
   const typeLabel=String(piece?.type||'poem').replace(/_/g,' ');
   const created=fmtDate(piece?.createdAt);
   const updated=fmtDate(piece?.updatedAt||piece?.createdAt);
-  const body=piece?.content ? piece.content : '<p class="reader-note">No content yet.</p>';
+  const body=piece?.content ? cleanEditorHtml(piece.content) : '<p class="reader-note">No content yet.</p>';
   if($('readerKicker')) $('readerKicker').textContent=archived ? 'Archived piece' : (status==='Posted' ? 'Published book' : 'Writing view');
   if($('readerTitle')) $('readerTitle').textContent=title;
   if($('readerStatus')) $('readerStatus').textContent=status;
@@ -2931,16 +3087,18 @@ function renderPublic(){
     return;
   }
   feed.innerHTML=list.map(piece=>{
-    const image=cardDataUrl(piece);
-    const alt=`${piece.title||'Untitled'}. ${poemLines(piece).join(' ')}`;
+    const lines=poemLines(piece);
+    const when=fmtShort(piece.updatedAt||piece.createdAt);
     return `
       <article class="post">
         <button class="post-open" type="button" data-public-open="${esc(piece.id)}">
-          <img src="${image}" alt="${esc(alt)}">
+          <h2 class="post-title">${esc(piece.title||'Untitled')}</h2>
+          <div class="post-verse">${linesHtml(lines)}</div>
         </button>
-        <button class="post-share" type="button" data-share="${esc(piece.id)}" aria-label="Share ${esc(piece.title||'this shayari')} as an image">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 3 11 14"/><path d="M22 3 15 21l-4-7-7-4 18-7z"/></svg>
-        </button>
+        <div class="post-foot">
+          <span class="post-date">${when ? esc(when) : ''}</span>
+          <button class="post-share" type="button" data-share="${esc(piece.id)}">Share</button>
+        </div>
       </article>
     `;
   }).join('');
@@ -2956,20 +3114,14 @@ function openPublicPiece(id, updateHash){
     }
   }
   const reader=$('publicReader');
-  if(!reader) return;
-  const image=$('publicReaderImage');
+  const verse=$('publicReaderVerse');
+  if(!reader || !verse) return;
   if(!piece){
-    if(image){
-      image.removeAttribute('src');
-      image.alt='This shayari is not posted.';
-    }
+    verse.innerHTML='<h2 class="post-title">Not on the feed</h2><p class="post-line">This piece is not posted.</p>';
     reader.hidden=false;
     return;
   }
-  if(image){
-    image.src=cardDataUrl(piece);
-    image.alt=`${piece.title||'Untitled'}. ${poemLines(piece).join(' ')}`;
-  }
+  verse.innerHTML=`<h2 class="post-title">${esc(piece.title||'Untitled')}</h2><div class="post-verse">${linesHtml(poemLines(piece))}</div>`;
   reader.hidden=false;
   state.sharePiece=piece;
 }
@@ -2981,18 +3133,20 @@ function closePublicReader(updateHash){
     location.hash='feed';
   }
 }
-function openShareSheet(piece){
+async function openShareSheet(piece){
   if(!piece) return;
   state.sharePiece=piece;
   const sheet=$('shareSheet');
   if(!sheet) return;
-  if($('shareSheetCopy')) $('shareSheetCopy').textContent=`“${piece.title||'Untitled'}” is shared as a photo. Pick WhatsApp, Instagram, Messages, or any other app.`;
+  if($('shareSheetCopy')) $('shareSheetCopy').textContent=`“${piece.title||'Untitled'}” is shared as a photo, in the same type as the feed.`;
+  sheet.hidden=false;
+  await ensureVerseFont();
+  cardCache.delete(cardKey(piece));
   const preview=$('shareCardPreview');
   if(preview){
     preview.src=cardDataUrl(piece);
     preview.alt=piece.title||'Shayari card';
   }
-  sheet.hidden=false;
 }
 function closeShareSheet(){
   const sheet=$('shareSheet');
@@ -3090,7 +3244,7 @@ function fillEditor(piece,archived){
   $('titleInput').value=piece.title||'';
   $('langSelect').value=piece.lang||'hi';
   $('notesInput').value=piece.notes||'';
-  $('editor').innerHTML=piece.content||'';
+  $('editor').innerHTML=cleanEditorHtml(piece.content||'');
   $('titleInput').disabled=archived || reader;
   $('langSelect').disabled=archived || reader;
   $('notesInput').disabled=archived || reader;
@@ -3470,6 +3624,15 @@ function bindEvents(){
   $('searchInput').addEventListener('input',renderPieces);
   $('sortSelect').addEventListener('change',e=>{state.sort=e.target.value;renderPieces()});
   $('editor').addEventListener('input',updateCounts);
+  $('editor').addEventListener('paste',event=>{
+    const html=event.clipboardData?.getData('text/html');
+    const text=event.clipboardData?.getData('text/plain');
+    if(!html && !text) return;
+    event.preventDefault();
+    const clean=html ? cleanEditorHtml(html) : esc(text).replace(/\n/g,'<br>');
+    document.execCommand('insertHTML', false, clean);
+    updateCounts();
+  });
   $('titleInput').addEventListener('input',()=>{$('drawerTitle').textContent=$('titleInput').value.trim()||'New Piece';updateDocSummary();if(state.shareOpen)updateSharePreview()});
   $('langSelect').addEventListener('change',updateDocSummary);
   $('notesInput').addEventListener('input',()=>{if(state.shareOpen)updateSharePreview()});
