@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>FluffyPens</title>
-<meta name="theme-color" content="#111827">
+<meta name="theme-color" content="#09090b">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="FluffyPens">
@@ -13,27 +13,27 @@
 <link rel="apple-touch-icon" href="./icon.svg">
 <style>
   :root{
-    --bg:#eef2f7;
-    --panel:#ffffff;
-    --panel-2:#fbfcfe;
-    --ink:#111827;
-    --muted:#586271;
-    --soft:#8792a1;
-    --line:rgba(17,24,39,.09);
-    --line-2:rgba(17,24,39,.14);
-    --accent:#1d4ed8;
-    --accent-2:#0f9d58;
-    --shadow:0 14px 32px rgba(17,24,39,.06);
-    --shadow-2:0 22px 52px rgba(17,24,39,.10);
-    --radius:16px;
-    --radius-lg:22px;
-    --shell-max:1280px;
+    --bg:#09090b;
+    --panel:#141416;
+    --panel-2:#18181b;
+    --ink:#f4f4f5;
+    --muted:#a1a1aa;
+    --soft:#71717a;
+    --line:rgba(255,255,255,.08);
+    --line-2:rgba(255,255,255,.16);
+    --accent:#f5f0e8;
+    --accent-2:#d6d3d1;
+    --shadow:none;
+    --shadow-2:none;
+    --radius:14px;
+    --radius-lg:18px;
+    --shell-max:1100px;
   }
   *,*::before,*::after{box-sizing:border-box}
   html,body{height:100%}
   body{
     margin:0;
-    background:linear-gradient(180deg,#f8fafc 0%,#edf2f7 100%);
+    background:#09090b;
     color:var(--ink);
     font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Segoe UI',system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
@@ -1535,127 +1535,160 @@
   body[data-surface="studio"] .public-app{display:none}
   body[data-locked="on"] .app,
   body[data-locked="on"] .public-app{display:none}
+  body[data-surface="studio"] .topbar,
+  body[data-surface="studio"] .workspace-footer,
+  body[data-surface="studio"] .controls,
+  body[data-surface="studio"] .shelf-banner,
+  body[data-surface="studio"] .piece-card,
+  body[data-surface="studio"] .piece-card.posted,
+  body[data-surface="studio"] .drawer,
+  body[data-surface="studio"] .drawer-head,
+  body[data-surface="studio"] .drawer-foot,
+  body[data-surface="studio"] .modal,
+  body[data-surface="studio"] .doc-panel,
+  body[data-surface="studio"] .pipe,
+  body[data-surface="studio"] .chip,
+  body[data-surface="studio"] .icon-btn,
+  body[data-surface="studio"] .ghost-btn,
+  body[data-surface="studio"] .pill-btn,
+  body[data-surface="studio"] .search-input,
+  body[data-surface="studio"] .sort-select,
+  body[data-surface="studio"] .field,
+  body[data-surface="studio"] .notes,
+  body[data-surface="studio"] .editor-shell,
+  body[data-surface="studio"] .editor-toolbar,
+  body[data-surface="studio"] .editor-meta,
+  body[data-surface="studio"] .empty,
+  body[data-surface="studio"] .empty-btn,
+  body[data-surface="studio"] .status-pill,
+  body[data-surface="studio"] .footer-action,
+  body[data-surface="studio"] .top-menu,
+  body[data-surface="studio"] .seg-btn,
+  body[data-surface="studio"] .doc-stat{
+    background:#141416;
+    color:#f4f4f5;
+    border-color:rgba(255,255,255,.08);
+    box-shadow:none;
+  }
+  body[data-surface="studio"] .menu-item:hover{background:#222226}
+  body[data-surface="studio"] .chip.on,
+  body[data-surface="studio"] .primary-btn,
+  body[data-surface="studio"] .icon-btn.primary,
+  body[data-surface="studio"] .seg-btn.on,
+  body[data-surface="studio"] .empty-btn.primary{
+    background:#f5f0e8;
+    color:#111;
+    border-color:#f5f0e8;
+  }
+  body[data-surface="studio"] .main{padding:8px}
+  body[data-surface="studio"] .controls{padding:8px;gap:8px;margin-bottom:8px;border-radius:16px}
+  body[data-surface="studio"] .shelf-banner{padding:0;gap:8px;border:0}
+  body[data-surface="studio"] .shelf-banner .eyebrow,
+  body[data-surface="studio"] .shelf-banner .headline,
+  body[data-surface="studio"] .shelf-banner .subhead,
+  body[data-surface="studio"] .workspace-hint,
+  body[data-surface="studio"] .brand-subtitle,
+  body[data-surface="studio"] .status-row{display:none}
+  body[data-surface="studio"] .piece-grid{gap:8px}
+  body[data-surface="studio"] .piece-card{
+    min-height:0;
+    padding:12px 12px 12px 14px;
+    border-radius:14px;
+  }
+  body[data-surface="studio"] .piece-copy{min-height:0;-webkit-line-clamp:2}
+  body[data-surface="studio"] .piece-kicker,
+  body[data-surface="studio"] .piece-title,
+  body[data-surface="studio"] .piece-copy,
+  body[data-surface="studio"] .piece-meta{padding-left:8px}
+  body[data-surface="studio"] .workspace-footer{padding:8px 10px}
+  body[data-surface="studio"] .editor{min-height:180px;color:#f4f4f5}
+  body[data-surface="studio"] .search-input:focus,
+  body[data-surface="studio"] .field:focus,
+  body[data-surface="studio"] .notes:focus{background:#141416}
   .public-app{
     height:100svh;
     overflow:auto;
-    background:#fafafa;
-    color:#262626;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    background:#09090b;
+    color:#f4f4f5;
   }
   .feed-bar{
-    position:sticky;
-    top:0;
-    z-index:5;
-    display:flex;
+    position:sticky;top:0;z-index:5;
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr) auto;
     align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    height:60px;
-    padding:0 16px;
-    background:#fff;
-    border-bottom:1px solid #dbdbdb;
+    gap:10px;
+    height:52px;
+    padding:0 12px;
+    background:rgba(9,9,11,.9);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    backdrop-filter:blur(16px);
   }
-  .feed-brand h1{
-    margin:0;
-    font-size:22px;
-    font-weight:700;
-    letter-spacing:-.04em;
-    line-height:1;
-  }
-  .lock-btn,.ig-icon{
-    width:36px;height:36px;padding:0;border:0;border-radius:50%;
-    background:transparent;color:#262626;
+  .feed-brand h1{margin:0;font-size:16px;font-weight:650;letter-spacing:-.04em}
+  .lock-btn,.ig-icon,.post-share{
+    width:34px;height:34px;padding:0;border:0;border-radius:10px;
+    background:rgba(255,255,255,.06);color:#f4f4f5;
     display:grid;place-items:center;
   }
-  .lock-btn svg,.ig-icon svg{
-    width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;
+  .lock-btn svg,.ig-icon svg,.post-share svg{
+    width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;
     stroke-linecap:round;stroke-linejoin:round;
   }
-  .feed-wrap{width:min(470px,100%);margin:0 auto;padding:0 0 48px;background:#fff;min-height:calc(100svh - 60px);border-left:1px solid #dbdbdb;border-right:1px solid #dbdbdb}
+  .feed-wrap{width:min(640px,100%);margin:0 auto;padding:8px 8px 28px}
   .public-search{
-    width:calc(100% - 24px);
-    margin:12px;
-    min-height:36px;
-    padding:0 12px;
-    border-radius:8px;
-    border:1px solid #dbdbdb;
-    background:#fafafa;
-    color:#262626;
-    font-size:13px;
-    outline:none;
+    width:100%;min-height:34px;margin:0;padding:0 10px;border-radius:10px;
+    border:1px solid rgba(255,255,255,.08);background:#141416;color:#f4f4f5;font-size:13px;outline:none;
   }
-  .ig-post{background:#fff;border-bottom:1px solid #efefef;padding-bottom:8px}
-  .ig-head{display:flex;align-items:center;gap:10px;padding:10px 12px 8px}
-  .ig-avatar{
-    width:32px;height:32px;border-radius:50%;
-    display:grid;place-items:center;
-    background:radial-gradient(circle at 30% 30%, #f9ce34, #ee2a7b 55%, #6228d7);
-    color:#fff;font-size:10px;font-weight:800;
-  }
-  .ig-user{min-width:0}
-  .ig-user strong{display:block;font-size:14px;font-weight:650;line-height:1.15}
-  .ig-user span{display:block;color:#737373;font-size:12px}
-  .ig-media{display:block;width:100%;padding:0;border:0;background:#f4efe6;cursor:pointer}
-  .ig-media img{display:block;width:100%;height:auto;background:#f4efe6}
-  .ig-actions{display:flex;align-items:center;padding:2px 4px 0}
-  .ig-caption{padding:0 14px 10px;font-size:14px;line-height:1.45}
-  .ig-caption strong{margin-right:6px}
-  .public-empty{padding:48px 20px;color:#737373;text-align:center}
-  .public-empty h3{margin:0 0 8px;color:#262626;font-size:22px;font-weight:650}
+  .post{position:relative;margin:0 0 8px}
+  .post-open{display:block;width:100%;padding:0;border:0;background:transparent;cursor:pointer}
+  .post-open img{display:block;width:100%;height:auto;border-radius:16px}
+  .post-share{position:absolute;top:10px;right:10px}
+  .public-empty{padding:28px 12px;color:#a1a1aa;text-align:center}
+  .public-empty h3{margin:0 0 6px;color:#f4f4f5;font-size:18px}
   .reader-screen,.share-sheet{position:fixed;inset:0;z-index:40}
-  .reader-screen{background:#000;display:flex;flex-direction:column;color:#fff}
+  .reader-screen{background:#09090b;display:flex;flex-direction:column}
   .reader-screen[hidden],.share-sheet[hidden],.studio-gate[hidden]{display:none !important}
-  .reader-top{
-    display:flex;align-items:center;justify-content:space-between;
-    height:52px;padding:0 8px;color:#fff;
-  }
-  .reader-top .lock-btn,.reader-top .ig-icon{color:#fff}
-  .reader-scroll{flex:1;overflow:auto;display:grid;place-items:center}
-  .reader-scroll img{width:min(470px,100%);height:auto}
-  .share-scrim{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+  .reader-top{display:flex;align-items:center;justify-content:space-between;height:48px;padding:0 8px}
+  .reader-scroll{flex:1;overflow:auto}
+  .reader-scroll img{width:min(640px,100%);height:auto;display:block;margin:0 auto}
+  .share-scrim{position:absolute;inset:0;background:rgba(0,0,0,.62)}
   .share-panel{
     position:absolute;left:50%;bottom:0;transform:translateX(-50%);
-    width:min(470px,100%);
-    background:#fff;color:#262626;border-radius:16px 16px 0 0;
-    padding:14px 14px calc(16px + env(safe-area-inset-bottom));
+    width:min(520px,100%);
+    background:#141416;color:#f4f4f5;border-radius:18px 18px 0 0;
+    padding:14px 12px calc(14px + env(safe-area-inset-bottom));
+    border-top:1px solid rgba(255,255,255,.08);
   }
-  .share-panel h3{margin:0 0 4px;font-size:16px}
-  .share-panel p{margin:0 0 12px;color:#737373;font-size:13px;line-height:1.45}
-  .share-preview-frame{max-height:46vh;overflow:auto;border-radius:12px;margin-bottom:12px;background:#f4efe6}
-  .share-card-preview{width:100%;height:auto;display:block;background:#f4efe6}
+  .share-panel h3{margin:0 0 4px;font-size:15px}
+  .share-panel p{margin:0 0 10px;color:#a1a1aa;font-size:12px;line-height:1.45}
+  .share-preview-frame{max-height:42vh;overflow:auto;border-radius:12px;margin-bottom:10px;background:#f6f1e8}
+  .share-card-preview{width:100%;height:auto;display:block}
   .share-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .share-grid button{
-    min-height:44px;border-radius:10px;border:1px solid #dbdbdb;
-    background:#fff;color:#262626;font-size:14px;font-weight:650;
+    min-height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
+    background:#1c1c1f;color:#f4f4f5;font-size:13px;font-weight:650;
   }
-  .share-grid .wide{grid-column:1 / -1;background:#0095f6;border-color:#0095f6;color:#fff}
+  .share-grid .wide{grid-column:1 / -1;background:#f5f0e8;border-color:#f5f0e8;color:#111}
   .studio-gate{
-    min-height:100svh;
-    display:grid;
-    place-items:center;
-    padding:24px;
-    background:#fafafa;
-    color:#262626;
+    min-height:100svh;display:grid;place-items:center;padding:20px;
+    background:#09090b;color:#f4f4f5;
   }
   .studio-card{
-    width:min(380px,100%);
-    background:#fff;
-    border:1px solid #dbdbdb;
-    border-radius:12px;
-    padding:28px 22px 22px;
-    text-align:center;
+    width:min(380px,100%);background:#141416;border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;padding:22px 18px;text-align:left;
   }
-  .studio-card h2{margin:0 0 6px;font-size:28px;letter-spacing:-.04em}
-  .studio-card .lede{margin:0 0 16px;color:#737373;font-size:14px;line-height:1.5}
+  .studio-card h2{margin:0 0 6px;font-size:26px;letter-spacing:-.04em}
+  .studio-card .lede{margin:0 0 14px;color:#a1a1aa;font-size:13px;line-height:1.45}
   .studio-card input{
-    width:100%;min-height:42px;border-radius:8px;border:1px solid #dbdbdb;
-    padding:0 12px;font-size:14px;background:#fafafa;
+    width:100%;min-height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
+    padding:0 12px;font-size:14px;background:#09090b;color:#f4f4f5;
   }
-  .studio-card .primary-btn{width:100%;margin-top:10px;border-radius:8px}
-  .studio-help{margin:14px 0 0;color:#737373;font-size:12px;line-height:1.5;text-align:left}
+  .studio-card .primary-btn{width:100%;margin-top:10px;border-radius:12px;background:#f5f0e8;color:#111}
+  .studio-help{margin:12px 0 0;color:#71717a;font-size:12px;line-height:1.45}
   @media (max-width:720px){
-    .pipeline{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .feed-wrap{border:0}
+    .pipeline{grid-template-columns:repeat(3,minmax(0,1fr))}
+  }
+  @media (min-width:800px){
+    body[data-surface="studio"] .piece-grid{grid-template-columns:1fr 1fr}
   }
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
@@ -1668,12 +1701,12 @@
     <div class="feed-brand">
       <h1>FluffyPens</h1>
     </div>
+    <input class="public-search" id="publicSearch" type="search" placeholder="Search" aria-label="Search posted shayari">
     <button class="lock-btn" id="publicStudioBtn" type="button" aria-label="Open studio">
       <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
     </button>
   </header>
   <div class="feed-wrap">
-    <input class="public-search" id="publicSearch" type="search" placeholder="Search" aria-label="Search posted shayari">
     <section id="publicFeed" aria-live="polite"></section>
   </div>
   <section class="reader-screen" id="publicReader" hidden aria-label="Shayari">
@@ -2179,7 +2212,7 @@ function wrapCanvasLine(ctx,text,maxWidth){
 }
 function drawCard(piece){
   const w=1080;
-  const padX=120;
+  const padX=96;
   const maxWidth=w-padX*2;
   const title=String(piece?.title||'Untitled').trim()||'Untitled';
   const source=poemLines(piece);
@@ -2200,10 +2233,10 @@ function drawCard(piece){
   }
   const lineHeight=Math.round(fontSize*1.42);
   const titleLH=Math.round(titleSize*1.22);
-  const top=92;
-  const gap=44;
-  const footerGap=56;
-  const bottom=78;
+  const top=64;
+  const gap=28;
+  const footerGap=40;
+  const bottom=52;
   const h=top+titleLines.length*titleLH+gap+wrapped.length*lineHeight+footerGap+bottom;
   const canvas=document.createElement('canvas');
   canvas.width=w;
@@ -2213,7 +2246,7 @@ function drawCard(piece){
   ctx.fillRect(0,0,w,h);
   ctx.strokeStyle='#e4d8c8';
   ctx.lineWidth=8;
-  ctx.strokeRect(28,28,w-56,h-56);
+  ctx.strokeRect(16,16,w-32,h-32);
   ctx.textAlign='center';
   ctx.textBaseline='top';
   ctx.fillStyle='#1c1917';
@@ -2239,7 +2272,7 @@ function drawCard(piece){
   ctx.fillStyle='#6b6258';
   ctx.font='600 24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
   ctx.textBaseline='alphabetic';
-  ctx.fillText('fluffypens', w/2, h-48);
+  ctx.fillText('fluffypens', w/2, h-28);
   return canvas;
 }
 function cardKey(piece){
@@ -2898,28 +2931,16 @@ function renderPublic(){
     return;
   }
   feed.innerHTML=list.map(piece=>{
-    const when=fmtDate(piece.updatedAt||piece.createdAt);
-    const kind=String(piece.type||'poem').replace(/_/g,' ');
     const image=cardDataUrl(piece);
     const alt=`${piece.title||'Untitled'}. ${poemLines(piece).join(' ')}`;
     return `
-      <article class="ig-post">
-        <div class="ig-head">
-          <div class="ig-avatar" aria-hidden="true">FP</div>
-          <div class="ig-user">
-            <strong>fluffypens</strong>
-            <span>${esc(kind)}${when ? ` · ${esc(when)}` : ''}</span>
-          </div>
-        </div>
-        <button class="ig-media" type="button" data-public-open="${esc(piece.id)}">
+      <article class="post">
+        <button class="post-open" type="button" data-public-open="${esc(piece.id)}">
           <img src="${image}" alt="${esc(alt)}">
         </button>
-        <div class="ig-actions">
-          <button class="ig-icon" type="button" data-share="${esc(piece.id)}" aria-label="Share ${esc(piece.title||'this shayari')} as an image">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 3 11 14"/><path d="M22 3 15 21l-4-7-7-4 18-7z"/></svg>
-          </button>
-        </div>
-        <div class="ig-caption"><strong>fluffypens</strong> ${esc(piece.title||'Untitled')}</div>
+        <button class="post-share" type="button" data-share="${esc(piece.id)}" aria-label="Share ${esc(piece.title||'this shayari')} as an image">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 3 11 14"/><path d="M22 3 15 21l-4-7-7-4 18-7z"/></svg>
+        </button>
       </article>
     `;
   }).join('');
