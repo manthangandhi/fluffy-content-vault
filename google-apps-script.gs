@@ -1,5 +1,5 @@
 const SHEET_ID = "15EYdRdL2YAMnITyZSywfhfjVZj46Q1CRMTXktxeAm38";
-const SCRIPT_VERSION = "2026-06-01-sheets-only-local-tz";
+const SCRIPT_VERSION = "2026-10-13-studio-lock";
 const LOCAL_TIMEZONE = "Asia/Kolkata";
 
   const HEADERS = [
@@ -18,9 +18,61 @@ const LOCAL_TIMEZONE = "Asia/Kolkata";
     "deletedAt",
   ];
 
+  function studioPassword_() {
+    return String(PropertiesService.getScriptProperties().getProperty("STUDIO_PASSWORD") || "");
+  }
+
+  function assertStudio_(body) {
+    const expected = studioPassword_();
+    if (!expected) {
+      return {
+        ok: false,
+        code: "needs_setup",
+        error: "Set STUDIO_PASSWORD in Apps Script project settings, then deploy a new version.",
+      };
+    }
+    if (String(body && body.password || "") !== expected) {
+      return { ok: false, code: "unauthorized", error: "Wrong studio password." };
+    }
+    return null;
+  }
+
+  function publicFeed_() {
+    return readRowsAsObjects_("vault")
+      .filter(function (row) {
+        return String(row.status || "").toLowerCase() === "posted";
+      })
+      .map(function (row) {
+        return {
+          id: row.id,
+          title: row.title,
+          type: row.type,
+          lang: row.lang,
+          content: row.content,
+          rawContent: row.rawContent,
+          status: "posted",
+          createdAt: row.createdAt,
+          updatedAt: row.updatedAt,
+        };
+      });
+  }
+
   function doPost(e) {
     try {
       const body = JSON.parse(e.postData && e.postData.contents ? e.postData.contents : "{}");
+
+      if (body.action === "feed") {
+        return jsonOut({
+          ok: true,
+          version: SCRIPT_VERSION,
+          feed: publicFeed_(),
+        });
+      }
+
+      if (body.action === "load" || body.action === "save" || body.action === "debug_headers") {
+        const denied = assertStudio_(body);
+        if (denied) return jsonOut(denied);
+      }
 
       if (body.action === "load") {
         return jsonOut({

@@ -1533,13 +1533,14 @@
 
   body[data-surface="public"] .app{display:none}
   body[data-surface="studio"] .public-app{display:none}
+  body[data-locked="on"] .app,
+  body[data-locked="on"] .public-app{display:none}
   .public-app{
     height:100svh;
     overflow:auto;
-    background:
-      radial-gradient(900px 420px at 50% -80px, rgba(146,64,14,.10), transparent 70%),
-      #f3eee6;
-    color:#1c1917;
+    background:#fafafa;
+    color:#262626;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   }
   .feed-bar{
     position:sticky;
@@ -1549,125 +1550,111 @@
     align-items:center;
     justify-content:space-between;
     gap:12px;
-    padding:12px 16px;
-    background:rgba(243,238,230,.88);
-    backdrop-filter:blur(16px);
-    border-bottom:1px solid rgba(28,25,23,.06);
+    height:60px;
+    padding:0 16px;
+    background:#fff;
+    border-bottom:1px solid #dbdbdb;
   }
-  .feed-brand{display:flex;align-items:center;gap:10px;min-width:0}
-  .feed-mark{
-    width:36px;height:36px;border-radius:50%;
-    display:grid;place-items:center;
-    background:#1c1917;color:#f6efe4;
-    font-size:11px;font-weight:800;letter-spacing:.04em;flex:0 0 auto;
-  }
-  .feed-brand h1{margin:0;font-size:16px;letter-spacing:-.03em;line-height:1.1}
-  .feed-brand p{margin:2px 0 0;color:#8a8175;font-size:12px}
-  .studio-link{
-    min-height:34px;padding:0 12px;border-radius:999px;
-    border:1px solid rgba(28,25,23,.12);background:#fffdf8;color:#1c1917;
-    font-size:12px;font-weight:700;
-  }
-  .feed-wrap{width:min(680px,100%);margin:0 auto;padding:18px 16px 72px}
-  .feed-intro{margin:6px 2px 16px}
-  .feed-intro h2{
+  .feed-brand h1{
     margin:0;
-    font-family:Georgia,'Iowan Old Style','Palatino Linotype',Palatino,serif;
-    font-size:34px;font-weight:500;letter-spacing:-.04em;line-height:1;
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:-.04em;
+    line-height:1;
   }
-  .feed-intro .lede{margin:8px 0 14px;color:#57534e;font-size:14px;line-height:1.55;max-width:42ch}
+  .lock-btn,.ig-icon{
+    width:36px;height:36px;padding:0;border:0;border-radius:50%;
+    background:transparent;color:#262626;
+    display:grid;place-items:center;
+  }
+  .lock-btn svg,.ig-icon svg{
+    width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;
+    stroke-linecap:round;stroke-linejoin:round;
+  }
+  .feed-wrap{width:min(470px,100%);margin:0 auto;padding:0 0 48px;background:#fff;min-height:calc(100svh - 60px);border-left:1px solid #dbdbdb;border-right:1px solid #dbdbdb}
   .public-search{
-    width:100%;min-height:44px;padding:0 14px;border-radius:14px;
-    border:1px solid rgba(28,25,23,.10);background:#fffdf8;color:#1c1917;outline:none;
+    width:calc(100% - 24px);
+    margin:12px;
+    min-height:36px;
+    padding:0 12px;
+    border-radius:8px;
+    border:1px solid #dbdbdb;
+    background:#fafafa;
+    color:#262626;
+    font-size:13px;
+    outline:none;
   }
-  .public-search:focus{border-color:rgba(146,64,14,.35);box-shadow:0 0 0 4px rgba(146,64,14,.08)}
-  .feed-post{
-    background:#fffdf8;
-    border:1px solid rgba(28,25,23,.08);
-    border-radius:22px;
-    padding:16px 16px 10px;
-    margin-bottom:14px;
-    box-shadow:0 16px 40px rgba(68,48,24,.05);
+  .ig-post{background:#fff;border-bottom:1px solid #efefef;padding-bottom:8px}
+  .ig-head{display:flex;align-items:center;gap:10px;padding:10px 12px 8px}
+  .ig-avatar{
+    width:32px;height:32px;border-radius:50%;
+    display:grid;place-items:center;
+    background:radial-gradient(circle at 30% 30%, #f9ce34, #ee2a7b 55%, #6228d7);
+    color:#fff;font-size:10px;font-weight:800;
   }
-  .post-head{display:flex;align-items:center;gap:10px}
-  .post-avatar{
-    width:40px;height:40px;border-radius:50%;
-    display:grid;place-items:center;background:#1c1917;color:#f6efe4;
-    font-size:11px;font-weight:800;flex:0 0 auto;
-  }
-  .post-name{margin:0;font-size:14px;font-weight:750}
-  .post-meta{margin:2px 0 0;color:#8a8175;font-size:12px}
-  .post-title{
-    margin:14px 0 8px;
-    font-family:Georgia,'Iowan Old Style','Palatino Linotype',Palatino,serif;
-    font-size:26px;font-weight:500;letter-spacing:-.03em;line-height:1.15;
-  }
-  .post-body{cursor:pointer}
-  .post-line{
-    margin:0 0 4px;
-    font-family:Georgia,'Iowan Old Style','Palatino Linotype',Palatino,serif;
-    font-size:17px;line-height:1.7;color:#292524;
-  }
-  .post-more{margin:6px 0 0;color:#9a3412;font-size:13px;font-weight:700}
-  .post-actions{
-    display:flex;justify-content:flex-end;align-items:center;
-    margin-top:10px;padding-top:8px;border-top:1px solid rgba(28,25,23,.06);
-  }
-  .share-btn{
-    min-height:36px;padding:0 12px;border-radius:999px;border:1px solid rgba(28,25,23,.10);
-    background:#fff;color:#1c1917;font-size:13px;font-weight:700;
-    display:inline-flex;align-items:center;gap:6px;
-  }
-  .share-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .public-empty{
-    padding:36px 8px;color:#57534e;text-align:center;
-  }
-  .public-empty h3{
-    margin:0 0 8px;font-family:Georgia,serif;font-weight:500;font-size:28px;color:#1c1917;
-  }
-  .reader-screen,.share-sheet{
-    position:fixed;inset:0;z-index:40;
-  }
-  .reader-screen{
-    background:#f7f2ea;
-    display:flex;flex-direction:column;
-  }
-  .reader-screen[hidden],.share-sheet[hidden]{display:none}
+  .ig-user{min-width:0}
+  .ig-user strong{display:block;font-size:14px;font-weight:650;line-height:1.15}
+  .ig-user span{display:block;color:#737373;font-size:12px}
+  .ig-media{display:block;width:100%;padding:0;border:0;background:#000;cursor:pointer}
+  .ig-media img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;background:#090909}
+  .ig-actions{display:flex;align-items:center;padding:2px 4px 0}
+  .ig-caption{padding:0 14px 10px;font-size:14px;line-height:1.45}
+  .ig-caption strong{margin-right:6px}
+  .public-empty{padding:48px 20px;color:#737373;text-align:center}
+  .public-empty h3{margin:0 0 8px;color:#262626;font-size:22px;font-weight:650}
+  .reader-screen,.share-sheet{position:fixed;inset:0;z-index:40}
+  .reader-screen{background:#000;display:flex;flex-direction:column;color:#fff}
+  .reader-screen[hidden],.share-sheet[hidden],.studio-gate[hidden]{display:none !important}
   .reader-top{
-    display:flex;align-items:center;justify-content:space-between;gap:8px;
-    padding:12px 14px;border-bottom:1px solid rgba(28,25,23,.06);
-    background:rgba(247,242,234,.92);backdrop-filter:blur(12px);
+    display:flex;align-items:center;justify-content:space-between;
+    height:52px;padding:0 8px;color:#fff;
   }
-  .reader-scroll{flex:1;overflow:auto;padding:22px 18px 40px}
-  .reader-column{width:min(640px,100%);margin:0 auto}
-  .reader-kicker-public{margin:0 0 8px;color:#8a8175;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
-  .reader-screen h2{
-    margin:0 0 16px;
-    font-family:Georgia,'Iowan Old Style',Palatino,serif;
-    font-size:36px;font-weight:500;letter-spacing:-.04em;line-height:1.05;
-  }
-  .reader-screen .post-line{font-size:19px;line-height:1.75}
-  .share-scrim{position:absolute;inset:0;background:rgba(28,25,23,.35)}
+  .reader-top .lock-btn,.reader-top .ig-icon{color:#fff}
+  .reader-scroll{flex:1;overflow:auto;display:grid;place-items:center}
+  .reader-scroll img{width:min(470px,100%);height:auto}
+  .share-scrim{position:absolute;inset:0;background:rgba(0,0,0,.55)}
   .share-panel{
     position:absolute;left:50%;bottom:0;transform:translateX(-50%);
-    width:min(520px,100%);
-    background:#fffdf8;border-radius:22px 22px 0 0;
-    padding:16px 16px calc(16px + env(safe-area-inset-bottom));
-    box-shadow:0 -20px 50px rgba(28,25,23,.18);
+    width:min(470px,100%);
+    background:#fff;color:#262626;border-radius:16px 16px 0 0;
+    padding:14px 14px calc(16px + env(safe-area-inset-bottom));
   }
-  .share-panel h3{margin:0 0 4px;font-size:18px}
-  .share-panel p{margin:0 0 12px;color:#57534e;font-size:13px;line-height:1.5}
+  .share-panel h3{margin:0 0 4px;font-size:16px}
+  .share-panel p{margin:0 0 12px;color:#737373;font-size:13px;line-height:1.45}
+  .share-card-preview{width:100%;border-radius:8px;display:block;margin-bottom:12px;background:#000}
   .share-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .share-grid button,.share-grid a{
-    min-height:44px;border-radius:14px;border:1px solid rgba(28,25,23,.10);
-    background:#fff;color:#1c1917;font-size:13px;font-weight:700;
-    display:flex;align-items:center;justify-content:center;text-decoration:none;
+  .share-grid button{
+    min-height:44px;border-radius:10px;border:1px solid #dbdbdb;
+    background:#fff;color:#262626;font-size:14px;font-weight:650;
   }
-  .share-grid .wide{grid-column:1 / -1;background:#1c1917;color:#f6efe4;border-color:#1c1917}
+  .share-grid .wide{grid-column:1 / -1;background:#0095f6;border-color:#0095f6;color:#fff}
+  .studio-gate{
+    min-height:100svh;
+    display:grid;
+    place-items:center;
+    padding:24px;
+    background:#fafafa;
+    color:#262626;
+  }
+  .studio-card{
+    width:min(380px,100%);
+    background:#fff;
+    border:1px solid #dbdbdb;
+    border-radius:12px;
+    padding:28px 22px 22px;
+    text-align:center;
+  }
+  .studio-card h2{margin:0 0 6px;font-size:28px;letter-spacing:-.04em}
+  .studio-card .lede{margin:0 0 16px;color:#737373;font-size:14px;line-height:1.5}
+  .studio-card input{
+    width:100%;min-height:42px;border-radius:8px;border:1px solid #dbdbdb;
+    padding:0 12px;font-size:14px;background:#fafafa;
+  }
+  .studio-card .primary-btn{width:100%;margin-top:10px;border-radius:8px}
+  .studio-help{margin:14px 0 0;color:#737373;font-size:12px;line-height:1.5;text-align:left}
   @media (max-width:720px){
     .pipeline{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .feed-intro h2{font-size:30px}
-    .reader-screen h2{font-size:30px}
+    .feed-wrap{border:0}
   }
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
@@ -1678,51 +1665,51 @@
 <div class="public-app" id="publicApp">
   <header class="feed-bar">
     <div class="feed-brand">
-      <div class="feed-mark">FP</div>
-      <div>
-        <h1>FluffyPens</h1>
-        <p>Shayari</p>
-      </div>
+      <h1>FluffyPens</h1>
     </div>
-    <button class="studio-link" id="publicStudioBtn" type="button">Studio</button>
+    <button class="lock-btn" id="publicStudioBtn" type="button" aria-label="Open studio">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+    </button>
   </header>
   <div class="feed-wrap">
-    <section class="feed-intro">
-      <h2>Shayari</h2>
-      <p class="lede">Read what’s posted. There are no likes and no comments — if a piece stays with you, share it on.</p>
-      <input class="public-search" id="publicSearch" type="search" placeholder="Search a title or a line" aria-label="Search posted shayari">
-    </section>
+    <input class="public-search" id="publicSearch" type="search" placeholder="Search" aria-label="Search posted shayari">
     <section id="publicFeed" aria-live="polite"></section>
   </div>
   <section class="reader-screen" id="publicReader" hidden aria-label="Shayari">
     <div class="reader-top">
-      <button class="studio-link" id="publicReaderBack" type="button">Back</button>
-      <button class="share-btn" id="publicReaderShare" type="button">Share</button>
+      <button class="ig-icon" id="publicReaderBack" type="button" aria-label="Back">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <button class="ig-icon" id="publicReaderShare" type="button" aria-label="Share image">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 3 11 14"/><path d="M22 3 15 21l-4-7-7-4 18-7z"/></svg>
+      </button>
     </div>
     <div class="reader-scroll">
-      <article class="reader-column">
-        <p class="reader-kicker-public" id="publicReaderKicker">FluffyPens</p>
-        <h2 id="publicReaderTitle"></h2>
-        <div id="publicReaderBody"></div>
-      </article>
+      <img id="publicReaderImage" alt="">
     </div>
   </section>
   <section class="share-sheet" id="shareSheet" hidden>
     <div class="share-scrim" id="shareScrim"></div>
     <div class="share-panel" role="dialog" aria-labelledby="shareSheetTitle">
-      <h3 id="shareSheetTitle">Share this shayari</h3>
-      <p id="shareSheetCopy">Send the words to WhatsApp, X, Messages, or anywhere else. Nothing is posted back here.</p>
+      <h3 id="shareSheetTitle">Share image</h3>
+      <p id="shareSheetCopy">The shayari goes out as a photo. On your phone, choose WhatsApp, Instagram, or Messages.</p>
+      <img class="share-card-preview" id="shareCardPreview" alt="">
       <div class="share-grid">
-        <button type="button" class="wide" data-share-kind="native">Share to apps</button>
-        <button type="button" data-share-kind="whatsapp">WhatsApp</button>
-        <button type="button" data-share-kind="x">X</button>
-        <button type="button" data-share-kind="telegram">Telegram</button>
-        <button type="button" data-share-kind="sms">Messages</button>
-        <button type="button" data-share-kind="copy">Copy text</button>
+        <button type="button" class="wide" data-share-kind="image">Share image</button>
+        <button type="button" data-share-kind="download">Download</button>
         <button type="button" data-share-kind="copy-link">Copy link</button>
       </div>
     </div>
   </section>
+</div>
+<div class="studio-gate" id="studioGate" hidden>
+  <form class="studio-card" id="studioLockForm">
+    <h2>FluffyPens</h2>
+    <p class="lede">Studio is locked. Visitors can read and share. Only this password can edit.</p>
+    <input id="studioPassword" type="password" autocomplete="current-password" placeholder="Studio password" aria-label="Studio password">
+    <button class="primary-btn" id="studioUnlock" type="submit">Unlock</button>
+    <p class="studio-help" id="studioLockHelp">The password is checked by Google Apps Script, not saved in this page. In the script project, open Settings, add a script property named STUDIO_PASSWORD, paste the latest script, and deploy a new web app version.</p>
+  </form>
 </div>
 <div class="app">
   <header class="topbar">
@@ -1792,6 +1779,13 @@
           <path d="M8 9h.01M12 9h.01M16 9h.01M8 13h8"/>
         </svg>
         Keyboard shortcuts
+      </button>
+      <button class="menu-item" type="button" data-menu-action="lock" role="menuitem">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="5" y="11" width="14" height="10" rx="2"/>
+          <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+        </svg>
+        Lock studio
       </button>
       <button class="menu-item" type="button" data-menu-action="feed" role="menuitem">
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -2072,6 +2066,9 @@ const state={
   surface:'public',
   publicPieceId:null,
   sharePiece:null,
+  studioPassword:'',
+  studioAuthed:false,
+  apiLocked:false,
 };
 let deferredInstallPrompt=null;
 
@@ -2147,6 +2144,90 @@ function poemLines(piece){
     .split(/\n+/)
     .map(line=>line.trim())
     .filter(Boolean);
+}
+const cardCache=new Map();
+function wrapCanvasLine(ctx,text,maxWidth){
+  const words=String(text||'').split(/\s+/).filter(Boolean);
+  if(!words.length) return [''];
+  const lines=[];
+  let current='';
+  const pushToken=(token)=>{
+    if(ctx.measureText(token).width<=maxWidth){
+      current=current?`${current} ${token}`:token;
+      return;
+    }
+    if(current) lines.push(current);
+    let chunk='';
+    for(const ch of token){
+      const next=chunk+ch;
+      if(ctx.measureText(next).width>maxWidth && chunk){
+        lines.push(chunk);
+        chunk=ch;
+      }else chunk=next;
+    }
+    current=chunk;
+  };
+  words.forEach(pushToken);
+  if(current) lines.push(current);
+  return lines;
+}
+function drawCard(piece){
+  const w=1080,h=1350,pad=100;
+  const canvas=document.createElement('canvas');
+  canvas.width=w; canvas.height=h;
+  const ctx=canvas.getContext('2d');
+  const bg=ctx.createRadialGradient(w/2,h*0.42,80,w/2,h*0.5,860);
+  bg.addColorStop(0,'#1a1a1a');
+  bg.addColorStop(1,'#050505');
+  ctx.fillStyle=bg;
+  ctx.fillRect(0,0,w,h);
+  const title=String(piece?.title||'Untitled').trim()||'Untitled';
+  const source=poemLines(piece);
+  const bodyLines=source.length?source:[title];
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  let fontSize=54;
+  let wrapped=[];
+  const maxWidth=w-pad*2;
+  while(fontSize>=28){
+    ctx.font=`${fontSize}px Georgia, "Times New Roman", serif`;
+    wrapped=bodyLines.flatMap(line=>wrapCanvasLine(ctx,line,maxWidth));
+    if(wrapped.length*fontSize*1.42 < h-380) break;
+    fontSize-=2;
+  }
+  ctx.fillStyle='rgba(255,255,255,.62)';
+  ctx.font='600 26px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+  ctx.fillText(title.toUpperCase().slice(0,42), w/2, 118);
+  ctx.fillStyle='#f7f7f7';
+  ctx.font=`${fontSize}px Georgia, "Times New Roman", serif`;
+  const lineHeight=fontSize*1.42;
+  let y=(h-wrapped.length*lineHeight)/2+lineHeight/2;
+  wrapped.forEach(line=>{
+    ctx.fillText(line,w/2,y);
+    y+=lineHeight;
+  });
+  ctx.fillStyle='rgba(255,255,255,.5)';
+  ctx.font='600 22px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+  ctx.fillText('FLUFFYPENS', w/2, h-92);
+  return canvas;
+}
+function cardKey(piece){
+  return [piece?.id,piece?.updatedAt,piece?.title,piece?.rawContent,piece?.content].join('|');
+}
+function cardDataUrl(piece){
+  const key=cardKey(piece);
+  if(cardCache.has(key)) return cardCache.get(key);
+  const url=drawCard(piece).toDataURL('image/jpeg',0.86);
+  cardCache.set(key,url);
+  return url;
+}
+function cardBlob(piece){
+  return new Promise(resolve=>drawCard(piece).toBlob(resolve,'image/jpeg',0.92));
+}
+async function pieceCardFile(piece){
+  const blob=await cardBlob(piece);
+  const name=(piece?.title||'shayari').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)||'shayari';
+  return new File([blob], `${name}.jpg`, {type:'image/jpeg'});
 }
 function postedPieces(){
   return state.vault.filter(p=>p.status==='posted');
@@ -2407,38 +2488,82 @@ async function loadSharedConfig(){
 function hasConfig(){return Boolean(state.sheetsUrl)}
 async function sheetsRequest(payload){
   if(!hasConfig())throw new Error('Sheets not configured');
+  const body={...payload};
+  if(body.action==='load'||body.action==='save'||body.action==='debug_headers'){
+    body.password=state.studioPassword||'';
+  }
   const res=await fetch(state.sheetsUrl,{
     method:'POST',
     headers:{'Content-Type':'text/plain;charset=utf-8'},
-    body:JSON.stringify(payload)
+    body:JSON.stringify(body)
   });
   if(!res.ok)throw new Error(`HTTP ${res.status}`);
   const data=await res.json();
   if(!data.ok)throw new Error(data.error||'Unknown error');
   return data;
 }
-async function loadRemote(){
+function postedOnly(list){
+  return (Array.isArray(list)?list:[])
+    .filter(piece=>String(piece?.status||'').toLowerCase()==='posted')
+    .map(piece=>{
+      const next=normalizePiece(piece);
+      next.notes='';
+      next.status='posted';
+      return next;
+    });
+}
+async function loadPublic(){
   if(!hasConfig()){
-    if(state.surface==='studio') return openSettings();
     renderPublic();
     return;
   }
+  try{
+    try{
+      const data=await sheetsRequest({action:'feed'});
+      state.apiLocked=true;
+      state.vault=postedOnly(data.feed);
+      state.archive=[];
+    }catch(err){
+      if(!/invalid action/i.test(err.message||'')) throw err;
+      const data=await sheetsRequest({action:'load'});
+      state.apiLocked=false;
+      state.vault=postedOnly(data.vault);
+      state.archive=[];
+    }
+    state.syncError='';
+    state.lastSyncAt=new Date();
+    renderPublic();
+    if(state.surface==='public' && state.publicPieceId) openPublicPiece(state.publicPieceId, false);
+  }catch(err){
+    state.syncError=err.message;
+    renderPublic();
+  }
+}
+async function loadRemote(){
+  if(!state.studioAuthed) return false;
+  if(!hasConfig()) return openSettings();
   setConn('busy','Loading...');
   try{
     const data=await sheetsRequest({action:'load'});
+    if(!String(data.version||'').includes('studio-lock')){
+      lockStudio('Studio is not protected on the server yet.');
+      return false;
+    }
     state.vault=Array.isArray(data.vault)?data.vault.map(normalizePiece):[];
     state.archive=Array.isArray(data.archive)?data.archive.map(normalizePiece):[];
     state.lastSyncAt=new Date();
     state.syncError='';
+    state.apiLocked=true;
     clearLastAction();
     setConn('ok',syncStampLabel());
     renderAll();
-    if(state.surface==='public' && state.publicPieceId) openPublicPiece(state.publicPieceId, false);
+    return true;
   }catch(err){
     state.syncError=err.message;
     setConn('', 'Connection failed');
-    toast(`Load failed: ${err.message}`);
-    renderPublic();
+    if(/password|unauthorized|studio_password/i.test(err.message||'')) lockStudio(err.message);
+    else toast(`Load failed: ${err.message}`);
+    return false;
   }
 }
 async function saveRemote(){
@@ -2612,6 +2737,75 @@ function readRoute(){
   if(match) return {surface:'public', piece:match[1]};
   return {surface:'public', piece:null};
 }
+function setLockMessage(text){
+  const help=$('studioLockHelp');
+  if(help && text) help.textContent=text;
+}
+function showStudioGate(message){
+  document.body.dataset.locked='on';
+  const gate=$('studioGate');
+  if(gate) gate.hidden=false;
+  if(message) setLockMessage(message);
+  closeDrawer();
+  closeSettings();
+  closeShareModal();
+  closeTopMenu();
+  closeShareSheet();
+}
+function hideStudioGate(){
+  document.body.dataset.locked='off';
+  const gate=$('studioGate');
+  if(gate) gate.hidden=true;
+}
+function lockStudio(message){
+  state.studioAuthed=false;
+  state.studioPassword='';
+  sessionStorage.removeItem('fp-studio-pass');
+  state.vault=state.vault.filter(piece=>piece.status==='posted').map(piece=>({...piece,notes:''}));
+  state.archive=[];
+  closePublicReader(false);
+  if(location.hash!=='#studio') location.hash='studio';
+  else showStudioGate(message);
+}
+async function unlockStudio(){
+  if(state.unlocking) return;
+  const password=String($('studioPassword')?.value||state.studioPassword||'');
+  if(!password){
+    setLockMessage('Enter the studio password.');
+    return;
+  }
+  if(!hasConfig()){
+    setLockMessage('The Sheets connection is not set up on this site yet.');
+    return;
+  }
+  state.unlocking=true;
+  state.studioPassword=password;
+  try{
+    const data=await sheetsRequest({action:'load'});
+    if(!String(data.version||'').includes('studio-lock')){
+      state.studioPassword='';
+      setLockMessage('This site’s Apps Script is still unlocked. Open the script, set the script property STUDIO_PASSWORD, paste the latest google-apps-script.gs, and deploy a new web app version.');
+      return;
+    }
+    sessionStorage.setItem('fp-studio-pass', password);
+    state.studioAuthed=true;
+    state.apiLocked=true;
+    state.vault=Array.isArray(data.vault)?data.vault.map(normalizePiece):[];
+    state.archive=Array.isArray(data.archive)?data.archive.map(normalizePiece):[];
+    state.lastSyncAt=new Date();
+    state.syncError='';
+    hideStudioGate();
+    setConn('ok',syncStampLabel());
+    renderAll();
+    toast('Studio unlocked');
+  }catch(err){
+    state.studioPassword='';
+    sessionStorage.removeItem('fp-studio-pass');
+    setLockMessage(err.message||'Could not unlock Studio.');
+  }finally{
+    state.unlocking=false;
+  }
+}
 function applyRoute(){
   const route=readRoute();
   state.surface=route.surface;
@@ -2620,9 +2814,16 @@ function applyRoute(){
   if(state.surface==='studio'){
     closePublicReader(false);
     closeShareSheet();
+    if(!state.studioAuthed){
+      showStudioGate();
+      if(state.studioPassword && hasConfig() && !state.unlocking) unlockStudio();
+      return;
+    }
+    hideStudioGate();
     renderAll();
     return;
   }
+  hideStudioGate();
   closeDrawer();
   closeSettings();
   closeShareModal();
@@ -2658,39 +2859,36 @@ function renderPublic(){
     return;
   }
   if(state.syncError && !postedPieces().length){
-    feed.innerHTML='<div class="public-empty"><h3>Couldn’t load shayari</h3><p>Check the connection and refresh. Studio can still open from the corner.</p></div>';
+    feed.innerHTML='<div class="public-empty"><h3>Couldn’t load the feed</h3><p>Check the connection and refresh.</p></div>';
     return;
   }
   if(!list.length){
-    feed.innerHTML=`<div class="public-empty"><h3>${q ? 'No match' : 'Nothing posted yet'}</h3><p>${q ? 'Try another line or title.' : 'New shayari will show up here once it is posted.'}</p></div>`;
+    feed.innerHTML=`<div class="public-empty"><h3>${q ? 'No results' : 'No posts yet'}</h3><p>${q ? 'Try another word.' : 'Posted shayari will show up here.'}</p></div>`;
     return;
   }
   feed.innerHTML=list.map(piece=>{
-    const lines=poemLines(piece);
-    const preview=lines.slice(0,6);
-    const more=lines.length>preview.length;
     const when=fmtDate(piece.updatedAt||piece.createdAt);
-    const kind=String(piece.type||'poem').replace(/_/g,' ').replace(/\b\w/g,ch=>ch.toUpperCase());
+    const kind=String(piece.type||'poem').replace(/_/g,' ');
+    const image=cardDataUrl(piece);
+    const alt=`${piece.title||'Untitled'}. ${poemLines(piece).join(' ')}`;
     return `
-      <article class="feed-post">
-        <div class="post-head">
-          <div class="post-avatar" aria-hidden="true">FP</div>
-          <div>
-            <p class="post-name">FluffyPens</p>
-            <p class="post-meta">${esc(kind)}${when ? ` · ${esc(when)}` : ''}</p>
+      <article class="ig-post">
+        <div class="ig-head">
+          <div class="ig-avatar" aria-hidden="true">FP</div>
+          <div class="ig-user">
+            <strong>fluffypens</strong>
+            <span>${esc(kind)}${when ? ` · ${esc(when)}` : ''}</span>
           </div>
         </div>
-        <div class="post-body" data-public-open="${esc(piece.id)}">
-          <h3 class="post-title">${esc(piece.title||'Untitled')}</h3>
-          ${linesHtml(preview)}
-          ${more ? '<p class="post-more">Read the rest</p>' : ''}
-        </div>
-        <div class="post-actions">
-          <button class="share-btn" type="button" data-share="${esc(piece.id)}" aria-label="Share ${esc(piece.title||'this shayari')}">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M12 16V4"/><path d="M8 8l4-4 4 4"/></svg>
-            Share
+        <button class="ig-media" type="button" data-public-open="${esc(piece.id)}">
+          <img src="${image}" alt="${esc(alt)}">
+        </button>
+        <div class="ig-actions">
+          <button class="ig-icon" type="button" data-share="${esc(piece.id)}" aria-label="Share ${esc(piece.title||'this shayari')} as an image">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 3 11 14"/><path d="M22 3 15 21l-4-7-7-4 18-7z"/></svg>
           </button>
         </div>
+        <div class="ig-caption"><strong>fluffypens</strong> ${esc(piece.title||'Untitled')}</div>
       </article>
     `;
   }).join('');
@@ -2707,18 +2905,19 @@ function openPublicPiece(id, updateHash){
   }
   const reader=$('publicReader');
   if(!reader) return;
+  const image=$('publicReaderImage');
   if(!piece){
-    $('publicReaderKicker').textContent='FluffyPens';
-    $('publicReaderTitle').textContent='Not on the feed';
-    $('publicReaderBody').innerHTML='<p class="post-line">This piece is not posted, so it stays in Studio.</p>';
+    if(image){
+      image.removeAttribute('src');
+      image.alt='This shayari is not posted.';
+    }
     reader.hidden=false;
     return;
   }
-  const when=fmtDate(piece.updatedAt||piece.createdAt);
-  const kind=String(piece.type||'poem').replace(/_/g,' ').replace(/\b\w/g,ch=>ch.toUpperCase());
-  $('publicReaderKicker').textContent=`FluffyPens${when ? ` · ${when}` : ''} · ${kind}`;
-  $('publicReaderTitle').textContent=piece.title||'Untitled';
-  $('publicReaderBody').innerHTML=linesHtml(poemLines(piece));
+  if(image){
+    image.src=cardDataUrl(piece);
+    image.alt=`${piece.title||'Untitled'}. ${poemLines(piece).join(' ')}`;
+  }
   reader.hidden=false;
   state.sharePiece=piece;
 }
@@ -2735,47 +2934,59 @@ function openShareSheet(piece){
   state.sharePiece=piece;
   const sheet=$('shareSheet');
   if(!sheet) return;
-  if($('shareSheetCopy')) $('shareSheetCopy').textContent=`“${piece.title||'Untitled'}” can be sent to WhatsApp, X, Messages, or any other app. Nothing is posted back here.`;
+  if($('shareSheetCopy')) $('shareSheetCopy').textContent=`“${piece.title||'Untitled'}” is shared as a photo. Pick WhatsApp, Instagram, Messages, or any other app.`;
+  const preview=$('shareCardPreview');
+  if(preview){
+    preview.src=cardDataUrl(piece);
+    preview.alt=piece.title||'Shayari card';
+  }
   sheet.hidden=false;
 }
 function closeShareSheet(){
   const sheet=$('shareSheet');
   if(sheet) sheet.hidden=true;
 }
+async function downloadCard(piece){
+  const file=await pieceCardFile(piece);
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(file);
+  a.download=file.name;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  toast('Image downloaded');
+}
 async function runShare(kind, piece){
   const target=piece||state.sharePiece;
   if(!target) return;
   const payload=pieceSharePayload(target);
-  const full=`${payload.text}\n\n${payload.url}`;
-  if(kind==='native'){
-    if(navigator.share){
-      try{
-        await navigator.share({title:payload.title, text:payload.text, url:payload.url});
+  if(kind==='native' || kind==='image'){
+    try{
+      const file=await pieceCardFile(target);
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        await navigator.share({files:[file], title:payload.title, text:`${payload.title} — FluffyPens`});
         closeShareSheet();
         return;
-      }catch(err){
-        if(err?.name==='AbortError') return;
       }
+    }catch(err){
+      if(err?.name==='AbortError') return;
     }
-    kind='copy';
+    await downloadCard(target);
+    closeShareSheet();
+    return;
   }
-  if(kind==='whatsapp'){
-    window.open(`https://wa.me/?text=${encodeURIComponent(full)}`, '_blank', 'noopener');
-  }else if(kind==='x'){
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${payload.text}\n\n${payload.url}`)}`, '_blank', 'noopener');
-  }else if(kind==='telegram'){
-    window.open(`https://t.me/share/url?url=${encodeURIComponent(payload.url)}&text=${encodeURIComponent(payload.text)}`, '_blank', 'noopener');
-  }else if(kind==='sms'){
-    window.location.href=`sms:?&body=${encodeURIComponent(full)}`;
-  }else if(kind==='copy' || kind==='copy-link'){
+  if(kind==='download'){
+    await downloadCard(target);
+    closeShareSheet();
+    return;
+  }
+  if(kind==='copy-link'){
     try{
-      await navigator.clipboard.writeText(kind==='copy-link' ? payload.url : full);
-      toast(kind==='copy-link' ? 'Link copied' : 'Shayari copied');
+      await navigator.clipboard.writeText(payload.url);
+      toast('Link copied');
     }catch{
       toast('Copy is not available in this browser');
     }
   }
-  if(kind!=='copy' && kind!=='copy-link') closeShareSheet();
 }
 function openDrawer(){
   state.drawerOpen=true;
@@ -3153,7 +3364,8 @@ function bindEvents(){
   $('docShareBtn')?.addEventListener('click',openShareModal);
   $('copyDraftBtn')?.addEventListener('click',copyShareDraft);
   $('copySummaryBtn')?.addEventListener('click',copyShareSummary);
-  $('shareAppsBtn')?.addEventListener('click',()=>runShare('native', editorSharePiece()));
+  $('shareAppsBtn')?.addEventListener('click',()=>runShare('image', editorSharePiece()));
+  $('studioLockForm')?.addEventListener('submit',e=>{e.preventDefault();unlockStudio();});
   $('publicStudioBtn')?.addEventListener('click',goStudio);
   $('openPublicBtn')?.addEventListener('click',goPublic);
   $('publicSearch')?.addEventListener('input',renderPublic);
@@ -3218,6 +3430,7 @@ function bindEvents(){
     if(action==='shortcuts')showShortcutHelp();
     if(action==='about')showAbout();
     if(action==='feed')goPublic();
+    if(action==='lock')lockStudio('Studio locked.');
   }));
   $('statusRow').addEventListener('click',e=>{
     const btn=e.target.closest('[data-status]');
@@ -3292,6 +3505,7 @@ async function init(){
   bindEvents();
   registerPwa();
   window.addEventListener('hashchange',applyRoute);
+  state.studioPassword=sessionStorage.getItem('fp-studio-pass')||'';
   applyRoute();
   const loaded=await loadSharedConfig();
   closeDrawer();
@@ -3299,11 +3513,15 @@ async function init(){
   document.body.dataset.view=state.view;
   if(loaded && hasConfig()){
     setConn('ok','Ready');
-    await loadRemote();
+    if(state.surface==='studio' && state.studioPassword){
+      if($('studioPassword')) $('studioPassword').value=state.studioPassword;
+      await unlockStudio();
+    }
+    if(!state.studioAuthed) await loadPublic();
   }else{
     setConn('', 'Apps Script URL not set');
-    if(state.surface==='studio') openSettings();
-    else renderPublic();
+    renderPublic();
+    if(state.surface==='studio') showStudioGate('The Sheets connection is not set up on this site yet.');
   }
   updateDocSummary();
   $('docShareBtn')?.setAttribute('aria-expanded','false');
