@@ -1479,12 +1479,251 @@
       margin-top:2px;
     }
   }
+  .piece-card.status-draft::before{background:linear-gradient(180deg,#64748b,#94a3b8)}
+  .piece-card.status-wip::before{background:linear-gradient(180deg,#d97706,#fbbf24)}
+  .piece-card.status-ready::before{background:linear-gradient(180deg,#1d4ed8,#60a5fa)}
+  .piece-card.status-recorded::before{background:linear-gradient(180deg,#6d28d9,#c4b5fd)}
+  .piece-card.status-posted::before{background:linear-gradient(180deg,#0f9d58,#86efac)}
+  .status-chip.draft{background:#f1f5f9;color:#334155;border-color:rgba(51,65,85,.12)}
+  .status-chip.wip{background:#fff7ed;color:#9a3412;border-color:rgba(217,119,6,.18)}
+  .status-chip.ready{background:#eff6ff;color:#1d4ed8;border-color:rgba(29,78,216,.16)}
+  .status-chip.recorded{background:#f5f3ff;color:#6d28d9;border-color:rgba(109,40,217,.16)}
+  .status-chip.posted{background:#ecfdf3;color:#047857;border-color:rgba(15,157,88,.18)}
+  .chip-count{
+    display:inline-grid;
+    place-items:center;
+    min-width:18px;
+    height:18px;
+    margin-left:6px;
+    padding:0 5px;
+    border-radius:999px;
+    background:rgba(17,24,39,.08);
+    font-size:10px;
+  }
+  .chip.on .chip-count{background:rgba(255,255,255,.22)}
+  .pipeline{
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:8px;
+  }
+  .pipe{
+    text-align:left;
+    padding:10px 11px;
+    border-radius:14px;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--ink);
+  }
+  .pipe.on{border-color:rgba(26,115,232,.35);box-shadow:0 0 0 3px rgba(26,115,232,.08)}
+  .pipe .k{
+    display:block;
+    color:var(--soft);
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .pipe .v{display:block;font-size:16px;font-weight:750;letter-spacing:-.03em}
+  .pipe.draft .v{color:#334155}
+  .pipe.wip .v{color:#b45309}
+  .pipe.ready .v{color:#1d4ed8}
+  .pipe.recorded .v{color:#6d28d9}
+  .pipe.posted .v{color:#047857}
+
+  body[data-surface="public"] .app{display:none}
+  body[data-surface="studio"] .public-app{display:none}
+  .public-app{
+    height:100svh;
+    overflow:auto;
+    background:
+      radial-gradient(900px 420px at 50% -80px, rgba(146,64,14,.10), transparent 70%),
+      #f3eee6;
+    color:#1c1917;
+  }
+  .feed-bar{
+    position:sticky;
+    top:0;
+    z-index:5;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:12px 16px;
+    background:rgba(243,238,230,.88);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(28,25,23,.06);
+  }
+  .feed-brand{display:flex;align-items:center;gap:10px;min-width:0}
+  .feed-mark{
+    width:36px;height:36px;border-radius:50%;
+    display:grid;place-items:center;
+    background:#1c1917;color:#f6efe4;
+    font-size:11px;font-weight:800;letter-spacing:.04em;flex:0 0 auto;
+  }
+  .feed-brand h1{margin:0;font-size:16px;letter-spacing:-.03em;line-height:1.1}
+  .feed-brand p{margin:2px 0 0;color:#8a8175;font-size:12px}
+  .studio-link{
+    min-height:34px;padding:0 12px;border-radius:999px;
+    border:1px solid rgba(28,25,23,.12);background:#fffdf8;color:#1c1917;
+    font-size:12px;font-weight:700;
+  }
+  .feed-wrap{width:min(680px,100%);margin:0 auto;padding:18px 16px 72px}
+  .feed-intro{margin:6px 2px 16px}
+  .feed-intro h2{
+    margin:0;
+    font-family:Georgia,'Iowan Old Style','Palatino Linotype',Palatino,serif;
+    font-size:34px;font-weight:500;letter-spacing:-.04em;line-height:1;
+  }
+  .feed-intro .lede{margin:8px 0 14px;color:#57534e;font-size:14px;line-height:1.55;max-width:42ch}
+  .public-search{
+    width:100%;min-height:44px;padding:0 14px;border-radius:14px;
+    border:1px solid rgba(28,25,23,.10);background:#fffdf8;color:#1c1917;outline:none;
+  }
+  .public-search:focus{border-color:rgba(146,64,14,.35);box-shadow:0 0 0 4px rgba(146,64,14,.08)}
+  .feed-post{
+    background:#fffdf8;
+    border:1px solid rgba(28,25,23,.08);
+    border-radius:22px;
+    padding:16px 16px 10px;
+    margin-bottom:14px;
+    box-shadow:0 16px 40px rgba(68,48,24,.05);
+  }
+  .post-head{display:flex;align-items:center;gap:10px}
+  .post-avatar{
+    width:40px;height:40px;border-radius:50%;
+    display:grid;place-items:center;background:#1c1917;color:#f6efe4;
+    font-size:11px;font-weight:800;flex:0 0 auto;
+  }
+  .post-name{margin:0;font-size:14px;font-weight:750}
+  .post-meta{margin:2px 0 0;color:#8a8175;font-size:12px}
+  .post-title{
+    margin:14px 0 8px;
+    font-family:Georgia,'Iowan Old Style','Palatino Linotype',Palatino,serif;
+    font-size:26px;font-weight:500;letter-spacing:-.03em;line-height:1.15;
+  }
+  .post-body{cursor:pointer}
+  .post-line{
+    margin:0 0 4px;
+    font-family:Georgia,'Iowan Old Style','Palatino Linotype',Palatino,serif;
+    font-size:17px;line-height:1.7;color:#292524;
+  }
+  .post-more{margin:6px 0 0;color:#9a3412;font-size:13px;font-weight:700}
+  .post-actions{
+    display:flex;justify-content:flex-end;align-items:center;
+    margin-top:10px;padding-top:8px;border-top:1px solid rgba(28,25,23,.06);
+  }
+  .share-btn{
+    min-height:36px;padding:0 12px;border-radius:999px;border:1px solid rgba(28,25,23,.10);
+    background:#fff;color:#1c1917;font-size:13px;font-weight:700;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .share-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .public-empty{
+    padding:36px 8px;color:#57534e;text-align:center;
+  }
+  .public-empty h3{
+    margin:0 0 8px;font-family:Georgia,serif;font-weight:500;font-size:28px;color:#1c1917;
+  }
+  .reader-screen,.share-sheet{
+    position:fixed;inset:0;z-index:40;
+  }
+  .reader-screen{
+    background:#f7f2ea;
+    display:flex;flex-direction:column;
+  }
+  .reader-screen[hidden],.share-sheet[hidden]{display:none}
+  .reader-top{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:12px 14px;border-bottom:1px solid rgba(28,25,23,.06);
+    background:rgba(247,242,234,.92);backdrop-filter:blur(12px);
+  }
+  .reader-scroll{flex:1;overflow:auto;padding:22px 18px 40px}
+  .reader-column{width:min(640px,100%);margin:0 auto}
+  .reader-kicker-public{margin:0 0 8px;color:#8a8175;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .reader-screen h2{
+    margin:0 0 16px;
+    font-family:Georgia,'Iowan Old Style',Palatino,serif;
+    font-size:36px;font-weight:500;letter-spacing:-.04em;line-height:1.05;
+  }
+  .reader-screen .post-line{font-size:19px;line-height:1.75}
+  .share-scrim{position:absolute;inset:0;background:rgba(28,25,23,.35)}
+  .share-panel{
+    position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+    width:min(520px,100%);
+    background:#fffdf8;border-radius:22px 22px 0 0;
+    padding:16px 16px calc(16px + env(safe-area-inset-bottom));
+    box-shadow:0 -20px 50px rgba(28,25,23,.18);
+  }
+  .share-panel h3{margin:0 0 4px;font-size:18px}
+  .share-panel p{margin:0 0 12px;color:#57534e;font-size:13px;line-height:1.5}
+  .share-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .share-grid button,.share-grid a{
+    min-height:44px;border-radius:14px;border:1px solid rgba(28,25,23,.10);
+    background:#fff;color:#1c1917;font-size:13px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;text-decoration:none;
+  }
+  .share-grid .wide{grid-column:1 / -1;background:#1c1917;color:#f6efe4;border-color:#1c1917}
+  @media (max-width:720px){
+    .pipeline{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .feed-intro h2{font-size:30px}
+    .reader-screen h2{font-size:30px}
+  }
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
   }
 </style>
 </head>
-<body>
+<body data-surface="public">
+<div class="public-app" id="publicApp">
+  <header class="feed-bar">
+    <div class="feed-brand">
+      <div class="feed-mark">FP</div>
+      <div>
+        <h1>FluffyPens</h1>
+        <p>Shayari</p>
+      </div>
+    </div>
+    <button class="studio-link" id="publicStudioBtn" type="button">Studio</button>
+  </header>
+  <div class="feed-wrap">
+    <section class="feed-intro">
+      <h2>Shayari</h2>
+      <p class="lede">Read what’s posted. There are no likes and no comments — if a piece stays with you, share it on.</p>
+      <input class="public-search" id="publicSearch" type="search" placeholder="Search a title or a line" aria-label="Search posted shayari">
+    </section>
+    <section id="publicFeed" aria-live="polite"></section>
+  </div>
+  <section class="reader-screen" id="publicReader" hidden aria-label="Shayari">
+    <div class="reader-top">
+      <button class="studio-link" id="publicReaderBack" type="button">Back</button>
+      <button class="share-btn" id="publicReaderShare" type="button">Share</button>
+    </div>
+    <div class="reader-scroll">
+      <article class="reader-column">
+        <p class="reader-kicker-public" id="publicReaderKicker">FluffyPens</p>
+        <h2 id="publicReaderTitle"></h2>
+        <div id="publicReaderBody"></div>
+      </article>
+    </div>
+  </section>
+  <section class="share-sheet" id="shareSheet" hidden>
+    <div class="share-scrim" id="shareScrim"></div>
+    <div class="share-panel" role="dialog" aria-labelledby="shareSheetTitle">
+      <h3 id="shareSheetTitle">Share this shayari</h3>
+      <p id="shareSheetCopy">Send the words to WhatsApp, X, Messages, or anywhere else. Nothing is posted back here.</p>
+      <div class="share-grid">
+        <button type="button" class="wide" data-share-kind="native">Share to apps</button>
+        <button type="button" data-share-kind="whatsapp">WhatsApp</button>
+        <button type="button" data-share-kind="x">X</button>
+        <button type="button" data-share-kind="telegram">Telegram</button>
+        <button type="button" data-share-kind="sms">Messages</button>
+        <button type="button" data-share-kind="copy">Copy text</button>
+        <button type="button" data-share-kind="copy-link">Copy link</button>
+      </div>
+    </div>
+  </section>
+</div>
 <div class="app">
   <header class="topbar">
     <div class="brand">
@@ -1554,6 +1793,14 @@
         </svg>
         Keyboard shortcuts
       </button>
+      <button class="menu-item" type="button" data-menu-action="feed" role="menuitem">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 6h16"/>
+          <path d="M4 12h16"/>
+          <path d="M4 18h10"/>
+        </svg>
+        Public feed
+      </button>
       <button class="menu-item" type="button" data-menu-action="about" role="menuitem">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="12" r="9"/>
@@ -1572,9 +1819,10 @@
           <button class="chip on" data-view="library" type="button">Library</button>
           <button class="chip" data-view="published" type="button">Published</button>
           <button class="chip" data-view="archive" type="button">Archive</button>
+          <button class="chip" id="openPublicBtn" type="button">Public feed</button>
         </div>
         <div class="shelf-banner" id="shelfBanner" aria-live="polite"></div>
-        <div class="workspace-hint">Cmd/Ctrl+K focuses search, Cmd/Ctrl+S saves, click a card to edit.</div>
+        <div class="workspace-hint">Only Posted pieces appear on the public feed. Drafts, in progress, ready, and recorded stay here in Studio.</div>
         <div class="search-row">
           <div class="search-wrap">
             <input class="search-input" id="searchInput" type="text" placeholder="Search title, content, note">
@@ -1781,16 +2029,17 @@
 </section>
 
 <section class="modal" id="shareModal" aria-hidden="true">
-  <h3>Share draft</h3>
-  <p>Copy a clean draft package. This app stays session-only, so sharing is handled by copying the content instead of generating a cloud link.</p>
+  <h3>Share this piece</h3>
+  <p>Send the shayari to another app, or copy it. Visitors on the public feed can do the same. Nothing is liked or commented here.</p>
   <textarea class="share-preview" id="sharePreview" readonly></textarea>
   <div class="share-meta">
     <span id="shareMetaLeft">Ready to copy</span>
     <span id="shareMetaRight">Google Sheets synced</span>
   </div>
   <div class="modal-foot">
+    <button class="ghost-btn" id="shareAppsBtn" type="button">Share to apps</button>
     <button class="ghost-btn" id="copySummaryBtn" type="button">Copy summary</button>
-    <button class="ghost-btn" id="copyDraftBtn" type="button">Copy draft</button>
+    <button class="ghost-btn" id="copyDraftBtn" type="button">Copy text</button>
     <button class="primary-btn" id="closeShareBtn" type="button">Done</button>
   </div>
 </section>
@@ -1820,17 +2069,20 @@ const state={
   syncError:'',
   lastAction:null,
   readerMode:'edit',
+  surface:'public',
+  publicPieceId:null,
+  sharePiece:null,
 };
 let deferredInstallPrompt=null;
 
 const $=id=>document.getElementById(id);
 const fmtDate=v=>{
-  const d=new Date(v);
-  return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const t=toEpoch(v);
+  return t ? new Date(t).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : '';
 };
 const fmtShort=v=>{
-  const d=new Date(v);
-  return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'});
+  const t=toEpoch(v);
+  return t ? new Date(t).toLocaleDateString('en-IN',{day:'2-digit',month:'short'}) : '';
 };
 const fmtClock=v=>{
   const d=new Date(v);
@@ -1868,22 +2120,61 @@ function pieceToPreview(piece,max=130){
   const raw=stripHtml(piece.content||piece.rawContent||'');
   return raw ? raw.slice(0,max) : 'No preview yet.';
 }
+function listFromField(value){
+  if(Array.isArray(value))return value.map(x=>String(x).trim()).filter(Boolean);
+  return String(value||'').split(',').map(x=>x.trim()).filter(Boolean);
+}
 function normalizePiece(piece){
   const status=STATUS_ORDER.includes(piece.status)?piece.status:DEFAULT_STATUS;
   return {
     id:String(piece.id||''),
     title:String(piece.title||''),
-    type:'poem',
+    type:String(piece.type||'poem'),
     lang:String(piece.lang||'hi'),
     content:String(piece.content||''),
     rawContent:String(piece.rawContent||stripHtml(piece.content||'')),
     notes:String(piece.notes||''),
     status,
-    platforms:[],
-    tags:'',
+    platforms:listFromField(piece.platforms),
+    tags:String(piece.tags||''),
     createdAt:String(piece.createdAt||''),
     updatedAt:String(piece.updatedAt||''),
     deletedAt:String(piece.deletedAt||'')
+  };
+}
+function poemLines(piece){
+  return stripHtml(piece?.content||piece?.rawContent||'')
+    .split(/\n+/)
+    .map(line=>line.trim())
+    .filter(Boolean);
+}
+function postedPieces(){
+  return state.vault.filter(p=>p.status==='posted');
+}
+function piecePublicUrl(piece){
+  const url=new URL(location.href);
+  url.hash=piece?.id ? `p/${encodeURIComponent(piece.id)}` : 'feed';
+  return url.toString();
+}
+function pieceSharePayload(piece){
+  const title=String(piece?.title||'Untitled').trim()||'Untitled';
+  const lines=poemLines(piece).join('\n');
+  const url=piecePublicUrl(piece);
+  const text=[title,'',lines,'','— FluffyPens'].filter(part=>part!=='').join('\n');
+  return {title,text,url};
+}
+function editorSharePiece(){
+  const existing=state.vault.find(p=>p.id===state.selectedId)||state.archive.find(p=>p.id===state.selectedId);
+  return {
+    id:state.selectedId||'',
+    title:$('titleInput')?.value.trim()||'Untitled',
+    content:$('editor')?.innerHTML||'',
+    rawContent:stripHtml($('editor')?.innerHTML||''),
+    status:currentStatus(),
+    type:existing?.type||'poem',
+    lang:$('langSelect')?.value||'hi',
+    createdAt:existing?.createdAt||'',
+    updatedAt:existing?.updatedAt||''
   };
 }
 function toast(msg){
@@ -1995,38 +2286,38 @@ function updateDrawerActionLabels(){
   if($('cancelBtn')) $('cancelBtn').textContent=mobile ? 'Close' : 'Cancel';
   if($('saveBtn')) $('saveBtn').textContent=mobile ? 'Save' : 'Save & Sync';
 }
+function statusCount(key){
+  if(key==='all')return state.vault.length;
+  return state.vault.filter(p=>p.status===key).length;
+}
 function renderShelfBanner(){
   const el=$('shelfBanner');
   if(!el)return;
-  const total=state.vault.length+state.archive.length;
-  const published=state.vault.filter(p=>p.status==='posted').length;
-  const drafts=state.vault.filter(p=>p.status==='draft' || p.status==='wip').length;
   const archived=state.archive.length;
   const title=state.view==='published'
-    ?'Published Shelf'
+    ?'Published shelf'
     :state.view==='archive'
-      ?'Archive Cabinet'
-      :'Writing Library';
+      ?'Archive'
+      :'Studio';
   const headline=state.view==='published'
-    ?'Your published book, ready to read'
+    ?'These are the pieces visitors can read and share'
     :state.view==='archive'
-      ?'Stored work stays out of the way'
-      :'A calm workspace for drafting and publishing';
-  const copy=state.view==='published'
-    ?'Pieces marked Posted appear here as a clean, book-like reading surface.'
-    :state.view==='archive'
-      ?'Archived work remains easy to restore without cluttering the active library.'
-      :'Keep drafts, revisions, and published work organized in one focused space.';
+      ?'Stored work stays off the public feed'
+      :'See what is posted, and what is still in progress';
+  const copy=state.view==='archive'
+    ?`${archived} archived. Restore one when you want it back in the library.`
+    :'Mark a piece Posted when it should show on the public feed. Everything else stays in Studio.';
+  const pipes=STATUS_ORDER.map(key=>`
+    <button class="pipe ${key} ${state.view==='library' && state.status===key ? 'on' : ''}" type="button" data-pipe="${key}">
+      <span class="k">${esc(STATUS_LABEL[key])}</span>
+      <span class="v">${statusCount(key)}</span>
+    </button>
+  `).join('');
   el.innerHTML=`
     <p class="eyebrow">${title}</p>
     <h2 class="headline">${headline}</h2>
     <p class="subhead">${copy}</p>
-    <div class="shelf-metrics" aria-label="Workspace summary">
-      <div class="shelf-metric"><span class="k">Total</span><span class="v">${total} pieces</span></div>
-      <div class="shelf-metric"><span class="k">Published</span><span class="v">${published} live</span></div>
-      <div class="shelf-metric"><span class="k">Drafts</span><span class="v">${drafts} active</span></div>
-      ${state.view==='archive' ? `<div class="shelf-metric"><span class="k">Archive</span><span class="v">${archived} stored</span></div>` : ''}
-    </div>
+    <div class="pipeline" aria-label="Piece status counts">${pipes}</div>
   `;
 }
 function setConn(kind,text){
@@ -2127,7 +2418,11 @@ async function sheetsRequest(payload){
   return data;
 }
 async function loadRemote(){
-  if(!hasConfig()) return openSettings();
+  if(!hasConfig()){
+    if(state.surface==='studio') return openSettings();
+    renderPublic();
+    return;
+  }
   setConn('busy','Loading...');
   try{
     const data=await sheetsRequest({action:'load'});
@@ -2138,10 +2433,12 @@ async function loadRemote(){
     clearLastAction();
     setConn('ok',syncStampLabel());
     renderAll();
+    if(state.surface==='public' && state.publicPieceId) openPublicPiece(state.publicPieceId, false);
   }catch(err){
     state.syncError=err.message;
     setConn('', 'Connection failed');
     toast(`Load failed: ${err.message}`);
+    renderPublic();
   }
 }
 async function saveRemote(){
@@ -2235,7 +2532,7 @@ function renderStatusRow(){
     return;
   }
   row.innerHTML=[['all','All'],...STATUS_ORDER.map(s=>[s,STATUS_LABEL[s]])]
-    .map(([k,l])=>`<button class="chip ${state.status===k?'on':''}" data-status="${k}" type="button" aria-pressed="${state.status===k?'true':'false'}">${l}</button>`)
+    .map(([k,l])=>`<button class="chip ${state.status===k?'on':''}" data-status="${k}" type="button" aria-pressed="${state.status===k?'true':'false'}">${l}<span class="chip-count">${statusCount(k)}</span></button>`)
     .join('');
 }
 function renderPieces(){
@@ -2286,11 +2583,11 @@ function renderPieces(){
           ?'Archived'
           :'Open';
     return `
-      <article class="piece-card ${p.status==='posted'?'posted':''}" data-open="${esc(p.id)}">
+      <article class="piece-card status-${esc(p.status)} ${p.status==='posted'?'posted':''}" data-open="${esc(p.id)}">
         <div class="piece-kicker">${esc(typeLabel)} · ${esc(langLabel)}</div>
         <div class="piece-top">
           <h3 class="piece-title">${esc(p.title||'Untitled')}</h3>
-          <span class="status-chip">${esc(STATUS_LABEL[p.status]||p.status)}</span>
+          <span class="status-chip ${esc(p.status)}">${esc(STATUS_LABEL[p.status]||p.status)}</span>
         </div>
         <p class="piece-copy">${esc(preview)}</p>
         <div class="piece-meta">
@@ -2306,6 +2603,179 @@ function renderAll(){
   renderPieces();
   renderShelfBanner();
   updateFooter();
+  renderPublic();
+}
+function readRoute(){
+  const hash=decodeURIComponent(location.hash.replace(/^#/, ''));
+  if(hash==='studio' || hash.startsWith('studio/')) return {surface:'studio', piece:null};
+  const match=hash.match(/^p\/(.+)$/);
+  if(match) return {surface:'public', piece:match[1]};
+  return {surface:'public', piece:null};
+}
+function applyRoute(){
+  const route=readRoute();
+  state.surface=route.surface;
+  state.publicPieceId=route.piece;
+  document.body.dataset.surface=state.surface;
+  if(state.surface==='studio'){
+    closePublicReader(false);
+    closeShareSheet();
+    renderAll();
+    return;
+  }
+  closeDrawer();
+  closeSettings();
+  closeShareModal();
+  closeTopMenu();
+  renderPublic();
+  if(route.piece) openPublicPiece(route.piece, false);
+  else closePublicReader(false);
+}
+function goPublic(){
+  if(location.hash!=='#feed') location.hash='feed';
+  else applyRoute();
+}
+function goStudio(){
+  if(location.hash!=='#studio') location.hash='studio';
+  else applyRoute();
+}
+function linesHtml(lines){
+  if(!lines.length) return '<p class="post-line">No lines yet.</p>';
+  return lines.map(line=>`<p class="post-line">${esc(line)}</p>`).join('');
+}
+function renderPublic(){
+  const feed=$('publicFeed');
+  if(!feed) return;
+  const q=($('publicSearch')?.value||'').trim().toLowerCase();
+  const list=postedPieces()
+    .filter(piece=>{
+      if(!q) return true;
+      return [piece.title, piece.rawContent, stripHtml(piece.content)].some(value=>String(value||'').toLowerCase().includes(q));
+    })
+    .sort((a,b)=>toEpoch(b.updatedAt||b.createdAt)-toEpoch(a.updatedAt||a.createdAt));
+  if(!state.sheetsUrl){
+    feed.innerHTML='<div class="public-empty"><h3>Feed unavailable</h3><p>The writing library is not connected yet.</p></div>';
+    return;
+  }
+  if(state.syncError && !postedPieces().length){
+    feed.innerHTML='<div class="public-empty"><h3>Couldn’t load shayari</h3><p>Check the connection and refresh. Studio can still open from the corner.</p></div>';
+    return;
+  }
+  if(!list.length){
+    feed.innerHTML=`<div class="public-empty"><h3>${q ? 'No match' : 'Nothing posted yet'}</h3><p>${q ? 'Try another line or title.' : 'New shayari will show up here once it is posted.'}</p></div>`;
+    return;
+  }
+  feed.innerHTML=list.map(piece=>{
+    const lines=poemLines(piece);
+    const preview=lines.slice(0,6);
+    const more=lines.length>preview.length;
+    const when=fmtDate(piece.updatedAt||piece.createdAt);
+    const kind=String(piece.type||'poem').replace(/_/g,' ').replace(/\b\w/g,ch=>ch.toUpperCase());
+    return `
+      <article class="feed-post">
+        <div class="post-head">
+          <div class="post-avatar" aria-hidden="true">FP</div>
+          <div>
+            <p class="post-name">FluffyPens</p>
+            <p class="post-meta">${esc(kind)}${when ? ` · ${esc(when)}` : ''}</p>
+          </div>
+        </div>
+        <div class="post-body" data-public-open="${esc(piece.id)}">
+          <h3 class="post-title">${esc(piece.title||'Untitled')}</h3>
+          ${linesHtml(preview)}
+          ${more ? '<p class="post-more">Read the rest</p>' : ''}
+        </div>
+        <div class="post-actions">
+          <button class="share-btn" type="button" data-share="${esc(piece.id)}" aria-label="Share ${esc(piece.title||'this shayari')}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M12 16V4"/><path d="M8 8l4-4 4 4"/></svg>
+            Share
+          </button>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+function openPublicPiece(id, updateHash){
+  const piece=postedPieces().find(p=>p.id===id);
+  state.publicPieceId=id;
+  if(updateHash){
+    const next=`#p/${encodeURIComponent(id)}`;
+    if(location.hash!==next){
+      location.hash=next;
+      return;
+    }
+  }
+  const reader=$('publicReader');
+  if(!reader) return;
+  if(!piece){
+    $('publicReaderKicker').textContent='FluffyPens';
+    $('publicReaderTitle').textContent='Not on the feed';
+    $('publicReaderBody').innerHTML='<p class="post-line">This piece is not posted, so it stays in Studio.</p>';
+    reader.hidden=false;
+    return;
+  }
+  const when=fmtDate(piece.updatedAt||piece.createdAt);
+  const kind=String(piece.type||'poem').replace(/_/g,' ').replace(/\b\w/g,ch=>ch.toUpperCase());
+  $('publicReaderKicker').textContent=`FluffyPens${when ? ` · ${when}` : ''} · ${kind}`;
+  $('publicReaderTitle').textContent=piece.title||'Untitled';
+  $('publicReaderBody').innerHTML=linesHtml(poemLines(piece));
+  reader.hidden=false;
+  state.sharePiece=piece;
+}
+function closePublicReader(updateHash){
+  const reader=$('publicReader');
+  if(reader) reader.hidden=true;
+  state.publicPieceId=null;
+  if(updateHash && location.hash.startsWith('#p/')){
+    location.hash='feed';
+  }
+}
+function openShareSheet(piece){
+  if(!piece) return;
+  state.sharePiece=piece;
+  const sheet=$('shareSheet');
+  if(!sheet) return;
+  if($('shareSheetCopy')) $('shareSheetCopy').textContent=`“${piece.title||'Untitled'}” can be sent to WhatsApp, X, Messages, or any other app. Nothing is posted back here.`;
+  sheet.hidden=false;
+}
+function closeShareSheet(){
+  const sheet=$('shareSheet');
+  if(sheet) sheet.hidden=true;
+}
+async function runShare(kind, piece){
+  const target=piece||state.sharePiece;
+  if(!target) return;
+  const payload=pieceSharePayload(target);
+  const full=`${payload.text}\n\n${payload.url}`;
+  if(kind==='native'){
+    if(navigator.share){
+      try{
+        await navigator.share({title:payload.title, text:payload.text, url:payload.url});
+        closeShareSheet();
+        return;
+      }catch(err){
+        if(err?.name==='AbortError') return;
+      }
+    }
+    kind='copy';
+  }
+  if(kind==='whatsapp'){
+    window.open(`https://wa.me/?text=${encodeURIComponent(full)}`, '_blank', 'noopener');
+  }else if(kind==='x'){
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${payload.text}\n\n${payload.url}`)}`, '_blank', 'noopener');
+  }else if(kind==='telegram'){
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(payload.url)}&text=${encodeURIComponent(payload.text)}`, '_blank', 'noopener');
+  }else if(kind==='sms'){
+    window.location.href=`sms:?&body=${encodeURIComponent(full)}`;
+  }else if(kind==='copy' || kind==='copy-link'){
+    try{
+      await navigator.clipboard.writeText(kind==='copy-link' ? payload.url : full);
+      toast(kind==='copy-link' ? 'Link copied' : 'Shayari copied');
+    }catch{
+      toast('Copy is not available in this browser');
+    }
+  }
+  if(kind!=='copy' && kind!=='copy-link') closeShareSheet();
 }
 function openDrawer(){
   state.drawerOpen=true;
@@ -2415,16 +2885,17 @@ function currentStatus(){
 }
 function currentPieceBase(){
   const html=$('editor').innerHTML;
+  const existing=state.vault.find(p=>p.id===state.selectedId)||state.archive.find(p=>p.id===state.selectedId);
   return {
     title:$('titleInput').value.trim(),
-    type:'poem',
+    type:existing?.type||'poem',
     lang:$('langSelect').value,
     content:html,
     rawContent:stripHtml(html),
     notes:$('notesInput').value.trim(),
     status:currentStatus(),
-    platforms:[],
-    tags:''
+    platforms:Array.isArray(existing?.platforms)?existing.platforms:[],
+    tags:existing?.tags||''
   };
 }
 async function savePiece(){
@@ -2682,6 +3153,35 @@ function bindEvents(){
   $('docShareBtn')?.addEventListener('click',openShareModal);
   $('copyDraftBtn')?.addEventListener('click',copyShareDraft);
   $('copySummaryBtn')?.addEventListener('click',copyShareSummary);
+  $('shareAppsBtn')?.addEventListener('click',()=>runShare('native', editorSharePiece()));
+  $('publicStudioBtn')?.addEventListener('click',goStudio);
+  $('openPublicBtn')?.addEventListener('click',goPublic);
+  $('publicSearch')?.addEventListener('input',renderPublic);
+  $('publicFeed')?.addEventListener('click',e=>{
+    const shareBtn=e.target.closest('[data-share]');
+    if(shareBtn){
+      const piece=postedPieces().find(p=>p.id===shareBtn.dataset.share);
+      if(piece) openShareSheet(piece);
+      return;
+    }
+    const opener=e.target.closest('[data-public-open]');
+    if(opener) openPublicPiece(opener.dataset.publicOpen, true);
+  });
+  $('publicReaderBack')?.addEventListener('click',()=>closePublicReader(true));
+  $('publicReaderShare')?.addEventListener('click',()=>{
+    const piece=postedPieces().find(p=>p.id===state.publicPieceId);
+    if(piece) openShareSheet(piece);
+  });
+  $('shareScrim')?.addEventListener('click',closeShareSheet);
+  document.querySelectorAll('[data-share-kind]').forEach(btn=>{
+    btn.addEventListener('click',()=>runShare(btn.dataset.shareKind, state.sharePiece));
+  });
+  $('shelfBanner')?.addEventListener('click',e=>{
+    const pipe=e.target.closest('[data-pipe]');
+    if(!pipe) return;
+    if(state.view!=='library') setView('library');
+    setStatus(pipe.dataset.pipe);
+  });
   $('closeShareBtn')?.addEventListener('click',closeShareModal);
   $('importRepoBtn')?.addEventListener('click',importRepoJson);
   $('readerPrevBtn')?.addEventListener('click',()=>openReaderAt(-1));
@@ -2717,6 +3217,7 @@ function bindEvents(){
     if(action==='setup')openSettings();
     if(action==='shortcuts')showShortcutHelp();
     if(action==='about')showAbout();
+    if(action==='feed')goPublic();
   }));
   $('statusRow').addEventListener('click',e=>{
     const btn=e.target.closest('[data-status]');
@@ -2758,6 +3259,8 @@ function bindEvents(){
   });
   document.addEventListener('keydown',e=>{
     if(e.key==='Escape'){
+      if(!$('shareSheet')?.hidden){closeShareSheet();return;}
+      if(state.surface==='public' && !$('publicReader')?.hidden){closePublicReader(true);return;}
       if(state.menuOpen)closeTopMenu();
       if(state.shareOpen)closeShareModal();
       if(state.drawerOpen)closeDrawer();
@@ -2788,16 +3291,19 @@ async function init(){
   wireStatusButtons();
   bindEvents();
   registerPwa();
+  window.addEventListener('hashchange',applyRoute);
+  applyRoute();
   const loaded=await loadSharedConfig();
   closeDrawer();
   closeSettings();
   document.body.dataset.view=state.view;
   if(loaded && hasConfig()){
     setConn('ok','Ready');
-    loadRemote();
+    await loadRemote();
   }else{
     setConn('', 'Apps Script URL not set');
-    openSettings();
+    if(state.surface==='studio') openSettings();
+    else renderPublic();
   }
   updateDocSummary();
   $('docShareBtn')?.setAttribute('aria-expanded','false');

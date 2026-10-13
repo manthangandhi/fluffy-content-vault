@@ -1,7 +1,7 @@
 {
   "name": "FluffyPens",
   "short_name": "FluffyPens",
-  "description": "A royal minimalist writing vault synced with Google Sheets.",
+  "description": "Read and share FluffyPens shayari. Drafts stay in Studio.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
