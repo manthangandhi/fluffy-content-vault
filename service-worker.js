@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fluffypens-shell-v4';
+const CACHE_NAME = 'fluffypens-shell-v5';
 const CORE_ASSETS = [
   './',
   './index.html',
