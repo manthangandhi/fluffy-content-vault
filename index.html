@@ -2103,6 +2103,16 @@
   html[data-theme="dark"] body[data-surface="studio"] .pipe.posted .v{color:#86efac}
   html[data-theme="dark"] body[data-surface="studio"] .pipe.on .k,
   html[data-theme="dark"] body[data-surface="studio"] .pipe.on .v{color:#fff}
+  .tip{
+    position:fixed;z-index:80;left:0;top:0;
+    max-width:min(240px,calc(100vw - 16px));
+    padding:6px 9px;border-radius:8px;
+    background:#111;color:#fff;
+    font-family:var(--font-ui);font-size:12px;font-weight:600;line-height:1.3;
+    pointer-events:none;
+    box-shadow:0 8px 24px rgba(0,0,0,.22);
+  }
+  .tip[hidden]{display:none !important}
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
   }
@@ -2121,7 +2131,7 @@
         <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></svg>
       </button>
-      <button class="lock-btn" id="publicStudioBtn" type="button" aria-label="Open studio">
+      <button class="lock-btn" id="publicStudioBtn" type="button" aria-label="Open Studio">
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
       </button>
     </div>
@@ -2135,10 +2145,10 @@
   </div>
   <section class="reader-screen" id="publicReader" hidden aria-label="Shayari">
     <div class="reader-top">
-      <button class="ig-icon" id="publicReaderBack" type="button" aria-label="Back">
+      <button class="ig-icon" id="publicReaderBack" type="button" aria-label="Back to the feed">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
       </button>
-      <button class="ig-icon" id="publicReaderShare" type="button" aria-label="Share image">
+      <button class="ig-icon" id="publicReaderShare" type="button" aria-label="Share as a photo">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 3 11 14"/><path d="M22 3 15 21l-4-7-7-4 18-7z"/></svg>
       </button>
     </div>
@@ -2153,9 +2163,9 @@
       <p id="shareSheetCopy">The shayari goes out as a photo. On your phone, choose WhatsApp, Instagram, or Messages.</p>
       <div class="share-preview-frame"><img class="share-card-preview" id="shareCardPreview" alt=""></div>
       <div class="share-grid">
-        <button type="button" class="wide" data-share-kind="image">Share image</button>
-        <button type="button" data-share-kind="download">Download</button>
-        <button type="button" data-share-kind="copy-link">Copy link</button>
+        <button type="button" class="wide" data-share-kind="image" data-tip="Send a photo of this piece">Share image</button>
+        <button type="button" data-share-kind="download" data-tip="Save the photo to this device">Download</button>
+        <button type="button" data-share-kind="copy-link" data-tip="Copy a link to this piece">Copy link</button>
       </div>
     </div>
   </section>
@@ -2167,8 +2177,8 @@
     <p id="installCopy">It opens like an app, with the poems one tap away.</p>
   </div>
   <div class="install-actions">
-    <button type="button" id="installLater">Not now</button>
-    <button type="button" id="installNow">Install</button>
+    <button type="button" id="installLater" data-tip="Hide this for a week">Not now</button>
+    <button type="button" id="installNow" data-tip="Add FluffyPens to your home screen">Install</button>
   </div>
 </aside>
 <div class="studio-gate" id="studioGate" hidden>
@@ -2190,7 +2200,7 @@
       </div>
     </div>
     <div class="top-actions">
-      <div class="status-pill" title="Google Sheets connection">
+      <div class="status-pill" data-tip="Google Sheets connection">
         <span class="status-dot" id="connDot"></span>
         <span id="connText">Not connected</span>
       </div>
@@ -2199,27 +2209,27 @@
           <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z"/></svg>
           <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></svg>
         </button>
-        <button class="icon-btn" id="setupBtn" type="button" aria-label="Connect to Sheets" title="Connect to Sheets">
+        <button class="icon-btn" id="setupBtn" type="button" aria-label="Sheets connection">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M10 13a5 5 0 0 1 0-7.07l1.17-1.17a5 5 0 0 1 7.07 7.07l-1.1 1.1"/>
             <path d="M14 11a5 5 0 0 1 0 7.07l-1.17 1.17a5 5 0 0 1-7.07-7.07l1.1-1.1"/>
             <path d="M9 15l6-6"/>
           </svg>
         </button>
-        <button class="icon-btn primary" id="newBtn" type="button" aria-label="New piece" title="New piece">
+        <button class="icon-btn primary" id="newBtn" type="button" aria-label="New piece">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 5v14"/>
             <path d="M5 12h14"/>
           </svg>
         </button>
-        <button class="icon-btn hidden" id="installBtn" type="button" aria-label="Install app" title="Install app">
+        <button class="icon-btn hidden" id="installBtn" type="button" aria-label="Install app">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 3v10"/>
             <path d="M8.5 9.5 12 13l3.5-3.5"/>
             <path d="M5 17h14"/>
           </svg>
         </button>
-        <button class="icon-btn" id="moreBtn" type="button" aria-label="More options" title="More options">
+        <button class="icon-btn" id="moreBtn" type="button" aria-label="More actions">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 6.5v.01"/>
             <path d="M12 12v.01"/>
@@ -2283,10 +2293,10 @@
     <main class="main">
       <section class="controls">
         <div class="view-row" id="viewRow">
-          <button class="chip on" data-view="library" type="button">Library</button>
-          <button class="chip" data-view="published" type="button">Published</button>
-          <button class="chip" data-view="archive" type="button">Archive</button>
-          <button class="chip" id="openPublicBtn" type="button">Public feed</button>
+          <button class="chip on" data-view="library" type="button" data-tip="Every piece in Studio">Library</button>
+          <button class="chip" data-view="published" type="button" data-tip="Pieces marked Posted">Published</button>
+          <button class="chip" data-view="archive" type="button" data-tip="Pieces taken out of the library">Archive</button>
+          <button class="chip" id="openPublicBtn" type="button" data-tip="What visitors see">Public feed</button>
         </div>
         <div class="shelf-banner" id="shelfBanner" aria-live="polite"></div>
         <div class="workspace-hint">Only Posted pieces appear on the public feed. Drafts, in progress, ready, and recorded stay here in Studio.</div>
@@ -2294,7 +2304,7 @@
           <div class="search-wrap">
             <input class="search-input" id="searchInput" type="text" placeholder="Search title, content, note">
           </div>
-          <select class="sort-select" id="sortSelect">
+          <select class="sort-select" id="sortSelect" data-tip="Sort the library" aria-label="Sort the library">
             <option value="new">Newest</option>
             <option value="old">Oldest</option>
             <option value="az">A to Z</option>
@@ -2329,7 +2339,7 @@
       <h3 id="drawerTitle">New Piece</h3>
       <p id="drawerSubtitle">Calm editing, synced to Sheets</p>
     </div>
-    <button class="icon-btn" id="closeDrawerBtn" type="button">✕</button>
+    <button class="icon-btn" id="closeDrawerBtn" type="button" aria-label="Close the editor">✕</button>
   </div>
   <div class="drawer-body">
     <div class="doc-shell">
@@ -2342,21 +2352,21 @@
           </div>
         </div>
         <div class="doc-actions">
-          <button class="icon-btn" id="docInfoBtn" type="button" aria-label="Document info" title="Document info">
+          <button class="icon-btn" id="docInfoBtn" type="button" aria-label="About this document">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9"/>
               <path d="M12 10.5v5"/>
               <path d="M12 8.2h.01"/>
             </svg>
           </button>
-          <button class="icon-btn" id="docHistoryBtn" type="button" aria-label="Version history" title="Version history">
+          <button class="icon-btn" id="docHistoryBtn" type="button" aria-label="Version history">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 8v5l3 2"/>
               <path d="M12 3a9 9 0 1 0 9 9"/>
               <path d="M21 3v5h-5"/>
             </svg>
           </button>
-          <button class="icon-btn" id="docShareBtn" type="button" aria-label="Share" title="Share">
+          <button class="icon-btn" id="docShareBtn" type="button" aria-label="Share as a photo">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M16 8a3 3 0 1 0-2.8-4"/>
               <path d="M8 14a3 3 0 1 0 2.8 4"/>
@@ -2377,12 +2387,12 @@
           <div class="reader-chrome">
             <span class="status-chip" id="readerStatus">Draft</span>
             <div class="reader-nav-group" aria-label="Reader navigation">
-              <button class="ghost-btn muted reader-nav" id="readerPrevBtn" type="button" aria-label="Previous piece" title="Previous piece">
+              <button class="ghost-btn muted reader-nav" id="readerPrevBtn" type="button" aria-label="Previous piece">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M15 6l-6 6 6 6"/>
                 </svg>
               </button>
-              <button class="ghost-btn muted reader-nav" id="readerNextBtn" type="button" aria-label="Next piece" title="Next piece">
+              <button class="ghost-btn muted reader-nav" id="readerNextBtn" type="button" aria-label="Next piece">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M9 6l6 6-6 6"/>
                 </svg>
@@ -2393,9 +2403,9 @@
         <div class="reader-body" id="readerBody"></div>
         <div class="reader-summary" id="readerSummary"></div>
         <div class="reader-actions" id="readerActions">
-          <button class="ghost-btn muted" id="readerEditBtn" type="button">Edit</button>
-          <button class="ghost-btn muted" id="readerDuplicateBtn" type="button">Duplicate</button>
-          <button class="ghost-btn muted" id="readerCloseBtn" type="button">Close</button>
+          <button class="ghost-btn muted" id="readerEditBtn" type="button" data-tip="Change this piece">Edit</button>
+          <button class="ghost-btn muted" id="readerDuplicateBtn" type="button" data-tip="Copy this into a new draft">Duplicate</button>
+          <button class="ghost-btn muted" id="readerCloseBtn" type="button" data-tip="Close the reader">Close</button>
         </div>
         <p class="reader-note" id="readerNote">Open a piece to read it in a calm, book-like layout.</p>
       </section>
@@ -2409,14 +2419,14 @@
             <div class="doc-section-title">Write</div>
             <div class="editor-shell">
               <div class="editor-toolbar">
-                <button class="editor-btn" type="button" data-cmd="bold"><b>B</b></button>
-                <button class="editor-btn" type="button" data-cmd="italic"><i>I</i></button>
-                <button class="editor-btn" type="button" data-cmd="underline"><u>U</u></button>
-                <button class="editor-btn" type="button" data-cmd="h1">H1</button>
-                <button class="editor-btn" type="button" data-cmd="h2">H2</button>
-                <button class="editor-btn" type="button" data-cmd="ul">•</button>
-                <button class="editor-btn" type="button" data-cmd="ol">1.</button>
-                <button class="editor-btn" type="button" data-cmd="quote">❝</button>
+                <button class="editor-btn" type="button" data-cmd="bold" aria-label="Bold"><b>B</b></button>
+                <button class="editor-btn" type="button" data-cmd="italic" aria-label="Italic"><i>I</i></button>
+                <button class="editor-btn" type="button" data-cmd="underline" aria-label="Underline"><u>U</u></button>
+                <button class="editor-btn" type="button" data-cmd="h1" aria-label="Heading">H1</button>
+                <button class="editor-btn" type="button" data-cmd="h2" aria-label="Small heading">H2</button>
+                <button class="editor-btn" type="button" data-cmd="ul" aria-label="Bulleted list">•</button>
+                <button class="editor-btn" type="button" data-cmd="ol" aria-label="Numbered list">1.</button>
+                <button class="editor-btn" type="button" data-cmd="quote" aria-label="Quote">❝</button>
               </div>
               <div class="editor" id="editor" contenteditable="true" data-placeholder="Start writing..."></div>
               <div class="editor-meta">
@@ -2490,8 +2500,8 @@
   </div>
   <p style="margin-top:14px">Update the repo file once, deploy GitHub Pages, and every device will use the same Sheets backend automatically.</p>
   <div class="modal-foot">
-    <button class="ghost-btn" id="importRepoBtn" type="button">Import repo JSON</button>
-    <button class="primary-btn" id="cancelSetupBtn" type="button">Done</button>
+    <button class="ghost-btn" id="importRepoBtn" type="button" data-tip="Replace the library with vault.json from this site">Import repo JSON</button>
+    <button class="primary-btn" id="cancelSetupBtn" type="button" data-tip="Close settings">Done</button>
   </div>
 </section>
 
@@ -2504,10 +2514,10 @@
     <span id="shareMetaRight">Google Sheets synced</span>
   </div>
   <div class="modal-foot">
-    <button class="ghost-btn" id="shareAppsBtn" type="button">Share to apps</button>
-    <button class="ghost-btn" id="copySummaryBtn" type="button">Copy summary</button>
-    <button class="ghost-btn" id="copyDraftBtn" type="button">Copy text</button>
-    <button class="primary-btn" id="closeShareBtn" type="button">Done</button>
+    <button class="ghost-btn" id="shareAppsBtn" type="button" data-tip="Send a photo of this piece">Share to apps</button>
+    <button class="ghost-btn" id="copySummaryBtn" type="button" data-tip="Copy the title, status, and notes">Copy summary</button>
+    <button class="ghost-btn" id="copyDraftBtn" type="button" data-tip="Copy the poem as text">Copy text</button>
+    <button class="primary-btn" id="closeShareBtn" type="button" data-tip="Close sharing">Done</button>
   </div>
 </section>
 
@@ -2516,6 +2526,13 @@
 <script>
 const STATUS_ORDER=['draft','wip','ready','recorded','posted'];
 const STATUS_LABEL={draft:'Draft',wip:'In Progress',ready:'Ready',recorded:'Recorded',posted:'Posted'};
+const STATUS_TIP={
+  draft:'Show drafts',
+  wip:'Show pieces in progress',
+  ready:'Show pieces that are ready',
+  recorded:'Show recorded pieces',
+  posted:'Show pieces on the public feed'
+};
 const DEFAULT_STATUS='draft';
 const state={
   vault:[],
@@ -2933,17 +2950,36 @@ function updateFooter(){
     const action=state.lastAction;
     const label=action?.type==='delete' ? 'Undo delete' : action?.type==='archive' ? 'Undo archive' : 'Undo last change';
     undoBtn.textContent=label;
+    undoBtn.dataset.tip=action ? label : 'Nothing to undo';
     undoBtn.disabled=!action;
   }
 }
 function updateDrawerActionLabels(){
   const mobile=window.matchMedia('(max-width:859px)').matches;
-  if($('deleteBtn')) $('deleteBtn').textContent=mobile ? 'Archive' : 'Archive';
-  if($('restoreBtn')) $('restoreBtn').textContent=mobile ? 'Restore' : 'Restore';
-  if($('purgeBtn')) $('purgeBtn').textContent=mobile ? 'Delete' : 'Delete Forever';
-  if($('duplicateBtn')) $('duplicateBtn').textContent=mobile ? 'Duplicate' : 'Duplicate as Draft';
-  if($('cancelBtn')) $('cancelBtn').textContent=mobile ? 'Close' : 'Cancel';
-  if($('saveBtn')) $('saveBtn').textContent=mobile ? 'Save' : 'Save & Sync';
+  if($('deleteBtn')){
+    $('deleteBtn').textContent=mobile ? 'Archive' : 'Archive';
+    $('deleteBtn').dataset.tip='Move this piece to the archive';
+  }
+  if($('restoreBtn')){
+    $('restoreBtn').textContent='Restore';
+    $('restoreBtn').dataset.tip='Put this piece back in the library';
+  }
+  if($('purgeBtn')){
+    $('purgeBtn').textContent=mobile ? 'Delete' : 'Delete Forever';
+    $('purgeBtn').dataset.tip='Delete this piece permanently';
+  }
+  if($('duplicateBtn')){
+    $('duplicateBtn').textContent=mobile ? 'Duplicate' : 'Duplicate as Draft';
+    $('duplicateBtn').dataset.tip='Copy this piece into a new draft';
+  }
+  if($('cancelBtn')){
+    $('cancelBtn').textContent=mobile ? 'Close' : 'Cancel';
+    $('cancelBtn').dataset.tip='Close the editor';
+  }
+  if($('saveBtn')){
+    $('saveBtn').textContent=mobile ? 'Save' : 'Save & Sync';
+    $('saveBtn').dataset.tip='Save this piece to Sheets';
+  }
 }
 function statusCount(key){
   if(key==='all')return state.vault.length;
@@ -2967,7 +3003,7 @@ function renderShelfBanner(){
     ?`${archived} archived. Restore one when you want it back in the library.`
     :'Mark a piece Posted when it should show on the public feed. Everything else stays in Studio.';
   const pipes=STATUS_ORDER.map(key=>`
-    <button class="pipe ${key} ${state.view==='library' && state.status===key ? 'on' : ''}" type="button" data-pipe="${key}">
+    <button class="pipe ${key} ${state.view==='library' && state.status===key ? 'on' : ''}" type="button" data-pipe="${key}" data-tip="${esc(STATUS_TIP[key]||STATUS_LABEL[key])}">
       <span class="k">${esc(STATUS_LABEL[key])}</span>
       <span class="v">${statusCount(key)}</span>
     </button>
@@ -3295,7 +3331,7 @@ function renderStatusRow(){
     return;
   }
   row.innerHTML=[['all','All'],...STATUS_ORDER.map(s=>[s,STATUS_LABEL[s]])]
-    .map(([k,l])=>`<button class="chip ${state.status===k?'on':''}" data-status="${k}" type="button" aria-pressed="${state.status===k?'true':'false'}">${l}<span class="chip-count">${statusCount(k)}</span></button>`)
+    .map(([k,l])=>`<button class="chip ${state.status===k?'on':''}" data-status="${k}" type="button" data-tip="${esc(k==='all'?'Show every piece':(STATUS_TIP[k]||l))}" aria-pressed="${state.status===k?'true':'false'}">${l}<span class="chip-count">${statusCount(k)}</span></button>`)
     .join('');
 }
 function renderPieces(){
@@ -3492,7 +3528,10 @@ function renderFeedFilters(pieces){
   }
   host.hidden=false;
   const items=[['all','All'], ...types.map(type=>[type, titleCaseType(type)])];
-  host.innerHTML=items.map(([key,label])=>`<button type="button" data-feed-type="${esc(key)}" class="${state.publicType===key?'on':''}" aria-pressed="${state.publicType===key?'true':'false'}">${esc(label)}</button>`).join('');
+  host.innerHTML=items.map(([key,label])=>{
+    const tip=key==='all'?'Show every posted piece':`Show ${label.toLowerCase()} pieces`;
+    return `<button type="button" data-feed-type="${esc(key)}" data-tip="${esc(tip)}" class="${state.publicType===key?'on':''}" aria-pressed="${state.publicType===key?'true':'false'}">${esc(label)}</button>`;
+  }).join('');
 }
 function renderPublic(){
   const feed=$('publicFeed');
@@ -3540,7 +3579,7 @@ function renderPublic(){
     const rest=lines.length>shown.length || shown.some(line=>line.length>36*FEED_PREVIEW_LINES);
     return `
       <article class="post">
-        <button class="post-open" type="button" data-public-open="${esc(piece.id)}">
+        <button class="post-open" type="button" data-public-open="${esc(piece.id)}" data-tip="Read the full piece">
           <p class="post-kicker">${esc(facts.type)} · ${esc(facts.lang)}</p>
           <h2 class="post-title">${esc(piece.title||'Untitled')}</h2>
           <div class="post-verse">${linesHtml(shown)}</div>
@@ -3549,7 +3588,7 @@ function renderPublic(){
         </button>
         <div class="post-foot">
           <span class="post-date">${when ? esc(when) : ''}</span>
-          <button class="post-share" type="button" data-share="${esc(piece.id)}">Share</button>
+          <button class="post-share" type="button" data-share="${esc(piece.id)}" data-tip="Share this piece as a photo">Share</button>
         </div>
       </article>
     `;
@@ -4009,8 +4048,92 @@ async function importRepoJson(){
 }
 function wireStatusButtons(){
   $('statusButtons').innerHTML=STATUS_ORDER
-    .map(s=>`<button class="seg-btn ${s===DEFAULT_STATUS?'on':''}" type="button" data-status-choice="${s}" aria-pressed="${s===DEFAULT_STATUS?'true':'false'}">${STATUS_LABEL[s]}</button>`)
+    .map(s=>`<button class="seg-btn ${s===DEFAULT_STATUS?'on':''}" type="button" data-status-choice="${s}" data-tip="Set this piece to ${esc(STATUS_LABEL[s])}" aria-pressed="${s===DEFAULT_STATUS?'true':'false'}">${STATUS_LABEL[s]}</button>`)
     .join('');
+}
+function bindTips(){
+  const tip=document.createElement('div');
+  tip.id='tip';
+  tip.className='tip';
+  tip.hidden=true;
+  tip.setAttribute('role','tooltip');
+  document.body.appendChild(tip);
+  let timer=0;
+  let holdEl=null;
+  let holdShown=false;
+  let fromPointer=false;
+  const textOf=el=>(el?.getAttribute('data-tip')||el?.getAttribute('aria-label')||'').trim();
+  const target=node=>{
+    const el=node?.closest?.('[data-tip],button[aria-label]');
+    return el && textOf(el) ? el : null;
+  };
+  function place(el){
+    const text=textOf(el);
+    if(!text){ tip.hidden=true; return; }
+    tip.textContent=text;
+    tip.hidden=false;
+    const rect=el.getBoundingClientRect();
+    const margin=8;
+    let left=rect.left+rect.width/2;
+    tip.style.transform='translate(-50%, -100%)';
+    tip.style.left=`${left}px`;
+    tip.style.top=`${rect.top-margin}px`;
+    let box=tip.getBoundingClientRect();
+    if(box.top<margin){
+      tip.style.transform='translate(-50%, 0)';
+      tip.style.top=`${rect.bottom+margin}px`;
+      box=tip.getBoundingClientRect();
+    }
+    const shift=Math.max(margin, Math.min(box.left, window.innerWidth-margin-box.width));
+    if(shift!==box.left) tip.style.left=`${left+(shift-box.left)}px`;
+  }
+  function hide(){
+    clearTimeout(timer);
+    tip.hidden=true;
+  }
+  document.addEventListener('pointerover',event=>{
+    if(event.pointerType && event.pointerType!=='mouse') return;
+    const el=target(event.target);
+    if(!el) return;
+    clearTimeout(timer);
+    timer=setTimeout(()=>place(el), 250);
+  });
+  document.addEventListener('pointerout',event=>{
+    if(event.pointerType && event.pointerType!=='mouse') return;
+    const el=target(event.target);
+    if(!el || target(event.relatedTarget)===el) return;
+    hide();
+  });
+  document.addEventListener('focusin',event=>{
+    if(fromPointer){ fromPointer=false; return; }
+    const el=target(event.target);
+    if(el) place(el);
+  });
+  document.addEventListener('focusout',hide);
+  document.addEventListener('keydown',()=>{ fromPointer=false; });
+  document.addEventListener('pointerdown',event=>{
+    fromPointer=true;
+    if(event.pointerType==='mouse'){ hide(); return; }
+    const el=target(event.target);
+    holdEl=el;
+    holdShown=false;
+    clearTimeout(timer);
+    if(!el) return;
+    timer=setTimeout(()=>{ holdShown=true; place(el); }, 450);
+  });
+  document.addEventListener('pointerup',()=>{
+    clearTimeout(timer);
+    if(holdShown) setTimeout(hide, 900);
+  });
+  document.addEventListener('pointercancel',()=>{ holdShown=false; hide(); });
+  document.addEventListener('click',event=>{
+    if(!holdShown || target(event.target)!==holdEl) return;
+    event.preventDefault();
+    event.stopPropagation();
+    holdShown=false;
+  }, true);
+  document.addEventListener('scroll', hide, true);
+  window.addEventListener('blur', hide);
 }
 function bindEvents(){
   $('newBtn').addEventListener('click',()=>{resetEditor();openDrawer()});
@@ -4183,6 +4306,7 @@ async function init(){
   syncThemeChrome();
   wireStatusButtons();
   bindEvents();
+  bindTips();
   registerPwa();
   window.addEventListener('hashchange',applyRoute);
   state.studioPassword=sessionStorage.getItem('fp-studio-pass')||'';
