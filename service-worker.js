@@ -1,9 +1,13 @@
-const CACHE_NAME = 'fluffypens-shell-v9';
+const CACHE_NAME = 'fluffypens-shell-v10';
 const CORE_ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
   './icon.svg',
+  './icon-192.png',
+  './icon-512.png',
+  './icon-maskable.png',
+  './apple-touch-icon.png',
   './vault.json',
   './apps-script-url.txt',
 ];

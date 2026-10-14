@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="FluffyPens">
+  <rect width="512" height="512" fill="#f3eee6"/>
+  <path fill="#1c1612" d="M256 156c-6 4-46 20-96 26-6 1-12 6-12 12v136c0 7 6 13 13 12 46-6 82-20 95-29 13 9 49 23 95 29 7 1 13-5 13-12V194c0-6-6-11-12-12-50-6-90-22-96-26z"/>
+  <path stroke="#f3eee6" stroke-width="12" stroke-linecap="round" d="M256 184v150"/>
+</svg>

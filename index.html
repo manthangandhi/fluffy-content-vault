@@ -5,53 +5,53 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>FluffyPens</title>
-<meta name="theme-color" content="#efefef">
+<meta name="theme-color" content="#f3eee6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="FluffyPens">
 <meta name="application-name" content="FluffyPens">
 <link rel="manifest" href="./manifest.webmanifest">
-<link rel="apple-touch-icon" href="./icon.svg">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <style>
   :root{
-    --bg:#efefef;
-    --panel:#ffffff;
-    --panel-2:#f6f6f6;
-    --ink:#111111;
-    --verse:#111111;
-    --muted:#5f5f5f;
-    --soft:#767676;
-    --line:rgba(17,17,17,.08);
-    --line-2:rgba(17,17,17,.16);
-    --accent:#e60023;
-    --on-accent:#ffffff;
-    --bar:rgba(255,255,255,.94);
-    --font-ui:"Inter",system-ui,sans-serif;
-    --font-verse:"Inter",system-ui,sans-serif;
-    --accent-2:#5f5f5f;
-    --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.05);
-    --radius:16px;
-    --radius-lg:16px;
-    --shell-max:1240px;
+    --bg:#f3eee6;
+    --panel:#fffdf8;
+    --panel-2:#f7f1e8;
+    --ink:#1c1612;
+    --verse:#241e1a;
+    --muted:#6f675e;
+    --soft:#8a8176;
+    --line:rgba(28,22,18,.1);
+    --line-2:rgba(28,22,18,.18);
+    --accent:#1c1612;
+    --on-accent:#fffdf8;
+    --bar:rgba(243,238,230,.94);
+    --font-ui:"IBM Plex Sans",system-ui,sans-serif;
+    --font-verse:"Source Serif 4","Iowan Old Style",Palatino,serif;
+    --accent-2:#6f675e;
+    --shadow:0 1px 2px rgba(28,22,18,.04);
+    --radius:20px;
+    --radius-lg:20px;
+    --shell-max:920px;
   }
   html[data-theme="dark"]{
-    --bg:#191919;
-    --panel:#2b2b2b;
-    --panel-2:#333333;
-    --ink:#ffffff;
-    --verse:#f5f5f5;
-    --muted:#c2c2c2;
-    --soft:#9a9a9a;
-    --line:rgba(255,255,255,.1);
-    --line-2:rgba(255,255,255,.18);
-    --accent:#e60023;
-    --on-accent:#ffffff;
-    --bar:rgba(25,25,25,.94);
-    --accent-2:#c2c2c2;
-    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --bg:#1c1917;
+    --panel:#262220;
+    --panel-2:#312c28;
+    --ink:#f6f1e8;
+    --verse:#f3ece3;
+    --muted:#c4b8aa;
+    --soft:#a3988c;
+    --line:rgba(246,241,232,.12);
+    --line-2:rgba(246,241,232,.2);
+    --accent:#f6f1e8;
+    --on-accent:#1c1917;
+    --bar:rgba(28,25,23,.92);
+    --accent-2:#c4b8aa;
+    --shadow:none;
   }
   *,*::before,*::after{box-sizing:border-box}
   html,body{height:100%}
@@ -96,19 +96,15 @@
     flex:1 1 auto;
   }
   .brand-mark{
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    background:#e60023;
-    color:#fff;
-    display:grid;
-    place-items:center;
-    font-size:10px;
-    font-weight:800;
-    letter-spacing:.06em;
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    background:transparent;
+    overflow:hidden;
+    box-shadow:none;
     flex:0 0 auto;
-    box-shadow:0 8px 16px rgba(15,23,42,.10);
   }
+  .brand-mark img{width:32px;height:32px;display:block}
   .brand-copy{min-width:0}
   .brand-title{
     margin:0;
@@ -1870,48 +1866,58 @@
   @media (max-width:720px){
     .pipeline{grid-template-columns:repeat(3,minmax(0,1fr))}
   }
-  #publicFeed{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:12px;
-    align-items:start;
-    padding:12px 12px 40px;
+  .feed-bar{
+    min-height:56px;
+    height:auto;
+    padding-top:calc(8px + env(safe-area-inset-top));
+    padding-bottom:8px;
+    padding-left:calc(16px + env(safe-area-inset-left));
+    padding-right:calc(16px + env(safe-area-inset-right));
   }
-  .post{
+  .topbar{padding-top:calc(9px + env(safe-area-inset-top))}
+  .workspace-footer{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+  .feed-brand{display:flex;align-items:center;gap:8px}
+  .feed-brand img{width:28px;height:28px;border-radius:7px;display:block}
+  #publicFeed{
     display:flex;
     flex-direction:column;
-    width:auto;
-    break-inside:auto;
-    margin:0;
-    padding:16px;
-    border:0;
-    border-radius:16px;
-    background:var(--panel);
-    box-shadow:var(--shadow);
+    gap:16px;
+    padding:16px 16px calc(28px + env(safe-area-inset-bottom));
   }
-  .post-title{font-family:var(--font-ui);font-size:16px;font-weight:700;line-height:1.3;margin:0 0 8px}
-  .post-line{font-family:var(--font-ui);font-size:15px;font-weight:400;line-height:1.45}
-  .post-verse{max-height:none;overflow:visible;gap:2px}
-  .post-more{margin:8px 0 0;font-family:var(--font-ui);font-size:13px;font-weight:600;color:var(--soft)}
-  .post-share{color:#e60023;font-weight:700}
-  .feed-wrap{width:min(1240px,100%)}
-  .feed-brand h1{font-family:var(--font-ui);font-size:20px;font-weight:700;letter-spacing:-.04em}
-  .reader-verse{width:min(460px,calc(100% - 24px))}
+  .post{
+    display:block;
+    width:auto;
+    margin:0;
+    padding:22px 20px 16px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:var(--panel);
+    box-shadow:none;
+  }
+  .post-title{font-family:var(--font-verse);font-size:26px;font-weight:600;line-height:1.2;margin:0 0 14px;letter-spacing:-.02em}
+  .post-line{font-family:var(--font-verse);font-size:18px;font-weight:400;line-height:1.7}
+  .post-verse{display:flex;flex-direction:column;gap:8px;max-height:none;overflow:visible}
+  .post-share{color:var(--ink);font-family:var(--font-ui);font-size:14px;font-weight:600}
+  .feed-wrap{width:min(640px,100%)}
+  .feed-brand h1{font-family:var(--font-verse);font-size:22px;font-weight:600;letter-spacing:-.03em}
+  .reader-verse{width:min(640px,calc(100% - 24px))}
+  .reader-verse .post-line{font-size:20px;line-height:1.75}
   .pipeline{display:flex;gap:8px;overflow:auto;grid-template-columns:none}
   .pipe{
     display:inline-flex;align-items:center;gap:6px;width:auto;
     padding:8px 12px;border-radius:999px;background:var(--panel);white-space:nowrap;
   }
   .pipe .k,.pipe .v{
-    display:inline;font-family:var(--font-ui);font-size:14px;font-weight:600;
+    display:inline;font-family:var(--font-ui);font-size:14px;font-weight:500;
     letter-spacing:0;text-transform:none;color:inherit;margin:0;
   }
   .pipe.on{background:var(--ink);color:var(--bg);border-color:var(--ink);box-shadow:none}
   body[data-surface="studio"] .controls{background:transparent;border:0;box-shadow:none}
-  body[data-surface="studio"] .piece-grid{display:block;column-count:2;column-gap:12px}
+  body[data-surface="studio"] .piece-grid{
+    display:grid;grid-template-columns:1fr;column-count:auto;gap:12px;
+  }
   body[data-surface="studio"] .piece-card{
-    display:inline-block;width:100%;break-inside:avoid;margin:0 0 12px;
-    border-radius:16px;box-shadow:var(--shadow);
+    display:block;width:auto;break-inside:auto;margin:0;border-radius:18px;box-shadow:none;
   }
   body[data-surface="studio"] .chip.on,
   body[data-surface="studio"] .seg-btn.on{
@@ -1922,20 +1928,13 @@
   body[data-surface="studio"] .empty-btn.primary,
   .share-grid .wide,
   .studio-card .primary-btn{
-    background:#e60023;color:#fff;border-color:#e60023;
+    background:var(--accent);color:var(--on-accent);border-color:var(--accent);
   }
-  .piece-title,.piece-copy,#editor,#editor *,#readerBody,#readerBody *,.doc-title-input,#titleInput{
-    font-family:var(--font-ui) !important;
+  .piece-title,.piece-copy,#editor,#editor *,#readerBody,#readerBody *,.doc-title-input,#titleInput,.post-title,.post-line{
+    font-family:var(--font-verse) !important;
   }
-  @media (min-width:760px){
-    #publicFeed{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:16px 16px 48px}
-  }
-  @media (min-width:1100px){
-    #publicFeed{grid-template-columns:repeat(4,minmax(0,1fr))}
-    body[data-surface="studio"] .piece-grid{column-count:4}
-  }
-  @media (min-width:860px) and (max-width:1099px){
-    body[data-surface="studio"] .piece-grid{column-count:3}
+  @media (min-width:800px){
+    body[data-surface="studio"] .piece-grid{grid-template-columns:1fr 1fr}
   }
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
@@ -1946,6 +1945,7 @@
 <div class="public-app" id="publicApp">
   <header class="feed-bar">
     <div class="feed-brand">
+      <img src="./icon.svg" alt="" width="28" height="28">
       <h1>FluffyPens</h1>
     </div>
     <input class="public-search" id="publicSearch" type="search" placeholder="Search" aria-label="Search posted shayari">
@@ -2001,7 +2001,7 @@
 <div class="app">
   <header class="topbar">
     <div class="brand">
-      <div class="brand-mark">FP</div>
+      <div class="brand-mark"><img src="./icon.svg" alt=""></div>
       <div class="brand-copy">
         <h1 class="brand-title">FluffyPens</h1>
         <p class="brand-subtitle">Sheets synced · session only</p>
@@ -2483,17 +2483,17 @@ function wrapCanvasLine(ctx,text,maxWidth){
   if(current) lines.push(current);
   return lines;
 }
-const VERSE_STACK='Inter, system-ui, sans-serif';
+const VERSE_STACK='Source Serif 4, "Iowan Old Style", Palatino, serif';
 function cardPalette(){
   const dark=document.documentElement.dataset.theme==='dark';
   return dark
-    ? {bg:'#2b2b2b', ink:'#ffffff', mute:'#b0b0b0'}
-    : {bg:'#ffffff', ink:'#111111', mute:'#767676'};
+    ? {bg:'#262220', ink:'#f6f1e8', mute:'#a3988c'}
+    : {bg:'#fffdf8', ink:'#1c1612', mute:'#6f675e'};
 }
 function syncThemeChrome(){
   const dark=document.documentElement.dataset.theme==='dark';
   const meta=document.querySelector('meta[name="theme-color"]');
-  if(meta) meta.content=dark?'#191919':'#efefef';
+  if(meta) meta.content=dark?'#1c1917':'#f3eee6';
   document.querySelectorAll('.theme-btn').forEach(btn=>{
     btn.setAttribute('aria-label', dark?'Switch to light mode':'Switch to dark mode');
   });
@@ -2550,8 +2550,6 @@ function drawCard(piece){
   const ctx=canvas.getContext('2d');
   ctx.fillStyle=palette.bg;
   ctx.fillRect(0,0,w,h);
-  ctx.fillStyle='#e60023';
-  ctx.fillRect(0,0,w,10);
   ctx.textAlign='left';
   ctx.textBaseline='top';
   ctx.fillStyle=palette.ink;
@@ -3232,13 +3230,12 @@ function renderPublic(){
   }
   feed.innerHTML=list.map(piece=>{
     const lines=poemLines(piece);
-    const shown=lines.slice(0,6);
     const when=fmtShort(piece.updatedAt||piece.createdAt);
     return `
       <article class="post">
         <button class="post-open" type="button" data-public-open="${esc(piece.id)}">
           <h2 class="post-title">${esc(piece.title||'Untitled')}</h2>
-          <div class="post-verse">${linesHtml(shown)}${lines.length>6?'<p class="post-more">Read the rest</p>':''}</div>
+          <div class="post-verse">${linesHtml(lines)}</div>
         </button>
         <div class="post-foot">
           <span class="post-date">${when ? esc(when) : ''}</span>
