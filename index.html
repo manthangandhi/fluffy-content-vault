@@ -1934,7 +1934,9 @@
   }
   .post-open,.post-line,.post-title{max-width:100%;white-space:normal;overflow-wrap:break-word}
   .post-line{font-family:var(--font-verse);font-size:16px;font-weight:400;line-height:1.45}
-  .post-verse{display:flex;flex-direction:column;gap:2px;max-height:186px;overflow:hidden}
+  .post-verse{display:flex;flex-direction:column;gap:2px}
+  .post .post-verse{max-height:186px;overflow:hidden}
+  .reader-verse .post-verse{max-height:none;overflow:visible}
   .post-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
   .post-tag{
     font-family:var(--font-ui);font-size:12px;font-weight:600;color:var(--muted);
