@@ -10,9 +10,11 @@ The public feed and Studio are a tight pin board. Reading-app references set the
 
 ## Layout
 
-Public feed is CSS columns: 2 on a phone, 3 from 760px, 4 from 1100px. Column gap is 8–10px. Cards are only as tall as the text. Six lines show on the board. The rest opens on the poem page.
+The public feed is the product a visitor reads. Each posted piece is a full poem, with the saved type, language, tags, and platforms on the card. Phone is one column. From 900px it is two. A type filter appears when more than one type is posted. Share stays a photo of the poem, with the type and language on the image.
 
-Studio uses the same columns and the same card padding. Status filters stay in one scrolling row: Draft, In Progress, Ready, Recorded, Posted. The editor grows with the poem. It does not reserve a tall empty page.
+Studio stays the pin board: 2, 3, then 4 columns. Cards use the same labels as the feed: type, language, status, date, tags, and platforms. Controls share one size and the red selected state.
+
+If the site is not already installed, a banner asks for the home screen. Android uses the browser install prompt. iPhone explains Share, then Add to Home Screen. Not now hides it for a week.
 
 Light is the default. Dark is `#191919` with `#2b2b2b` cards, not pure black.
 

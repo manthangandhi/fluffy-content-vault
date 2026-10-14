@@ -1882,38 +1882,64 @@
   .workspace-footer{padding-bottom:calc(6px + env(safe-area-inset-bottom))}
   .feed-brand{display:flex;align-items:center;gap:8px}
   .feed-brand img{width:28px;height:28px;border-radius:7px;display:block}
+  .feed-head{
+    display:flex;flex-direction:column;gap:8px;
+    padding:12px 12px 0;
+    padding-left:calc(12px + env(safe-area-inset-left));
+    padding-right:calc(12px + env(safe-area-inset-right));
+  }
+  .feed-count{margin:0;font-family:var(--font-ui);font-size:13px;font-weight:500;color:var(--muted)}
+  .feed-filters{display:flex;gap:6px;overflow:auto;scrollbar-width:none}
+  .feed-filters::-webkit-scrollbar{display:none}
+  .feed-filters button{
+    border:0;background:var(--panel);color:var(--ink);
+    border-radius:999px;min-height:32px;padding:0 12px;
+    font-family:var(--font-ui);font-size:13px;font-weight:600;white-space:nowrap;
+  }
+  .feed-filters button.on{background:var(--accent);color:#fff}
   #publicFeed{
-    column-count:2;
-    column-gap:8px;
-    padding:8px;
-    padding-left:calc(8px + env(safe-area-inset-left));
-    padding-right:calc(8px + env(safe-area-inset-right));
-    padding-bottom:calc(12px + env(safe-area-inset-bottom));
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    column-count:auto;
+    padding:10px 12px calc(20px + env(safe-area-inset-bottom));
+    padding-left:calc(12px + env(safe-area-inset-left));
+    padding-right:calc(12px + env(safe-area-inset-right));
   }
   .public-empty{column-span:all}
   .post{
-    display:inline-block;
-    width:100%;
-    break-inside:avoid;
-    margin:0 0 8px;
-    padding:10px 12px 8px;
+    display:block;
+    width:auto;
+    break-inside:auto;
+    margin:0;
+    padding:14px 14px 10px;
     border:0;
     border-radius:16px;
     background:var(--panel);
     box-shadow:var(--shadow);
   }
-  .post-title{
-    font-family:var(--font-ui) !important;
-    font-size:15px;font-weight:700;line-height:1.25;margin:0 0 6px;letter-spacing:-.02em;
+  .post-kicker{
+    margin:0 0 4px;
+    font-family:var(--font-ui);font-size:12px;font-weight:600;color:var(--soft);
   }
-  .post-line{font-family:var(--font-verse);font-size:14px;font-weight:400;line-height:1.35}
-  .post-verse{display:flex;flex-direction:column;gap:1px;max-height:none;overflow:visible}
+  .post-title{
+    font-family:var(--font-verse) !important;
+    font-size:22px;font-weight:600;line-height:1.2;margin:0 0 8px;letter-spacing:-.02em;
+  }
+  .post-open,.post-line,.post-title{max-width:100%;white-space:normal;overflow-wrap:break-word}
+  .post-line{font-family:var(--font-verse);font-size:16px;font-weight:400;line-height:1.45}
+  .post-verse{display:flex;flex-direction:column;gap:2px;max-height:none;overflow:visible}
+  .post-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .post-tag{
+    font-family:var(--font-ui);font-size:12px;font-weight:600;color:var(--muted);
+    background:var(--panel-2);border-radius:999px;padding:3px 8px;
+  }
   .post-share{color:var(--accent);font-family:var(--font-ui);font-size:13px;font-weight:700}
-  .feed-wrap{width:min(1440px,100%)}
+  .feed-wrap{width:min(920px,100%)}
   .feed-brand h1{font-family:var(--font-ui);font-size:18px;font-weight:700;letter-spacing:-.03em}
-  .reader-verse{width:min(640px,calc(100% - 16px));padding:16px 16px 18px}
-  .reader-verse .post-title{font-family:var(--font-verse) !important;font-size:26px;margin:0 0 10px}
-  .reader-verse .post-line{font-size:18px;line-height:1.5}
+  .reader-verse{width:min(680px,calc(100% - 16px));padding:16px 16px 18px}
+  .reader-verse .post-title{font-size:28px;margin:0 0 10px}
+  .reader-verse .post-line{font-size:18px;line-height:1.55}
   .pipeline{display:flex;gap:6px;overflow:auto;grid-template-columns:none}
   .pipe{
     display:inline-flex;align-items:center;gap:6px;width:auto;
@@ -1958,18 +1984,79 @@
   .piece-copy,#editor,#editor *,#readerBody,#readerBody *,.doc-title-input,#titleInput,.post-line{
     font-family:var(--font-verse) !important;
   }
+  body[data-surface="studio"] .chip,
+  body[data-surface="studio"] .seg-btn,
+  body[data-surface="studio"] .status-chip{
+    min-height:28px;
+    padding:0 10px;
+    border-radius:999px;
+    font-family:var(--font-ui);
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0;
+    text-transform:none;
+  }
+  body[data-surface="studio"] .piece-kicker{
+    margin:0 0 6px;
+    padding-left:0;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0;
+    text-transform:none;
+    color:var(--soft);
+  }
+  body[data-surface="studio"] .piece-title,
+  body[data-surface="studio"] .piece-copy,
+  body[data-surface="studio"] .piece-meta{padding-left:0}
+  body[data-surface="studio"] .piece-badge{
+    font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted);
+    white-space:normal;overflow-wrap:anywhere;text-align:right;
+  }
+  body[data-surface="studio"] .search-input:focus,
+  body[data-surface="studio"] .sort-select:focus,
+  body[data-surface="studio"] .field:focus,
+  body[data-surface="studio"] .notes:focus{
+    border-color:rgba(230,0,35,.45);
+    box-shadow:0 0 0 3px rgba(230,0,35,.12);
+    background:var(--panel);
+  }
+  .install-banner{
+    position:fixed;left:12px;right:12px;z-index:35;
+    bottom:calc(10px + env(safe-area-inset-bottom));
+    display:flex;align-items:center;gap:10px;
+    padding:10px 12px;border-radius:16px;
+    background:#111;color:#fff;
+    box-shadow:0 12px 32px rgba(0,0,0,.22);
+  }
+  .install-banner.hidden{display:none}
+  .install-banner img{width:36px;height:36px;border-radius:8px;flex:0 0 auto}
+  .install-copy{min-width:0;flex:1}
+  .install-copy strong{display:block;font-size:14px;font-weight:600}
+  .install-copy p{margin:2px 0 0;font-size:12px;line-height:1.35;color:rgba(255,255,255,.78)}
+  .install-actions{display:flex;gap:6px;flex:0 0 auto}
+  .install-actions button{
+    border:0;border-radius:999px;min-height:34px;padding:0 12px;
+    font-family:var(--font-ui);font-size:13px;font-weight:600;color:#fff;background:transparent;
+  }
+  #installNow{background:#e60023}
+  body[data-locked="on"] .install-banner{display:none}
+  body[data-install="on"] #publicFeed{padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+  body[data-install="on"] .main{padding-bottom:88px}
   @media (max-width:720px){
     .pipeline{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;overflow:visible}
     .pipe{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:6px 6px;border-radius:12px;white-space:normal}
     .pipe .k{font-size:10px;line-height:1.15;white-space:normal}
     .pipe .v{font-size:13px}
+    .install-banner{flex-wrap:wrap}
+    .install-actions{width:100%;justify-content:flex-end}
   }
   @media (min-width:760px){
-    #publicFeed{column-count:3;column-gap:10px}
     body[data-surface="studio"] .piece-grid{column-count:3}
   }
+  @media (min-width:900px){
+    #publicFeed{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+  }
   @media (min-width:1100px){
-    #publicFeed{column-count:4}
     body[data-surface="studio"] .piece-grid{column-count:4}
   }
   @media (prefers-reduced-motion: reduce){
@@ -1996,6 +2083,10 @@
     </div>
   </header>
   <div class="feed-wrap">
+    <div class="feed-head">
+      <p class="feed-count" id="feedCount"></p>
+      <div class="feed-filters" id="feedFilters" hidden></div>
+    </div>
     <section id="publicFeed" aria-live="polite"></section>
   </div>
   <section class="reader-screen" id="publicReader" hidden aria-label="Shayari">
@@ -2025,6 +2116,17 @@
     </div>
   </section>
 </div>
+<aside class="install-banner hidden" id="installBanner" aria-label="Install FluffyPens">
+  <img src="./icon.svg" alt="">
+  <div class="install-copy">
+    <strong>Add FluffyPens to your home screen</strong>
+    <p id="installCopy">It opens like an app, with the poems one tap away.</p>
+  </div>
+  <div class="install-actions">
+    <button type="button" id="installLater">Not now</button>
+    <button type="button" id="installNow">Install</button>
+  </div>
+</aside>
 <div class="studio-gate" id="studioGate" hidden>
   <form class="studio-card" id="studioLockForm">
     <h2>FluffyPens</h2>
@@ -2392,6 +2494,7 @@ const state={
   readerMode:'edit',
   surface:'public',
   publicPieceId:null,
+  publicType:'all',
   sharePiece:null,
   studioPassword:'',
   studioAuthed:false,
@@ -2447,6 +2550,29 @@ function pieceToPreview(piece,max=130){
 function listFromField(value){
   if(Array.isArray(value))return value.map(x=>String(x).trim()).filter(Boolean);
   return String(value||'').split(',').map(x=>x.trim()).filter(Boolean);
+}
+const LANG_LABEL={hi:'Hindi / Urdu',en:'English',mixed:'Mixed'};
+const PLATFORM_LABEL={ig:'Instagram',x:'X',yt:'YouTube',sp:'Spotify',fb:'Facebook',wa:'WhatsApp'};
+function titleCaseType(type){
+  const raw=String(type||'poem').replace(/[_-]+/g,' ').trim()||'poem';
+  return raw.replace(/\b\w/g,ch=>ch.toUpperCase());
+}
+function langName(lang){
+  return LANG_LABEL[lang]||'Hindi / Urdu';
+}
+function tagList(tags){
+  return String(tags||'').split(/[,#]+/).map(s=>s.trim()).filter(Boolean);
+}
+function platformNames(list){
+  return listFromField(list).map(id=>PLATFORM_LABEL[String(id).toLowerCase()]||titleCaseType(id));
+}
+function pieceFacts(piece){
+  return {
+    type:titleCaseType(piece?.type),
+    lang:langName(piece?.lang),
+    tags:tagList(piece?.tags),
+    places:platformNames(piece?.platforms)
+  };
 }
 function normalizePiece(piece){
   const status=STATUS_ORDER.includes(piece.status)?piece.status:DEFAULT_STATUS;
@@ -2576,10 +2702,13 @@ function drawCard(piece){
   }
   const lineHeight=Math.round(fontSize*1.62);
   const titleLH=Math.round(titleSize*1.2);
+  const metaText=[titleCaseType(piece?.type), langName(piece?.lang)].join(' · ');
+  const metaSize=28;
+  const metaLH=40;
   const top=96;
-  const gap=36;
+  const gap=28;
   const bottom=96;
-  const h=top+titleLines.length*titleLH+gap+wrapped.length*lineHeight+bottom;
+  const h=top+titleLines.length*titleLH+16+metaLH+gap+wrapped.length*lineHeight+bottom;
   const canvas=document.createElement('canvas');
   canvas.width=w;
   canvas.height=h;
@@ -2597,7 +2726,12 @@ function drawCard(piece){
     ctx.fillText(line,padX,y);
     y+=titleLH;
   });
-  y+=gap;
+  y+=16;
+  ctx.fillStyle=palette.mute;
+  ctx.font=`500 ${metaSize}px ${VERSE_STACK}`;
+  ctx.fillText(metaText,padX,y);
+  y+=metaLH+gap;
+  ctx.fillStyle=palette.ink;
   ctx.font=`400 ${fontSize}px ${VERSE_STACK}`;
   wrapped.forEach(line=>{
     ctx.fillText(line,padX,y);
@@ -2685,7 +2819,7 @@ function updateReaderView(piece,archived){
   const created=fmtDate(piece?.createdAt);
   const updated=fmtDate(piece?.updatedAt||piece?.createdAt);
   const body=piece?.content ? cleanEditorHtml(piece.content) : '<p class="reader-note">No content yet.</p>';
-  if($('readerKicker')) $('readerKicker').textContent=archived ? 'Archived piece' : (status==='Posted' ? 'Published book' : 'Writing view');
+  if($('readerKicker')) $('readerKicker').textContent=archived ? 'Archived' : `${titleCaseType(piece?.type)} · ${langName(piece?.lang)}`;
   if($('readerTitle')) $('readerTitle').textContent=title;
   if($('readerStatus')) $('readerStatus').textContent=status;
   if($('readerMeta')) $('readerMeta').innerHTML=[
@@ -2836,11 +2970,71 @@ async function promptInstall(){
   deferredInstallPrompt=null;
   if(choice?.outcome==='accepted')toast('App install started');
   $('installBtn')?.classList.add('hidden');
+  return choice?.outcome||'';
 }
 function setInstallVisible(on){
   const btn=$('installBtn');
   if(!btn)return;
   btn.classList.toggle('hidden',!on);
+}
+function isStandalone(){
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
+}
+function isIosDevice(){
+  const ua=navigator.userAgent||'';
+  return /iphone|ipad|ipod/i.test(ua) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+}
+function installDismissed(){
+  return Number(localStorage.getItem('fp-install-until')||0)>Date.now();
+}
+function dismissInstall(days){
+  localStorage.setItem('fp-install-until', String(Date.now()+days*86400000));
+  document.body.dataset.install='off';
+  $('installBanner')?.classList.add('hidden');
+}
+function maybeShowInstall(){
+  const banner=$('installBanner');
+  if(!banner) return;
+  if(isStandalone() || installDismissed()){
+    banner.classList.add('hidden');
+    document.body.dataset.install='off';
+    return;
+  }
+  const ios=isIosDevice();
+  const android=/android/i.test(navigator.userAgent||'');
+  const canNative=!!deferredInstallPrompt;
+  if(!ios && !android && !canNative){
+    banner.classList.add('hidden');
+    document.body.dataset.install='off';
+    return;
+  }
+  const copy=$('installCopy');
+  const now=$('installNow');
+  if(canNative){
+    banner.dataset.mode='native';
+    if(copy) copy.textContent='Install it so the poems open like an app.';
+    if(now) now.textContent='Install';
+  }else if(ios){
+    banner.dataset.mode='ios';
+    if(copy) copy.textContent='On iPhone or iPad, tap Share, then Add to Home Screen.';
+    if(now) now.textContent='Got it';
+  }else{
+    banner.dataset.mode='android';
+    if(copy) copy.textContent='In Chrome, open the menu and tap Install app or Add to Home screen.';
+    if(now) now.textContent='Got it';
+  }
+  banner.classList.remove('hidden');
+  document.body.dataset.install='on';
+  setInstallVisible(canNative);
+}
+async function acceptInstall(){
+  const mode=$('installBanner')?.dataset.mode;
+  if(mode==='native' && deferredInstallPrompt){
+    const outcome=await promptInstall();
+    dismissInstall(outcome==='accepted'?365:3);
+    return;
+  }
+  dismissInstall(14);
 }
 function buildShareText(mode='draft'){
   const title=$('titleInput')?.value.trim()||'Untitled';
@@ -3094,22 +3288,11 @@ function renderPieces(){
   grid.innerHTML=list.map(p=>{
     const preview=pieceToPreview(p,150);
     const updatedText=fmtDate(p.updatedAt||p.createdAt);
-    const typeLabel=String(p.type||'poem').replace(/_/g,' ');
-    const langLabel={
-      hi:'Hindi / Urdu',
-      en:'English',
-      mixed:'Mixed'
-    }[p.lang] || String(p.lang||'');
-    const badgeText=state.view==='published'&&p.status==='posted'
-      ?'Published Book'
-      :p.status==='posted'
-        ?'Published'
-        :state.view==='archive'
-          ?'Archived'
-          :'Open';
+    const facts=pieceFacts(p);
+    const extra=[...facts.tags.map(tag=>`#${tag}`), ...facts.places].join(' · ');
     return `
       <article class="piece-card status-${esc(p.status)} ${p.status==='posted'?'posted':''}" data-open="${esc(p.id)}">
-        <div class="piece-kicker">${esc(typeLabel)} · ${esc(langLabel)}</div>
+        <div class="piece-kicker">${esc(facts.type)} · ${esc(facts.lang)}</div>
         <div class="piece-top">
           <h3 class="piece-title">${esc(p.title||'Untitled')}</h3>
           <span class="status-chip ${esc(p.status)}">${esc(STATUS_LABEL[p.status]||p.status)}</span>
@@ -3117,7 +3300,7 @@ function renderPieces(){
         <p class="piece-copy">${esc(preview)}</p>
         <div class="piece-meta">
           <span class="piece-date">${updatedText ? `Updated ${esc(updatedText)}` : 'Updated recently'}</span>
-          <span class="piece-badge">${esc(badgeText)}</span>
+          ${extra ? `<span class="piece-badge">${esc(extra)}</span>` : ''}
         </div>
       </article>
     `;
@@ -3244,37 +3427,68 @@ function linesHtml(lines){
   if(!lines.length) return '<p class="post-line">No lines yet.</p>';
   return lines.map(line=>`<p class="post-line">${esc(line)}</p>`).join('');
 }
+function factChips(piece){
+  const facts=pieceFacts(piece);
+  const chips=[
+    ...facts.tags.map(tag=>`<span class="post-tag">#${esc(tag)}</span>`),
+    ...facts.places.map(name=>`<span class="post-tag">${esc(name)}</span>`)
+  ];
+  return chips.length?`<div class="post-tags">${chips.join('')}</div>`:'';
+}
+function renderFeedFilters(pieces){
+  const host=$('feedFilters');
+  if(!host) return;
+  const types=[...new Set(pieces.map(piece=>String(piece.type||'poem')))];
+  if(!types.includes(state.publicType)) state.publicType='all';
+  if(types.length<2){
+    host.hidden=true;
+    host.innerHTML='';
+    return;
+  }
+  host.hidden=false;
+  const items=[['all','All'], ...types.map(type=>[type, titleCaseType(type)])];
+  host.innerHTML=items.map(([key,label])=>`<button type="button" data-feed-type="${esc(key)}" class="${state.publicType===key?'on':''}" aria-pressed="${state.publicType===key?'true':'false'}">${esc(label)}</button>`).join('');
+}
 function renderPublic(){
   const feed=$('publicFeed');
   if(!feed) return;
+  const posted=postedPieces().sort((a,b)=>toEpoch(b.updatedAt||b.createdAt)-toEpoch(a.updatedAt||a.createdAt));
+  renderFeedFilters(posted);
   const q=($('publicSearch')?.value||'').trim().toLowerCase();
-  const list=postedPieces()
-    .filter(piece=>{
-      if(!q) return true;
-      return [piece.title, piece.rawContent, stripHtml(piece.content)].some(value=>String(value||'').toLowerCase().includes(q));
-    })
-    .sort((a,b)=>toEpoch(b.updatedAt||b.createdAt)-toEpoch(a.updatedAt||a.createdAt));
+  const list=posted.filter(piece=>{
+    if(state.publicType!=='all' && String(piece.type||'poem')!==state.publicType) return false;
+    if(!q) return true;
+    const facts=pieceFacts(piece);
+    return [piece.title, piece.rawContent, stripHtml(piece.content), facts.type, facts.lang, facts.tags.join(' '), facts.places.join(' ')]
+      .some(value=>String(value||'').toLowerCase().includes(q));
+  });
+  const count=$('feedCount');
+  if(count){
+    const noun=state.publicType==='all'?'posted':titleCaseType(state.publicType).toLowerCase();
+    count.textContent=list.length===1?`1 ${noun}`:`${list.length} ${noun}${state.publicType==='all'?'':'s'}`;
+  }
   if(!state.sheetsUrl){
     feed.innerHTML='<div class="public-empty"><h3>Feed unavailable</h3><p>The writing library is not connected yet.</p></div>';
     return;
   }
-  if(state.syncError && !postedPieces().length){
+  if(state.syncError && !posted.length){
     feed.innerHTML='<div class="public-empty"><h3>Couldn’t load the feed</h3><p>Check the connection and refresh.</p></div>';
     return;
   }
   if(!list.length){
-    feed.innerHTML=`<div class="public-empty"><h3>${q ? 'No results' : 'No posts yet'}</h3><p>${q ? 'Try another word.' : 'Posted shayari will show up here.'}</p></div>`;
+    feed.innerHTML=`<div class="public-empty"><h3>${q || state.publicType!=='all' ? 'No results' : 'No posts yet'}</h3><p>${q || state.publicType!=='all' ? 'Try another word or type.' : 'Posted shayari will show up here.'}</p></div>`;
     return;
   }
   feed.innerHTML=list.map(piece=>{
-    const lines=poemLines(piece);
-    const shown=lines.slice(0,6);
+    const facts=pieceFacts(piece);
     const when=fmtShort(piece.updatedAt||piece.createdAt);
     return `
       <article class="post">
         <button class="post-open" type="button" data-public-open="${esc(piece.id)}">
+          <p class="post-kicker">${esc(facts.type)} · ${esc(facts.lang)}</p>
           <h2 class="post-title">${esc(piece.title||'Untitled')}</h2>
-          <div class="post-verse">${linesHtml(shown)}${lines.length>6?'<p class="post-more">Read the rest</p>':''}</div>
+          <div class="post-verse">${linesHtml(poemLines(piece))}</div>
+          ${factChips(piece)}
         </button>
         <div class="post-foot">
           <span class="post-date">${when ? esc(when) : ''}</span>
@@ -3302,7 +3516,9 @@ function openPublicPiece(id, updateHash){
     reader.hidden=false;
     return;
   }
-  verse.innerHTML=`<h2 class="post-title">${esc(piece.title||'Untitled')}</h2><div class="post-verse">${linesHtml(poemLines(piece))}</div>`;
+  const facts=pieceFacts(piece);
+  const when=fmtDate(piece.updatedAt||piece.createdAt);
+  verse.innerHTML=`<p class="post-kicker">${esc(facts.type)} · ${esc(facts.lang)}</p><h2 class="post-title">${esc(piece.title||'Untitled')}</h2><div class="post-verse">${linesHtml(poemLines(piece))}</div>${factChips(piece)}${when?`<p class="post-date" style="margin-top:12px">${esc(when)}</p>`:''}`;
   reader.hidden=false;
   state.sharePiece=piece;
 }
@@ -3757,6 +3973,14 @@ function bindEvents(){
   document.querySelectorAll('.theme-btn').forEach(btn=>btn.addEventListener('click',toggleTheme));
   $('openPublicBtn')?.addEventListener('click',goPublic);
   $('publicSearch')?.addEventListener('input',renderPublic);
+  $('feedFilters')?.addEventListener('click',event=>{
+    const button=event.target.closest('[data-feed-type]');
+    if(!button) return;
+    state.publicType=button.dataset.feedType||'all';
+    renderPublic();
+  });
+  $('installNow')?.addEventListener('click',acceptInstall);
+  $('installLater')?.addEventListener('click',()=>dismissInstall(7));
   $('publicFeed')?.addEventListener('click',e=>{
     const shareBtn=e.target.closest('[data-share]');
     if(shareBtn){
@@ -3888,11 +4112,12 @@ function bindEvents(){
   window.addEventListener('beforeinstallprompt',e=>{
     e.preventDefault();
     deferredInstallPrompt=e;
-    setInstallVisible(true);
+    maybeShowInstall();
   });
   window.addEventListener('appinstalled',()=>{
     deferredInstallPrompt=null;
     setInstallVisible(false);
+    dismissInstall(365);
     toast('FluffyPens installed');
   });
   window.addEventListener('resize',updateDrawerActionLabels,{passive:true});
@@ -3925,6 +4150,7 @@ async function init(){
   $('docShareBtn')?.setAttribute('aria-expanded','false');
   closeTopMenu();
   setInstallVisible(false);
+  maybeShowInstall();
   updateDrawerActionLabels();
   renderAll();
 }

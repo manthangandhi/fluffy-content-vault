@@ -50,6 +50,8 @@ const LOCAL_TIMEZONE = "Asia/Kolkata";
           lang: row.lang,
           content: row.content,
           rawContent: row.rawContent,
+          tags: row.tags,
+          platforms: row.platforms,
           status: "posted",
           createdAt: row.createdAt,
           updatedAt: row.updatedAt,
