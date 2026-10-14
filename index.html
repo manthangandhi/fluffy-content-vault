@@ -774,6 +774,7 @@
   }
   .drawer-body{
     flex:1;
+    min-height:0;
     overflow:auto;
     padding:16px;
   }
@@ -1562,9 +1563,13 @@
   .pipe.posted .v{color:#047857}
 
   body[data-surface="public"] .app{display:none}
-  body[data-surface="studio"] .public-app{display:none}
+  body[data-surface="studio"] .public-app,
+  body[data-surface="studio"] #publicReader,
+  body[data-surface="studio"] #shareSheet{display:none}
   body[data-locked="on"] .app,
-  body[data-locked="on"] .public-app{display:none}
+  body[data-locked="on"] .public-app,
+  body[data-locked="on"] #publicReader,
+  body[data-locked="on"] #shareSheet{display:none}
   body[data-surface="studio"] .topbar,
   body[data-surface="studio"] .workspace-footer,
   body[data-surface="studio"] .controls,
@@ -1745,11 +1750,22 @@
     font-family:var(--font-verse);font-size:26px;font-weight:600;letter-spacing:-.02em;
   }
   .public-empty p{margin:0;font-size:16px;line-height:1.5}
-  .reader-screen,.share-sheet{position:fixed;inset:0;z-index:40}
-  .reader-screen{background:var(--bg);display:flex;flex-direction:column}
+  .reader-screen,.share-sheet{position:fixed;inset:0;z-index:70}
+  .reader-screen{
+    background:var(--bg);
+    display:block;
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:calc(32px + env(safe-area-inset-bottom));
+  }
   .reader-screen[hidden],.share-sheet[hidden],.studio-gate[hidden]{display:none !important}
-  .reader-top{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 10px}
-  .reader-scroll{flex:1;overflow:auto}
+  .reader-top{
+    display:flex;align-items:center;justify-content:space-between;
+    height:56px;padding:0 10px;
+    position:sticky;top:0;z-index:2;
+    background:var(--bar);border-bottom:1px solid var(--line);
+  }
+  .reader-lines{display:flex;flex-direction:column;gap:8px;max-height:none;overflow:visible}
   .reader-verse{
     width:min(680px,100%);
     margin:8px auto 24px;
@@ -1936,7 +1952,8 @@
   .post-line{font-family:var(--font-verse);font-size:16px;font-weight:400;line-height:1.45}
   .post-verse{display:flex;flex-direction:column;gap:2px}
   .post .post-verse{max-height:186px;overflow:hidden}
-  .reader-verse .post-verse{max-height:none;overflow:visible}
+  .reader-verse .post-verse,
+  .reader-lines{max-height:none;overflow:visible}
   .post-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
   .post-tag{
     font-family:var(--font-ui);font-size:12px;font-weight:600;color:var(--muted);
@@ -2145,6 +2162,7 @@
     </div>
     <section id="publicFeed" aria-live="polite"></section>
   </div>
+</div>
   <section class="reader-screen" id="publicReader" hidden aria-label="Shayari">
     <div class="reader-top">
       <button class="ig-icon" id="publicReaderBack" type="button" aria-label="Back to the feed">
@@ -2154,9 +2172,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 3 11 14"/><path d="M22 3 15 21l-4-7-7-4 18-7z"/></svg>
       </button>
     </div>
-    <div class="reader-scroll">
-      <article class="reader-verse" id="publicReaderVerse"></article>
-    </div>
+    <article class="reader-verse" id="publicReaderVerse"></article>
   </section>
   <section class="share-sheet" id="shareSheet" hidden>
     <div class="share-scrim" id="shareScrim"></div>
@@ -2171,7 +2187,6 @@
       </div>
     </div>
   </section>
-</div>
 <aside class="install-banner hidden" id="installBanner" aria-label="Install FluffyPens">
   <img src="./icon.svg" alt="">
   <div class="install-copy">
@@ -3516,8 +3531,9 @@ function openPublicPiece(id, updateHash){
   }
   const facts=pieceFacts(piece);
   const when=fmtDate(piece.updatedAt||piece.createdAt);
-  verse.innerHTML=`<p class="post-kicker">${esc(facts.type)} · ${esc(facts.lang)}</p><h2 class="post-title">${esc(piece.title||'Untitled')}</h2><div class="post-verse">${linesHtml(poemLines(piece))}</div>${factChips(piece)}${when?`<p class="post-date" style="margin-top:12px">${esc(when)}</p>`:''}`;
+  verse.innerHTML=`<p class="post-kicker">${esc(facts.type)} · ${esc(facts.lang)}</p><h2 class="post-title">${esc(piece.title||'Untitled')}</h2><div class="reader-lines">${linesHtml(poemLines(piece))}</div>${factChips(piece)}${when?`<p class="post-date" style="margin-top:12px">${esc(when)}</p>`:''}`;
   reader.hidden=false;
+  reader.scrollTop=0;
   state.sharePiece=piece;
 }
 function closePublicReader(updateHash){
