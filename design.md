@@ -10,7 +10,7 @@ The public feed and Studio are a tight pin board. Reading-app references set the
 
 ## Layout
 
-The public feed is the product a visitor reads. Each posted piece is a full poem, with the saved type, language, tags, and platforms on the card. Phone is one column. From 900px it is two. A type filter appears when more than one type is posted. Share stays a photo of the poem, with the type and language on the image.
+The public feed is the shelf a visitor scans. It uses the full window: one column on a phone, two from 760px, three from 1100px, four from 1440px. Cards pack upward, so a short poem sits under a longer one instead of leaving a blank row. A card shows type, language, the first eight lines, tags, and platforms. The opened piece is the full poem. A type filter appears when more than one type is posted. Share of a piece stays a photo. Copy link copies the shelf URL.
 
 Studio stays the pin board: 2, 3, then 4 columns. Cards use the same labels as the feed: type, language, status, date, tags, and platforms. Controls share one size and the red selected state.
 
