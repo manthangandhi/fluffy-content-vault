@@ -2239,7 +2239,6 @@
       </div>
     </div>
     <div class="top-menu hidden" id="topMenu" role="menu" aria-label="More actions">
-      <div class="menu-note">Quick actions</div>
       <button class="menu-item" type="button" data-menu-action="backup" role="menuitem">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 3v12"/>
@@ -2248,43 +2247,12 @@
         </svg>
         Backup now
       </button>
-      <button class="menu-item" type="button" data-menu-action="setup" role="menuitem">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M10 13a5 5 0 0 1 0-7.07l1.17-1.17a5 5 0 0 1 7.07 7.07l-1.1 1.1"/>
-          <path d="M14 11a5 5 0 0 1 0 7.07l-1.17 1.17a5 5 0 0 1-7.07-7.07l1.1-1.1"/>
-          <path d="M9 15l6-6"/>
-        </svg>
-        Connect Sheets
-      </button>
-      <button class="menu-item" type="button" data-menu-action="shortcuts" role="menuitem">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="4" y="5" width="16" height="14" rx="3"/>
-          <path d="M8 9h.01M12 9h.01M16 9h.01M8 13h8"/>
-        </svg>
-        Keyboard shortcuts
-      </button>
       <button class="menu-item" type="button" data-menu-action="lock" role="menuitem">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <rect x="5" y="11" width="14" height="10" rx="2"/>
           <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
         </svg>
         Lock studio
-      </button>
-      <button class="menu-item" type="button" data-menu-action="feed" role="menuitem">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 6h16"/>
-          <path d="M4 12h16"/>
-          <path d="M4 18h10"/>
-        </svg>
-        Public feed
-      </button>
-      <button class="menu-item" type="button" data-menu-action="about" role="menuitem">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M12 10.5v5"/>
-          <path d="M12 8.2h.01"/>
-        </svg>
-        About this app
       </button>
     </div>
   </header>
@@ -2294,12 +2262,10 @@
       <section class="controls">
         <div class="view-row" id="viewRow">
           <button class="chip on" data-view="library" type="button" data-tip="Every piece in Studio">Library</button>
-          <button class="chip" data-view="published" type="button" data-tip="Pieces marked Posted">Published</button>
           <button class="chip" data-view="archive" type="button" data-tip="Pieces taken out of the library">Archive</button>
           <button class="chip" id="openPublicBtn" type="button" data-tip="What visitors see">Public feed</button>
         </div>
         <div class="shelf-banner" id="shelfBanner" aria-live="polite"></div>
-        <div class="workspace-hint">Only Posted pieces appear on the public feed. Drafts, in progress, ready, and recorded stay here in Studio.</div>
         <div class="search-row">
           <div class="search-wrap">
             <input class="search-input" id="searchInput" type="text" placeholder="Search title, content, note">
@@ -2312,7 +2278,6 @@
             <option value="status">Status</option>
           </select>
         </div>
-        <div class="status-row" id="statusRow"></div>
       </section>
 
       <section class="piece-grid" id="pieceGrid"></section>
@@ -2345,27 +2310,12 @@
     <div class="doc-shell">
       <div class="doc-bar">
         <div>
-          <p class="doc-kicker">Document editor</p>
           <div class="doc-state">
             <span class="doc-state-dot"></span>
             <span id="docStateText">Autosaved to Sheets</span>
           </div>
         </div>
         <div class="doc-actions">
-          <button class="icon-btn" id="docInfoBtn" type="button" aria-label="About this document">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M12 10.5v5"/>
-              <path d="M12 8.2h.01"/>
-            </svg>
-          </button>
-          <button class="icon-btn" id="docHistoryBtn" type="button" aria-label="Version history">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 8v5l3 2"/>
-              <path d="M12 3a9 9 0 1 0 9 9"/>
-              <path d="M21 3v5h-5"/>
-            </svg>
-          </button>
           <button class="icon-btn" id="docShareBtn" type="button" aria-label="Share as a photo">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M16 8a3 3 0 1 0-2.8-4"/>
@@ -2413,7 +2363,7 @@
         <section class="doc-main">
           <div class="doc-panel">
             <input class="doc-title-input" id="titleInput" type="text" placeholder="Name this piece">
-            <p class="doc-title-help">This title is synced to Sheets and appears in your published shelf.</p>
+
           </div>
           <div class="doc-panel">
             <div class="doc-section-title">Write</div>
@@ -2482,32 +2432,22 @@
 
 <div class="modal-scrim" id="modalScrim"></div>
 <section class="modal" id="settingsModal" aria-hidden="true">
-  <h3>Shared backend config</h3>
-  <p>The app reads the Google Apps Script URL from the deployed Pages file, so every device stays on the same backend without re-entering setup.</p>
+  <h3>Sheets</h3>
+  <p>Studio saves to this Google Apps Script address.</p>
   <div class="modal-grid">
     <div class="doc-stat">
-      <span class="k">Config source</span>
-      <span class="v">apps-script-url.txt</span>
-    </div>
-    <div class="doc-stat">
-      <span class="k">Backend url</span>
+      <span class="k">Address</span>
       <span class="v" id="sharedConfigUrl">Not set</span>
     </div>
-    <div class="doc-stat">
-      <span class="k">Backend access</span>
-      <span class="v">Injected at deploy time</span>
-    </div>
   </div>
-  <p style="margin-top:14px">Update the repo file once, deploy GitHub Pages, and every device will use the same Sheets backend automatically.</p>
   <div class="modal-foot">
-    <button class="ghost-btn" id="importRepoBtn" type="button" data-tip="Replace the library with vault.json from this site">Import repo JSON</button>
     <button class="primary-btn" id="cancelSetupBtn" type="button" data-tip="Close settings">Done</button>
   </div>
 </section>
 
 <section class="modal" id="shareModal" aria-hidden="true">
   <h3>Share this piece</h3>
-  <p>Send the shayari to another app, or copy it. Visitors on the public feed can do the same. Nothing is liked or commented here.</p>
+  <p>Send a photo, or copy the words for a caption.</p>
   <textarea class="share-preview" id="sharePreview" readonly></textarea>
   <div class="share-meta">
     <span id="shareMetaLeft">Ready to copy</span>
@@ -2515,7 +2455,6 @@
   </div>
   <div class="modal-foot">
     <button class="ghost-btn" id="shareAppsBtn" type="button" data-tip="Send a photo of this piece">Share to apps</button>
-    <button class="ghost-btn" id="copySummaryBtn" type="button" data-tip="Copy the title, status, and notes">Copy summary</button>
     <button class="ghost-btn" id="copyDraftBtn" type="button" data-tip="Copy the poem as text">Copy text</button>
     <button class="primary-btn" id="closeShareBtn" type="button" data-tip="Close sharing">Done</button>
   </div>
@@ -2988,32 +2927,16 @@ function statusCount(key){
 function renderShelfBanner(){
   const el=$('shelfBanner');
   if(!el)return;
-  const archived=state.archive.length;
-  const title=state.view==='published'
-    ?'Published shelf'
-    :state.view==='archive'
-      ?'Archive'
-      :'Studio';
-  const headline=state.view==='published'
-    ?'These are the pieces visitors can read and share'
-    :state.view==='archive'
-      ?'Stored work stays off the public feed'
-      :'See what is posted, and what is still in progress';
-  const copy=state.view==='archive'
-    ?`${archived} archived. Restore one when you want it back in the library.`
-    :'Mark a piece Posted when it should show on the public feed. Everything else stays in Studio.';
   const pipes=STATUS_ORDER.map(key=>`
     <button class="pipe ${key} ${state.view==='library' && state.status===key ? 'on' : ''}" type="button" data-pipe="${key}" data-tip="${esc(STATUS_TIP[key]||STATUS_LABEL[key])}">
       <span class="k">${esc(STATUS_LABEL[key])}</span>
       <span class="v">${statusCount(key)}</span>
     </button>
   `).join('');
-  el.innerHTML=`
-    <p class="eyebrow">${title}</p>
-    <h2 class="headline">${headline}</h2>
-    <p class="subhead">${copy}</p>
-    <div class="pipeline" aria-label="Piece status counts">${pipes}</div>
-  `;
+  const note=state.view==='archive'
+    ? `<p class="subhead">${state.archive.length} archived. These stay off the public feed.</p>`
+    : '';
+  el.innerHTML=`${note}<div class="pipeline" aria-label="Piece status counts">${pipes}</div>`;
 }
 function setConn(kind,text){
   const dot=$('connDot'), label=$('connText');
@@ -3324,44 +3247,21 @@ function setStatus(status){
   renderStatusRow();
   renderPieces();
 }
-function renderStatusRow(){
-  const row=$('statusRow');
-  if(state.view!=='library'){
-    row.innerHTML='';
-    return;
-  }
-  row.innerHTML=[['all','All'],...STATUS_ORDER.map(s=>[s,STATUS_LABEL[s]])]
-    .map(([k,l])=>`<button class="chip ${state.status===k?'on':''}" data-status="${k}" type="button" data-tip="${esc(k==='all'?'Show every piece':(STATUS_TIP[k]||l))}" aria-pressed="${state.status===k?'true':'false'}">${l}<span class="chip-count">${statusCount(k)}</span></button>`)
-    .join('');
-}
+function renderStatusRow(){}
 function renderPieces(){
   const grid=$('pieceGrid');
   const list=filteredList();
   if(!list.length){
-    const emptyTitle=state.view==='archive'
-      ?'Archive empty'
-      :state.view==='published'
-        ?'No published pieces yet'
-        :'Nothing to show';
+    const emptyTitle=state.view==='archive' ? 'Archive empty' : 'Nothing to show';
     const emptyCopy=state.view==='archive'
-      ?'Archived work will appear here and can be restored anytime.'
-      :state.view==='published'
-        ?'Pieces marked Posted will appear here like a clean published shelf.'
-        :'Try another search or create a new piece.';
+      ? 'Archived work will appear here and can be restored anytime.'
+      : 'Try another search or create a new piece.';
     const emptyActions=state.view==='archive'
-      ?`
+      ? `
         <button class="empty-btn" type="button" data-empty-action="library">Back to Library</button>
         <button class="empty-btn primary" type="button" data-empty-action="new">New Piece</button>
       `
-      :state.view==='published'
-        ?`
-          <button class="empty-btn" type="button" data-empty-action="library">View Library</button>
-          <button class="empty-btn primary" type="button" data-empty-action="new">New Piece</button>
-        `
-        :`
-          <button class="empty-btn" type="button" data-empty-action="published">Published Shelf</button>
-          <button class="empty-btn primary" type="button" data-empty-action="new">New Piece</button>
-        `;
+      : `<button class="empty-btn primary" type="button" data-empty-action="new">New Piece</button>`;
     grid.innerHTML=`<div class="empty"><div class="title">${emptyTitle}</div><p class="copy">${emptyCopy}</p><div class="empty-actions">${emptyActions}</div></div>`;
     return;
   }
@@ -4003,47 +3903,12 @@ function toggleTopMenu(){
   if(state.menuOpen)closeTopMenu();
   else openTopMenu();
 }
-function showShortcutHelp(){
-  toast('Cmd/Ctrl+K search · Cmd/Ctrl+S save · Click cards to edit');
-}
-function showAbout(){
-  toast('FluffyPens stays session-only and syncs with Google Sheets');
-}
 async function copyShareDraft(){
   try{
     await navigator.clipboard.writeText(buildShareText('draft'));
     toast('Draft copied');
   }catch{
     toast('Copy not available in this browser');
-  }
-}
-async function copyShareSummary(){
-  try{
-    await navigator.clipboard.writeText(buildShareText('summary'));
-    toast('Summary copied');
-  }catch{
-    toast('Copy not available in this browser');
-  }
-}
-async function importRepoJson(){
-  if(!hasConfig()){
-    toast('Publish Pages to load the backend URL');
-    openSettings();
-    return;
-  }
-  if(!confirm('Import vault.json from this repository and replace the current library in Sheets?'))return;
-  try{
-    const res=await fetch('./vault.json',{cache:'no-store'});
-    if(!res.ok)throw new Error(`HTTP ${res.status}`);
-    const data=await res.json();
-    const incoming=Array.isArray(data) ? data : (Array.isArray(data?.vault) ? data.vault : []);
-    if(!incoming.length)throw new Error('No records found in vault.json');
-    const normalized=incoming.map(normalizePiece);
-    state.vault=normalized;
-    renderAll();
-    if(await saveRemote())toast(`Imported ${normalized.length} pieces`);
-  }catch(err){
-    toast(`Import failed: ${err.message}`);
   }
 }
 function wireStatusButtons(){
@@ -4142,11 +4007,8 @@ function bindEvents(){
   $('moreBtn').addEventListener('click',e=>{e.stopPropagation();toggleTopMenu()});
   const backupBtn=$('backupBtn');
   if(backupBtn)backupBtn.addEventListener('click',downloadBackup);
-  $('docInfoBtn')?.addEventListener('click',()=>toast('Docs-style form: title, writing, notes, and sync summary'));
-  $('docHistoryBtn')?.addEventListener('click',()=>toast('Version history is coming soon'));
   $('docShareBtn')?.addEventListener('click',openShareModal);
   $('copyDraftBtn')?.addEventListener('click',copyShareDraft);
-  $('copySummaryBtn')?.addEventListener('click',copyShareSummary);
   $('shareAppsBtn')?.addEventListener('click',()=>runShare('image', editorSharePiece()));
   $('studioLockForm')?.addEventListener('submit',e=>{e.preventDefault();unlockStudio();});
   $('publicStudioBtn')?.addEventListener('click',goStudio);
@@ -4187,7 +4049,7 @@ function bindEvents(){
     setStatus(pipe.dataset.pipe);
   });
   $('closeShareBtn')?.addEventListener('click',closeShareModal);
-  $('importRepoBtn')?.addEventListener('click',importRepoJson);
+
   $('readerPrevBtn')?.addEventListener('click',()=>openReaderAt(-1));
   $('readerNextBtn')?.addEventListener('click',()=>openReaderAt(1));
   $('readerEditBtn')?.addEventListener('click',openSelectedInEditor);
@@ -4227,23 +4089,14 @@ function bindEvents(){
     const action=btn.dataset.menuAction;
     closeTopMenu();
     if(action==='backup')downloadBackup();
-    if(action==='setup')openSettings();
-    if(action==='shortcuts')showShortcutHelp();
-    if(action==='about')showAbout();
-    if(action==='feed')goPublic();
     if(action==='lock')lockStudio('Studio locked.');
   }));
-  $('statusRow').addEventListener('click',e=>{
-    const btn=e.target.closest('[data-status]');
-    if(btn)setStatus(btn.dataset.status);
-  });
   $('pieceGrid').addEventListener('click',e=>{
     const btn=e.target.closest('[data-empty-action]');
     if(!btn)return;
     const action=btn.dataset.emptyAction;
     if(action==='new'){resetEditor();openDrawer();return;}
     if(action==='library'){setView('library');return;}
-    if(action==='published'){setView('published');return;}
   });
   let touchStartX=0;
   let touchStartY=0;
