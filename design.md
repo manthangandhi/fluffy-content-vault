@@ -1,43 +1,42 @@
 # FluffyPens design
 
-This is the visual system for the public reading page and Studio. It comes from reading-app references, not from copying Pinterest’s board.
+The public feed and Studio are a tight pin board. Reading-app references set the type. The board sets the layout.
 
 ## References
 
-- [Booki](https://www.behance.net/gallery/242274183/Booki-Mobile-Reading-App-UIUX-Case-Study) (Behance, 2026). The interface stays quiet so the writing is the thing on screen.
-- [Matter](https://thesunrisedigest.com/daily/best-reading-apps-2026/), cited as the strongest reading surface in a 2026 reading-app comparison. One column, type first, mobile first.
-- [BooksListen](https://sleek.design/templates/book-summaries). Warm canvas, white page cards, one serif for titles, one sans for controls, one color for actions.
-- [Book-reader pin](https://www.pinterest.com/pin/501518108527342240/) and the related reading-app pins. The useful note there is the type pairing: a serif for the words, a plain sans for the chrome. Playfair Display is too thin-and-thick for Roman Hindi on a phone, so the serif here is Source Serif 4, which is drawn for screens.
+- Pinterest’s board: gray canvas, white cards, masonry, almost no page margin. Used as a layout reference, not as a copied product.
+- [Book-reader pin](https://www.pinterest.com/pin/501518108527342240/). Serif for the poem, sans for the controls. Source Serif 4 instead of Playfair, because Playfair is too thin-and-thick for Roman Hindi on a phone.
+- [Booki](https://www.behance.net/gallery/242274183/Booki-Mobile-Reading-App-UIUX-Case-Study) and [Matter](https://thesunrisedigest.com/daily/best-reading-apps-2026/). The opened poem is one column. The board is for scanning.
 
 ## Layout
 
-The public page is one reading column, `min(640px, 100%)`. Each posted piece is a page: title, then the full poem, then the date and Share. It is not a masonry grid.
+Public feed is CSS columns: 2 on a phone, 3 from 760px, 4 from 1100px. Column gap is 8–10px. Cards are only as tall as the text. Six lines show on the board. The rest opens on the poem page.
 
-Studio is the same page color and the same cards. On a phone the library is one column. From 800px it is two. Status stays visible as a row of filters: Draft, In Progress, Ready, Recorded, Posted.
+Studio uses the same columns and the same card padding. Status filters stay in one scrolling row: Draft, In Progress, Ready, Recorded, Posted. The editor grows with the poem. It does not reserve a tall empty page.
 
-Light is the default. Dark is a warm night page, not black and not a gray pin board. The moon button keeps the choice.
+Light is the default. Dark is `#191919` with `#2b2b2b` cards, not pure black.
 
 ## Type
 
-- Verse and titles: Source Serif 4. Feed title 26px, lines 18px, line-height 1.7. Reader lines 20px.
-- Chrome: IBM Plex Sans. 14px for controls, 13px for dates and labels.
-- One size step only. No 8–11px labels, no mixed pasted fonts. The editor forces Source Serif 4 at 18px.
+- Poem lines: Source Serif 4. Board 14px / 1.35. Opened poem 18px / 1.5.
+- Titles, search, filters, buttons: IBM Plex Sans. Board titles 15px.
+- One verse face in the editor. No pasted Google Docs fonts.
 
 ## Color
 
-Light: canvas `#f3eee6`, page `#fffdf8`, ink `#1c1612`, muted `#6f675e`, action `#1c1612`.
+Light canvas `#efefef`, card `#ffffff`, ink `#111111`, action `#e60023`.
 
-Dark: canvas `#1c1917`, page `#262220`, ink `#f6f1e8`, muted `#c4b8aa`, action `#f6f1e8`.
+Dark canvas `#191919`, card `#2b2b2b`, ink `#ffffff`, action `#e60023`.
 
-Share photos use the same page, the same serif, and the same ink as the screen.
+Share photos use the same card color, the same serif, and a thin red edge so the image matches the app.
 
 ## Mark and install icons
 
-The mark is a closed book on warm paper. It is the home icon, the Studio mark, and the PWA icon.
+The mark is an open book on warm paper. It is the header mark, the Studio footer mark, and the home-screen icon.
 
 - `icon.svg` is the source.
-- `icon-192.png` and `icon-512.png` are the Android any-purpose icons.
-- `icon-maskable.png` keeps the book inside the center safe zone so Android’s circle and squircle crops do not cut it.
-- `apple-touch-icon.png` is 180×180 for iPhone and iPad home screens.
-- The header and the bottom bar pad for the notch and the home indicator (`viewport-fit=cover` and `safe-area-inset`).
-- Installed display is `standalone`. Theme color follows light or dark.
+- `icon-192.png` and `icon-512.png` are the Android icons.
+- `icon-maskable.png` keeps the book inside Android’s circle and squircle crop.
+- `apple-touch-icon.png` is 180×180 for iPhone and iPad.
+- Header and footer pad for the notch and the home indicator.
+- Installed display is `standalone`. Theme color is `#efefef` in light and `#191919` in dark.
